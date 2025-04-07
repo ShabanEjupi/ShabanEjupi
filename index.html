@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shaban Ejupi | Developer Terminal</title>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -273,19 +276,10 @@
                         <h3>Featured Projects</h3>
                         
                         <div class="projects-grid">
-                            <!-- KoreaDriveKS (was Project 4) -->
+                            <!-- KoreaDriveKS Project 1 -->
                             <div class="project-card">
-                                <div class="project-showcase">
-                                    <div class="device-mockup">
-                                        <div class="device-frame">
-                                            <img src="images/project-screenshots/koreadriveks.jpg" alt="KoreaDrive KS" class="project-screenshot">
-                                        </div>
-                                        <div class="device-controls"></div>
-                                    </div>
-                                    <div class="project-badges">
-                                        <span class="project-badge">Responsive</span>
-                                        <span class="project-badge">Fast Load</span>
-                                    </div>
+                                <div class="project-image">
+                                    <img src="images/project1.jpg" alt="KoreaDrive KS" class="project-screenshot" loading="lazy">
                                 </div>
                                 <div class="project-content">
                                     <h3 class="project-title">KoreaDrive KS</h3>
@@ -298,19 +292,10 @@
                                 </div>
                             </div>
                             
-                            <!-- VioletaHasani (was Project 5) -->
+                            <!-- VioletaHasani Project 2 -->
                             <div class="project-card">
-                                <div class="project-showcase">
-                                    <div class="device-mockup">
-                                        <div class="device-frame">
-                                            <iframe src="https://violetahasani.netlify.app/" loading="lazy" title="Violeta Hasani Portfolio"></iframe>
-                                        </div>
-                                        <div class="device-controls"></div>
-                                    </div>
-                                    <div class="project-badges">
-                                        <span class="project-badge">Portfolio</span>
-                                        <span class="project-badge">Responsive</span>
-                                    </div>
+                                <div class="project-image">
+                                    <img src="images/project2.jpg" alt="Violeta Hasani Portfolio" loading="lazy">
                                 </div>
                                 <div class="project-content">
                                     <h3 class="project-title">Violeta Hasani Portfolio</h3>
@@ -323,10 +308,10 @@
                                 </div>
                             </div>
                             
-                            <!-- Image Generation Models (was Project 6) -->
+                            <!-- Image Generation Models Project 3 -->
                             <div class="project-card">
                                 <div class="project-image">
-                                    <img src="images/project5.jpg" alt="AI Image Generation Models" loading="lazy">
+                                    <img src="images/project3.jpg" alt="AI Image Generation Models" loading="lazy">
                                 </div>
                                 <div class="project-content">
                                     <h3 class="project-title">AI Image Generation</h3>
@@ -339,10 +324,10 @@
                                 </div>
                             </div>
                             
-                            <!-- AI Chatbot (was Project 7) -->
+                            <!-- AI Chatbot Project 4 -->
                             <div class="project-card">
                                 <div class="project-image">
-                                    <img src="images/project6.jpg" alt="AI Chatbot" loading="lazy">
+                                    <img src="images/project4.jpg" alt="AI Chatbot" loading="lazy">
                                 </div>
                                 <div class="project-content">
                                     <h3 class="project-title">AI Chatbot</h3>
@@ -355,19 +340,10 @@
                                 </div>
                             </div>
                             
-                            <!-- EtinUP Platform (was Project 1) -->
+                            <!-- EtinUP Platform Project 5 -->
                             <div class="project-card">
-                                <div class="project-showcase">
-                                    <div class="device-mockup">
-                                        <div class="device-frame">
-                                            <iframe src="https://etinup.netlify.app/" loading="lazy" title="EtinUP Platform"></iframe>
-                                        </div>
-                                        <div class="device-controls"></div>
-                                    </div>
-                                    <div class="project-badges">
-                                        <span class="project-badge">Education</span>
-                                        <span class="project-badge">MERN Stack</span>
-                                    </div>
+                                <div class="project-image">
+                                    <img src="images/project5.jpg" alt="EtinUP Platform" loading="lazy">
                                 </div>
                                 <div class="project-content">
                                     <h3 class="project-title">EtinUP Platform</h3>
@@ -380,10 +356,10 @@
                                 </div>
                             </div>
                             
-                            <!-- Prizren Park App (was Project 2) -->
+                            <!-- Prizren Park App Project 6 -->
                             <div class="project-card">
                                 <div class="project-image">
-                                    <img src="images/project2.jpg" alt="Prizren Park App" loading="lazy">
+                                    <img src="images/project6.jpg" alt="Prizren Park App" loading="lazy">
                                 </div>
                                 <div class="project-content">
                                     <h3 class="project-title">Prizren Park App - work project</h3>
@@ -395,10 +371,10 @@
                                 </div>
                             </div>
                             
-                            <!-- E-commerce website (was Project 3) -->
+                            <!-- E-commerce website Project 7 -->
                             <div class="project-card">
                                 <div class="project-image">
-                                    <img src="images/project3.jpg" alt="E-commerce Platform" loading="lazy">
+                                    <img src="images/project7.jpg" alt="E-commerce Platform" loading="lazy">
                                 </div>
                                 <div class="project-content">
                                     <h3 class="project-title">E-commerce website - group project</h3>
@@ -656,61 +632,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript for the matrix background -->
-    <script>
-        // Matrix background effect
-        const canvas = document.getElementById('matrix');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}';
-        const charArray = chars.split('');
-        
-        const fontSize = 10;
-        const columns = canvas.width / fontSize;
-        
-        const drops = [];
-        for(let i = 0; i < columns; i++) {
-            drops[i] = 1;
-        }
-        
-        function draw() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#0f0';
-            ctx.font = fontSize + 'px monospace';
-            
-            for(let i = 0; drops.length; i++) {
-                const text = charArray[Math.floor(Math.random() * charArray.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                
-                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                
-                drops[i]++;
-            }
-        }
-        
-        setInterval(draw, 33);
-        
-        // Resize canvas when window size changes
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // Function to handle CV request
-        function requestCV() {
-            alert('Your request for the CV has been received!');
-        }
-    </script>
-    <script src="js/matrix.js" defer></script>
-    <script src="js/script.js" defer></script>
-    <script src="js/terminal.js" defer></script>
-    <script src="js/emailHandler.js" defer></script>
+    <!-- JavaScript -->
+    <script src="js/main.js" defer></script>
 </body>
 </html>
