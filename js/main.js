@@ -283,10 +283,10 @@ function processCommand(command, output) {
             
         case 'skills':
             response.innerHTML = `
-                <div class="terminal-line"><span class="variable">Programming:</span> Java, JavaScript, Python, C#, PHP</div>
+                <div class="terminal-line"><span class="variable">Programming:</span> Java, JavaScript, Python, Dart, PHP</div>
                 <div class="terminal-line"><span class="variable">Frameworks:</span> React, Node.js, Flutter, Laravel, Express</div>
-                <div class="terminal-line"><span class="variable">Databases:</span> PostgreSQL, MongoDB, MySQL, Firebase</div>
-                <div class="terminal-line"><span class="variable">Tools:</span> Git, Docker, AWS, REST APIs</div>
+                <div class="terminal-line"><span class="variable">Databases:</span> PostgreSQL, MongoDB, MySQL, SQL Server</div>
+                <div class="terminal-line"><span class="variable">Tools:</span> Git, Docker, AWS, Github, Restful APIs</div>
             `;
             break;
             
@@ -294,7 +294,7 @@ function processCommand(command, output) {
             response.innerHTML = `
                 <div class="terminal-line"><span class="string">Email:</span> shaban.ejupi@student.uni-pr.edu</div>
                 <div class="terminal-line"><span class="string">Phone:</span> (+383) 45 601 379</div>
-                <div class="terminal-line"><span class="string">Location:</span> Podujevë, Kosovo</div>
+                <div class="terminal-line"><span class="string">Location:</span> Prishtinë, Kosovo</div>
                 <div class="terminal-line"><span class="string">LinkedIn:</span> https://www.linkedin.com/in/shaban-ejupi-406b94214/</div>
                 <div class="terminal-line"><span class="string">GitHub:</span> https://github.com/ShabanEjupi/</div>
             `;
