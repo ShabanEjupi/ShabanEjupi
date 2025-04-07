@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Force scroll to top on page load
+    window.scrollTo(0, 0);
+    
+    // Prevent auto-focus on terminal input when page loads
+    const terminalInput = document.getElementById('terminalInput');
+    if (terminalInput) {
+        terminalInput.removeAttribute('autofocus');
+    }
+
     // Mobile menu toggle
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('nav ul');
@@ -124,3 +133,20 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(card);
     });
 });
+
+function requestCV() {
+    // Pre-fill the subject field with CV request
+    const subjectField = document.getElementById('subject');
+    if (subjectField) {
+        subjectField.value = "CV Request";
+    }
+    
+    // Pre-fill the message field with a professional request
+    const messageField = document.getElementById('message');
+    if (messageField) {
+        messageField.value = "Hello Shaban,\n\nI'm interested in your professional experience and would like to request a copy of your CV.\n\nThank you.";
+    }
+    
+    // Optionally show a tooltip
+    alert("Please complete the contact form to request my CV.");
+}

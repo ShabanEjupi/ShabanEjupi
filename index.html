@@ -66,6 +66,9 @@
                         <div class="command-output">
                             <a href="#projects" class="btn btn-primary">View Projects</a>
                             <a href="#contact" class="btn btn-secondary">Contact Me</a>
+                            <a href="#contact" onclick="requestCV()" class="btn btn-download">
+                                <i class="fas fa-file-alt"></i> Request CV
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -638,8 +641,10 @@
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">About</a></li>
+                        <li><a href="#experience">Experience</a></li>
                         <li><a href="#projects">Projects</a></li>
                         <li><a href="#skills">Skills</a></li>
+                        <li><a href="#education">Education</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
@@ -697,6 +702,11 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
+
+        // Function to handle CV request
+        function requestCV() {
+            alert('Your request for the CV has been received!');
+        }
     </script>
     <script src="js/script.js"></script>
     <script src="js/terminal.js"></script>

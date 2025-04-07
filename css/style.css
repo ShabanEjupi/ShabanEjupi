@@ -284,6 +284,26 @@ section {
     color: var(--secondary-color);
 }
 
+/* CV Download button styling */
+.btn-download {
+    background-color: #2ecc71;
+    color: var(--bg-color);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-download:hover {
+    background-color: #27ae60;
+    color: var(--bg-color);
+}
+
+.btn-download i {
+    font-size: 1rem;
+}
+
 /* Header */
 header {
     position: fixed;
@@ -947,6 +967,101 @@ footer {
     
     .device-frame iframe {
         transform: scale(0.9); /* Slightly reduced scale on mobile */
+    }
+    
+    /* Make text more readable on small screens */
+    body {
+        font-size: 14px;
+    }
+    
+    /* Improve terminal display on mobile */
+    .terminal-window {
+        margin-bottom: 20px;
+    }
+    
+    .terminal-body {
+        padding: 15px;
+    }
+    
+    /* Fix project cards on mobile */
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Optimize hero section */
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    /* Better button layout on mobile */
+    .command-output {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .command-output .btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Improve interactive terminal height on mobile */
+    .interactive-terminal .terminal-body {
+        height: 300px;
+    }
+    
+    /* Make form elements more finger-friendly */
+    .form-group input,
+    .form-group textarea {
+        padding: 15px;
+        font-size: 16px; /* Prevents iOS zoom on focus */
+    }
+    
+    /* Improve skill categories layout */
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Better spacing for timeline items */
+    .timeline-item {
+        margin-bottom: 30px;
+    }
+    
+    .timeline-content {
+        padding: 15px;
+    }
+    
+    /* Fix education cards */
+    .credentials-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Extra small devices */
+@media screen and (max-width: 480px) {
+    .terminal-header {
+        padding: 8px 10px;
+    }
+    
+    .terminal-title {
+        font-size: 0.8rem;
+    }
+    
+    .project-showcase {
+        height: 200px;
+    }
+    
+    .about .terminal-body {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .about-image {
+        margin-top: 20px;
     }
 }
 
