@@ -503,6 +503,8 @@ nav ul li a:hover::before, nav ul li a:hover::after {
     height: 100%;
     display: flex;
     flex-direction: column;
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
 }
 
 .project-card:hover {
@@ -1360,4 +1362,19 @@ footer {
 
 .notification-hiding {
     transform: translateX(120%);
+}
+
+/* Add to your style.css */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .typing-effect {
+        border-right: none;
+        animation: none;
+    }
 }

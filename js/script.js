@@ -132,6 +132,82 @@ document.addEventListener('DOMContentLoaded', function() {
     projectCards.forEach(card => {
         observer.observe(card);
     });
+
+    // Matrix animation
+    const canvas = document.getElementById('matrix');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Reduce animation framerate
+    const FPS = 15;
+    let lastFrameTime = 0;
+    
+    // Reduce density of drops
+    const fontSize = 10;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const columns = Math.floor(canvas.width / fontSize) / 2; // Half as many columns
+    
+    const drops = [];
+    for(let i = 0; i < columns; i++) {
+        drops[i] = 1;
+    }
+    
+    function draw(currentTime) {
+        // Only render if enough time has passed (fps limiting)
+        if (currentTime - lastFrameTime < 1000 / FPS) {
+            requestAnimationFrame(draw);
+            return;
+        }
+        
+        lastFrameTime = currentTime;
+        
+        // More transparent background = less redrawing
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#0f0';
+        ctx.font = fontSize + 'px monospace';
+        
+        for(let i = 0; i < drops.length; i++) {
+            // Draw only half the characters
+            if (i % 2 === 0) {
+                const text = String.fromCharCode(Math.floor(Math.random() * 128));
+                ctx.fillText(text, i * fontSize * 2, drops[i] * fontSize);
+            }
+            
+            if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            
+            drops[i]++;
+        }
+        
+        requestAnimationFrame(draw);
+    }
+    
+    // Stop animation when tab is not visible to save resources
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            cancelAnimationFrame(draw);
+        } else {
+            requestAnimationFrame(draw);
+        }
+    });
+    
+    // Throttle resize events
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }, 200);
+    });
+    
+    requestAnimationFrame(draw);
 });
 
 function requestCV() {
