@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('cookieConsent').classList.add('visible');
         }, 2000);
         
+        // Check device type and set appropriate timeout
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const timeoutDuration = isMobile ? 60000 : 30000; // 60 seconds for mobile, 30 for desktop
+        
         // Add scroll detection to enforce cookie choice
         let scrollHandled = false;
         window.addEventListener('scroll', function() {
@@ -22,6 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         }, { passive: true });
+        
+        // Set up inactivity timer - with longer duration for mobile
+        setupInactivityTimer(timeoutDuration);
         
     } else if (cookieConsent === 'accepted') {
         // Initialize analytics if cookies were previously accepted
@@ -86,34 +93,80 @@ document.addEventListener('DOMContentLoaded', function() {
             closePrivacyPolicyHandler();
         }
     });
-    
-    // Function to handle cookie acceptance
-    function acceptCookiesHandler() {
-        localStorage.setItem('cookieConsent', 'accepted');
-        document.getElementById('cookieConsent').classList.remove('visible');
-        document.getElementById('cookieBlocker').classList.remove('visible');
-        document.body.style.overflow = 'auto'; // Re-enable scrolling
-        
-        // Trigger analytics initialization
-        const event = new Event('cookiesAccepted');
-        document.dispatchEvent(event);
-        
-        showNotification('success', 'Thank you for accepting cookies!');
-    }
-    
-    // Function to handle privacy policy closing
-    function closePrivacyPolicyHandler() {
-        document.getElementById('privacyModal').style.display = 'none';
-        
-        // Check if cookies haven't been accepted yet
-        const cookieConsent = localStorage.getItem('cookieConsent');
-        if (cookieConsent !== 'accepted') {
-            // Show the cookie blocker
-            document.getElementById('cookieBlocker').classList.add('visible');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
-        }
-    }
 });
+
+// Function to handle cookie acceptance - FIXED
+function acceptCookiesHandler() {
+    localStorage.setItem('cookieConsent', 'accepted');
+    
+    // Hide all cookie-related elements
+    document.getElementById('cookieConsent').classList.remove('visible');
+    document.getElementById('cookieBlocker').classList.remove('visible');
+    
+    // Ensure scrolling is enabled
+    document.body.style.overflow = 'auto';
+    
+    // Reset any inactivity timers
+    resetInactivityTimer();
+    
+    // Trigger analytics initialization
+    const event = new Event('cookiesAccepted');
+    document.dispatchEvent(event);
+    
+    showNotification('success', 'Thank you for accepting cookies!');
+}
+
+// Function to handle privacy policy closing
+function closePrivacyPolicyHandler() {
+    document.getElementById('privacyModal').style.display = 'none';
+    
+    // Check if cookies haven't been accepted yet
+    const cookieConsent = localStorage.getItem('cookieConsent');
+    if (cookieConsent !== 'accepted') {
+        // Show the cookie blocker
+        document.getElementById('cookieBlocker').classList.add('visible');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+}
+
+// Setup inactivity timer
+let inactivityTimer;
+function setupInactivityTimer(duration) {
+    // Only apply to users who haven't made a choice yet
+    if (localStorage.getItem('cookieConsent') === null) {
+        inactivityTimer = setTimeout(function() {
+            if (localStorage.getItem('cookieConsent') === null) {
+                document.getElementById('cookieConsent').classList.remove('visible');
+                document.getElementById('cookieBlocker').classList.add('visible');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
+        }, duration);
+        
+        // Reset timer on user activity
+        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'touchmove'].forEach(function(event) {
+            document.addEventListener(event, resetInactivityTimer, { passive: true });
+        });
+    }
+}
+
+// Reset inactivity timer
+function resetInactivityTimer() {
+    clearTimeout(inactivityTimer);
+    
+    // Only restart if no consent choice made yet
+    if (localStorage.getItem('cookieConsent') === null) {
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const timeoutDuration = isMobile ? 60000 : 30000; // 60 seconds for mobile, 30 for desktop
+        
+        inactivityTimer = setTimeout(function() {
+            if (localStorage.getItem('cookieConsent') === null) {
+                document.getElementById('cookieConsent').classList.remove('visible');
+                document.getElementById('cookieBlocker').classList.add('visible');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
+        }, timeoutDuration);
+    }
+}
 
 // Update cookie consent text when language changes
 document.addEventListener('languageChanged', function() {
@@ -173,7 +226,7 @@ function showNotification(type, message) {
             notification.classList.add('notification-visible');
         }, 10);
     }
-});
+};
 
 document.addEventListener('cookiesAccepted', function() {
     // Only detect location after cookies are accepted, and only if no language preference exists
