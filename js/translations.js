@@ -15,7 +15,7 @@ const translations = {
     },
     sq: {
         "nav.home": "Ballina",
-        "nav.about": "Rreth Meje",
+        "nav.about": "Rreth meje",
         "nav.experience": "Përvoja",
         "nav.projects": "Projektet",
         "nav.skills": "Aftësitë",
