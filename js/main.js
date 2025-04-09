@@ -483,7 +483,7 @@ function requestCV() {
     showNotification('info', 'Please complete the contact form to request my CV.');
 }
 // main.js (add at the beginning, after DOMContentLoaded event)
-let currentLanguage = localStorage.getItem('language') || 'en';
+let currentLanguage = localStorage.getItem('language') || 'sq';
 
 function initLanguageSwitcher() {
     const langOptions = document.querySelectorAll('.lang-option');
