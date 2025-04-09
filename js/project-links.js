@@ -15,44 +15,30 @@ function setupProjectLinks() {
                               this.getAttribute('data-i18n')?.includes('code');
             const isVisitLink = !isCodeLink;
             
-            // Projects that should redirect to contact form
+            // Projects that should redirect to contact form for code links
             const restrictedProjects = [
                 'Prizren Park App',
                 'E-commerce website',
-                'E-commerce',
+                'E-commerce'
             ];
             
-            // Check if this is a code link or restricted project
-            if (isCodeLink || restrictedProjects.some(name => projectTitle.includes(name))) {
+            // Check if this is a code link (for any project)
+            if (isCodeLink) {
                 e.preventDefault();
-                
-                // Redirect to contact form with pre-filled message
-                redirectToContactWithMessage(projectTitle, isCodeLink);
+                redirectToContactWithMessage(projectTitle, true);
                 return;
             }
             
-            // Allowed external links can proceed normally (koreadriveks.netlify.app already has href)
-            // For demo sites (AI Generator, Chatbot), we would normally add specific handling here
-            // but for now we'll let them go to their hrefs as well
+            // Check if this is a visit link for a restricted project
+            if (isVisitLink && restrictedProjects.some(name => projectTitle.includes(name))) {
+                e.preventDefault();
+                redirectToContactWithMessage(projectTitle, false);
+                return;
+            }
+            
+            // All other links proceed normally
         });
     });
-    
-    // Add specific handlers for AI demo buttons if needed
-    const aiGenButton = document.querySelector('[data-i18n="projects.cta.try"]');
-    if (aiGenButton) {
-        aiGenButton.addEventListener('click', function(e) {
-            // If you have a real AI generation demo, this would navigate there
-            // Otherwise, use the href already set on the button
-        });
-    }
-    
-    const chatbotButton = document.querySelector('[data-i18n="projects.cta.chat"]');
-    if (chatbotButton) {
-        chatbotButton.addEventListener('click', function(e) {
-            // If you have a real chatbot demo, this would navigate there
-            // Otherwise, use the href already set on the button
-        });
-    }
 }
 
 function redirectToContactWithMessage(projectTitle, isCodeRequest) {
@@ -67,8 +53,8 @@ function redirectToContactWithMessage(projectTitle, isCodeRequest) {
     if (subjectField && messageField) {
         // Set subject based on request type
         subjectField.value = isCodeRequest 
-            ? `Code Request for ${projectTitle}`
-            : `Project Access Request for ${projectTitle}`;
+            ? `Code Access Request for ${projectTitle}`
+            : `Project Demo Request for ${projectTitle}`;
         
         // Set message based on request type
         let message = `Hello Shaban,\n\n`;
@@ -76,7 +62,7 @@ function redirectToContactWithMessage(projectTitle, isCodeRequest) {
         if (isCodeRequest) {
             message += `I'm interested in your ${projectTitle} project and would like to request access to the source code. Could you please provide more information about the project and any requirements for accessing the code?\n\n`;
         } else {
-            message += `I'm interested in your ${projectTitle} project and would like to request access to see it in action. Could you please provide me with a demo or more details about this project?\n\n`;
+            message += `I'm interested in your ${projectTitle} project and would like to request access to see a demo or live version. Could you please provide me with access or more details about this project?\n\n`;
         }
         
         message += `Thank you,\n`;
@@ -87,5 +73,52 @@ function redirectToContactWithMessage(projectTitle, isCodeRequest) {
     }
     
     // Show notification to the user
-    showNotification('info', `Please complete the form to request information about ${projectTitle}.`);
+    const actionType = isCodeRequest ? "code access" : "project demo";
+    showNotification('info', `Please complete the form to request ${actionType} for ${projectTitle}.`);
+}
+
+// Helper function that should already exist in your main.js
+// Including it here for reference in case it needs to be added
+if (typeof showNotification !== 'function') {
+    function showNotification(type, message) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                <p>${message}</p>
+            </div>
+            <button class="notification-close">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        // Add to document
+        document.body.appendChild(notification);
+        
+        // Add close button functionality
+        const closeButton = notification.querySelector('.notification-close');
+        closeButton.addEventListener('click', () => {
+            notification.classList.add('notification-hiding');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        });
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                notification.classList.add('notification-hiding');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }
+        }, 5000);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.classList.add('notification-visible');
+        }, 10);
+    }
 }
