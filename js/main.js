@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== CORE FUNCTIONALITY =====
     // Force scroll to top on page load
     window.scrollTo(0, 0);
+
+    // Initialize language switcher
+    initLanguageSwitcher();
     
     // Initialize navigation
     initNavigation();
@@ -478,4 +481,41 @@ function requestCV() {
     }
     
     showNotification('info', 'Please complete the contact form to request my CV.');
+}
+// main.js (add at the beginning, after DOMContentLoaded event)
+let currentLanguage = localStorage.getItem('language') || 'en';
+
+function initLanguageSwitcher() {
+    const langOptions = document.querySelectorAll('.lang-option');
+    setLanguage(currentLanguage);
+    langOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.preventDefault();
+            const lang = this.getAttribute('data-lang');
+            setLanguage(lang);
+        });
+    });
+}
+
+function setLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem('language', lang);
+    const langOptions = document.querySelectorAll('.lang-option');
+    langOptions.forEach(option => {
+        if (option.getAttribute('data-lang') === lang) {
+            option.classList.add('active');
+        } else {
+            option.classList.remove('active');
+        }
+    });
+    updateContent();
+}
+
+function updateContent() {
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[currentLanguage][key]) {
+            element.textContent = translations[currentLanguage][key];
+        }
+    });
 }
