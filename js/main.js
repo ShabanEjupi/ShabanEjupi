@@ -505,16 +505,22 @@ function requestCV() {
     showNotification('info', 'Please complete the contact form to request my CV.');
 }
 // main.js (add at the beginning, after DOMContentLoaded event)
-let currentLanguage = localStorage.getItem('language') || 'sq';
+let currentLanguage = localStorage.getItem('language') || 'en'; // Default to English if no preference is stored
 
 function initLanguageSwitcher() {
     const langOptions = document.querySelectorAll('.lang-option');
-    setLanguage(currentLanguage);
+    
+    // Apply stored or detected language
+    updateLanguageUI();
+    
     langOptions.forEach(option => {
         option.addEventListener('click', function(e) {
             e.preventDefault();
             const lang = this.getAttribute('data-lang');
             setLanguage(lang);
+            
+            // When user explicitly changes language, remember their choice
+            localStorage.setItem('languageManuallySet', 'true');
         });
     });
 }
@@ -522,19 +528,27 @@ function initLanguageSwitcher() {
 function setLanguage(lang) {
     currentLanguage = lang;
     localStorage.setItem('language', lang);
-    const langOptions = document.querySelectorAll('.lang-option');
-    langOptions.forEach(option => {
-        if (option.getAttribute('data-lang') === lang) {
-            option.classList.add('active');
-        } else {
-            option.classList.remove('active');
-        }
-    });
+    
+    // Update UI
+    updateLanguageUI();
+    
+    // Update content
     updateContent();
     
     // Dispatch a language changed event
     const event = new Event('languageChanged');
     document.dispatchEvent(event);
+}
+
+function updateLanguageUI() {
+    const langOptions = document.querySelectorAll('.lang-option');
+    langOptions.forEach(option => {
+        if (option.getAttribute('data-lang') === currentLanguage) {
+            option.classList.add('active');
+        } else {
+            option.classList.remove('active');
+        }
+    });
 }
 
 function updateContent() {

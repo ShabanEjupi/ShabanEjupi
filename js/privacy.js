@@ -173,4 +173,12 @@ function showNotification(type, message) {
             notification.classList.add('notification-visible');
         }, 10);
     }
-}
+});
+
+document.addEventListener('cookiesAccepted', function() {
+    // Only detect location after cookies are accepted, and only if no language preference exists
+    if (!localStorage.getItem('languageManuallySet') && !localStorage.getItem('languageDetected')) {
+        detectUserLocation();
+        localStorage.setItem('languageDetected', 'true');
+    }
+});
