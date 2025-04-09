@@ -22,8 +22,8 @@ const translations = {
         "nav.education": "Edukimi",
         "nav.contact": "Kontakti",
         "hero.title": "Shaban Ejupi",
-        "hero.subtitle": "Zhvillues i Softuerit & Profesionist i TI",
-        "hero.description": "// Unë ndërtoj gjëra për uebin dhe celularin."
+        "hero.subtitle": "Zhvillues i softuerit & profesionist i IT",
+        "hero.description": "// Unë programoj gjëra për ueb dhe celular."
         // Add more translations as needed
     }
 };
