@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://shabanejupi.engineer/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://shabanejupi.engineer/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="sq" href="https://shabanejupi.engineer/?lang=sq"/>
-    <lastmod>2025-04-09</lastmod>
+    <lastmod>2025-04-09T10:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://shabanejupi.engineer/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="sq" href="https://shabanejupi.engineer/?lang=sq"/>
+    <image:image>
+      <image:loc>https://shabanejupi.engineer/images/about-image.webp</image:loc>
+      <image:title>Shaban Ejupi - Software Developer</image:title>
+    </image:image>
   </url>
+  <!-- Add section URLs as separate entries -->
 </urlset>

@@ -2,6 +2,10 @@ User-agent: bingbot
 Allow: /
 Sitemap: https://shabanejupi.engineer/sitemap.xml
 
+User-agent: msnbot
+Allow: /
+Sitemap: https://shabanejupi.engineer/sitemap.xml
+
 User-agent: *
 Allow: /
 Sitemap: https://shabanejupi.engineer/sitemap.xml
