@@ -142,7 +142,7 @@ const translations = {
         // Hero Section
         "hero.title": "Shaban Ejupi",
         "hero.subtitle": "Zhvillues i softuerit & profesionist i IT",
-        "hero.description": "// Unë programoj gjëra për ueb dhe celular.",
+        "hero.description": "// Unë programoj për ueb dhe celular.",
         "hero.specializing": "Specializuar në zhvillimin e aplikacioneve me Flutter, JavaScript dhe Java.",
         "hero.cta.projects": "Shiko Projektet",
         "hero.cta.contact": "Më Kontakto",
