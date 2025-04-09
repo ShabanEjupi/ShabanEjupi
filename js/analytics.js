@@ -1,5 +1,48 @@
 // Basic analytics and cookie enforcement
 
+// Enforce cookie acceptance after inactivity period
+document.addEventListener('DOMContentLoaded', function() {
+    const cookieConsent = localStorage.getItem('cookieConsent');
+    
+    // Only apply to users who haven't made a choice yet
+    if (cookieConsent === null) {
+        // Set a timeout to show the blocker after 30 seconds of inactivity
+        let inactivityTimer = setTimeout(function() {
+            if (localStorage.getItem('cookieConsent') === null) {
+                document.getElementById('cookieConsent').classList.remove('visible');
+                document.getElementById('cookieBlocker').classList.add('visible');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
+        }, 30000); // 30 seconds
+        
+        // Reset timer on user activity
+        const resetTimer = function() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(function() {
+                if (localStorage.getItem('cookieConsent') === null) {
+                    document.getElementById('cookieConsent').classList.remove('visible');
+                    document.getElementById('cookieBlocker').classList.add('visible');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                }
+            }, 30000);
+        };
+        
+        // Monitor user activity
+        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(function(event) {
+            document.addEventListener(event, resetTimer, { passive: true });
+        });
+    }
+    
+    // If cookies were explicitly declined, block interaction
+    if (cookieConsent === 'declined') {
+        // Show the blocking overlay
+        document.getElementById('cookieBlocker').classList.add('visible');
+        
+        // Prevent scrolling on the body
+        document.body.style.overflow = 'hidden';
+    }
+});
+
 // Check cookie consent status on page load
 document.addEventListener('DOMContentLoaded', function() {
     const cookieConsent = localStorage.getItem('cookieConsent');
@@ -27,6 +70,11 @@ document.addEventListener('cookiesAccepted', function() {
     //        'analytics_storage': 'granted'
     //    });
     // }
+});
+
+// When cookies are accepted, allow scrolling again
+document.addEventListener('cookiesAccepted', function() {
+    document.body.style.overflow = 'auto';
 });
 
 // Simple analytics system that respects privacy

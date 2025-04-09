@@ -7,6 +7,22 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             document.getElementById('cookieConsent').classList.add('visible');
         }, 2000);
+        
+        // Add scroll detection to enforce cookie choice
+        let scrollHandled = false;
+        window.addEventListener('scroll', function() {
+            // Only trigger once and only if user hasn't made a choice yet
+            if (!scrollHandled && localStorage.getItem('cookieConsent') === null) {
+                // After user has scrolled a bit (200px), show the blocker
+                if (window.scrollY > 200) {
+                    document.getElementById('cookieConsent').classList.remove('visible');
+                    document.getElementById('cookieBlocker').classList.add('visible');
+                    document.body.style.overflow = 'hidden'; // Prevent further scrolling
+                    scrollHandled = true;
+                }
+            }
+        }, { passive: true });
+        
     } else if (cookieConsent === 'accepted') {
         // Initialize analytics if cookies were previously accepted
         const event = new Event('cookiesAccepted');
@@ -14,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (cookieConsent === 'declined') {
         // Show blocking overlay if cookies were previously declined
         document.getElementById('cookieBlocker').classList.add('visible');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
     }
     
     // Handle accept button
@@ -26,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('cookieConsent', 'declined');
         document.getElementById('cookieConsent').classList.remove('visible');
         document.getElementById('cookieBlocker').classList.add('visible');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
         
         showNotification('info', 'You have declined cookies. Website access is restricted.');
     });
@@ -34,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('reconsiderCookies').addEventListener('click', function() {
         acceptCookiesHandler();
         document.getElementById('cookieBlocker').classList.remove('visible');
+        document.body.style.overflow = 'auto'; // Re-enable scrolling
     });
     
     // Handle privacy policy modal
@@ -72,6 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function acceptCookiesHandler() {
         localStorage.setItem('cookieConsent', 'accepted');
         document.getElementById('cookieConsent').classList.remove('visible');
+        document.getElementById('cookieBlocker').classList.remove('visible');
+        document.body.style.overflow = 'auto'; // Re-enable scrolling
         
         // Trigger analytics initialization
         const event = new Event('cookiesAccepted');
@@ -89,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cookieConsent !== 'accepted') {
             // Show the cookie blocker
             document.getElementById('cookieBlocker').classList.add('visible');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
         }
     }
 });
@@ -111,7 +133,44 @@ function showNotification(type, message) {
         // Use the existing global function
         window.showNotification(type, message);
     } else {
-        // Create a simple alert if the function doesn't exist
-        alert(message);
+        // Create a simple notification system
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'info' ? 'fa-info-circle' : 'fa-exclamation-circle'}"></i>
+                <p>${message}</p>
+            </div>
+            <button class="notification-close">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        // Add to document
+        document.body.appendChild(notification);
+        
+        // Add close button functionality
+        const closeButton = notification.querySelector('.notification-close');
+        closeButton.addEventListener('click', () => {
+            notification.classList.add('notification-hiding');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        });
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                notification.classList.add('notification-hiding');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }
+        }, 5000);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.classList.add('notification-visible');
+        }, 10);
     }
 }
