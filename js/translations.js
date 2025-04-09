@@ -1,6 +1,9 @@
 // js/translations.js
 const translations = {
     en: {
+        // Add title translation
+        "page.title": "Shaban Ejupi | Developer Terminal",
+        
         // Navigation
         "nav.home": "Home",
         "nav.about": "About",
@@ -27,6 +30,8 @@ const translations = {
         "terminal.cmd.contact": "Get my contact information",
         "terminal.cmd.projects": "List my projects",
         "terminal.cmd.clear": "Clear the terminal",
+        "terminal.cmd.notfound": "Command not found:",
+        "terminal.cmd.tryhelp": "Type 'help' for available commands.",
         
         // About Section
         "about.title": "About Me",
@@ -130,6 +135,9 @@ const translations = {
         "footer.copyright": "All rights reserved."
     },
     sq: {
+        // Add title translation
+        "page.title": "Shaban Ejupi | Terminali i Zhvilluesit",
+        
         // Navigation
         "nav.home": "Ballina",
         "nav.about": "Rreth meje",
@@ -156,6 +164,8 @@ const translations = {
         "terminal.cmd.contact": "Merr informatat e mia të kontaktit",
         "terminal.cmd.projects": "Listo projektet e mia",
         "terminal.cmd.clear": "Pastro terminalin",
+        "terminal.cmd.notfound": "Komanda nuk u gjet:",
+        "terminal.cmd.tryhelp": "Shkruani 'help' për komandat në dispozicion.",
         
         // About Section
         "about.title": "Rreth meje",

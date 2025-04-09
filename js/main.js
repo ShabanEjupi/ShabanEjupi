@@ -262,56 +262,72 @@ function processCommand(command, output) {
     const response = document.createElement('div');
     response.className = 'command-response';
     
-    switch(command) {
+    // Create command mapping for current language
+    const commandMap = {
+        'help': translations[currentLanguage]['terminal.cmd.help'],
+        'about': translations[currentLanguage]['terminal.cmd.about'],
+        'skills': translations[currentLanguage]['terminal.cmd.skills'],
+        'contact': translations[currentLanguage]['terminal.cmd.contact'],
+        'projects': translations[currentLanguage]['terminal.cmd.projects'],
+        'clear': translations[currentLanguage]['terminal.cmd.clear']
+    };
+    
+    // Reverse map to find English command from localized command
+    let englishCommand = command;
+    for (const [engCmd, localCmd] of Object.entries(commandMap)) {
+        if (command.toLowerCase() === localCmd.toLowerCase()) {
+            englishCommand = engCmd;
+            break;
+        }
+    }
+    
+    switch(englishCommand) {
         case 'help':
             response.innerHTML = `
-                <div class="terminal-line">Available commands:</div>
-                <div class="terminal-line">- <span class="keyword">help</span>: Show this help menu</div>
-                <div class="terminal-line">- <span class="keyword">about</span>: Learn about me</div>
-                <div class="terminal-line">- <span class="keyword">skills</span>: View my technical skills</div>
-                <div class="terminal-line">- <span class="keyword">contact</span>: Get my contact information</div>
-                <div class="terminal-line">- <span class="keyword">projects</span>: List my projects</div>
-                <div class="terminal-line">- <span class="keyword">clear</span>: Clear the terminal</div>
+                <div class="terminal-line">${translations[currentLanguage]['terminal.welcome']}</div>
+                <div class="terminal-line">- <span class="keyword">help</span>: ${translations[currentLanguage]['terminal.cmd.help']}</div>
+                <div class="terminal-line">- <span class="keyword">about</span>: ${translations[currentLanguage]['terminal.cmd.about']}</div>
+                <div class="terminal-line">- <span class="keyword">skills</span>: ${translations[currentLanguage]['terminal.cmd.skills']}</div>
+                <div class="terminal-line">- <span class="keyword">contact</span>: ${translations[currentLanguage]['terminal.cmd.contact']}</div>
+                <div class="terminal-line">- <span class="keyword">projects</span>: ${translations[currentLanguage]['terminal.cmd.projects']}</div>
+                <div class="terminal-line">- <span class="keyword">clear</span>: ${translations[currentLanguage]['terminal.cmd.clear']}</div>
             `;
             break;
             
         case 'about':
             response.innerHTML = `
                 <div class="terminal-line"><span class="function">whoami</span></div>
-                <div class="terminal-line">I'm a software developer from Kosovo with experience in</div>
-                <div class="terminal-line">developing apps and systems that solve real-world problems.</div>
-                <div class="terminal-line">Currently studying Computer Science at University "Hasan Prishtina" in Prishtina.</div>
+                <div class="terminal-line">${translations[currentLanguage]['about.description1']}</div>
+                <div class="terminal-line">${translations[currentLanguage]['about.description2']}</div>
+                <div class="terminal-line">${translations[currentLanguage]['about.description3']}</div>
             `;
             break;
             
         case 'skills':
             response.innerHTML = `
-                <div class="terminal-line"><span class="variable">Programming:</span> Java, JavaScript, Python, Dart, PHP</div>
-                <div class="terminal-line"><span class="variable">Frameworks:</span> React, Node.js, Flutter, Laravel, Express</div>
-                <div class="terminal-line"><span class="variable">Databases:</span> PostgreSQL, MongoDB, MySQL, SQL Server</div>
-                <div class="terminal-line"><span class="variable">Tools:</span> Git, Docker, AWS, Github, Restful APIs</div>
+                <div class="terminal-line"><span class="function">${translations[currentLanguage]['skills.title']}</span></div>
+                <div class="terminal-line"><span class="keyword">${translations[currentLanguage]['skills.languages']}:</span> Java, JavaScript, Python, Dart, PHP</div>
+                <div class="terminal-line"><span class="keyword">${translations[currentLanguage]['skills.frameworks']}:</span> React, Node.js, Flutter, Laravel, Express</div>
+                <div class="terminal-line"><span class="keyword">${translations[currentLanguage]['skills.databases']}:</span> PostgreSQL, MongoDB, MySQL, Firebase, SQL Server</div>
+                <div class="terminal-line"><span class="keyword">${translations[currentLanguage]['skills.tools']}:</span> Git, Docker, REST APIs, GitHub, AWS</div>
             `;
             break;
             
         case 'contact':
             response.innerHTML = `
-                <div class="terminal-line"><span class="string">Email:</span> shaban.ejupi@student.uni-pr.edu</div>
-                <div class="terminal-line"><span class="string">Phone:</span> (+383) 45 601 379</div>
-                <div class="terminal-line"><span class="string">Location:</span> Prishtinë, Kosovo</div>
-                <div class="terminal-line"><span class="string">LinkedIn:</span> https://www.linkedin.com/in/shaban-ejupi-406b94214/</div>
-                <div class="terminal-line"><span class="string">GitHub:</span> https://github.com/ShabanEjupi/</div>
+                <div class="terminal-line"><span class="function">${translations[currentLanguage]['contact.title']}</span></div>
+                <div class="terminal-line"><span class="keyword">Email:</span> shaban.ejupi@student.uni-pr.edu</div>
+                <div class="terminal-line"><span class="keyword">${translations[currentLanguage]['contact.form.phone'] || 'Phone'}:</span> (+383) 45 601 379</div>
+                <div class="terminal-line"><span class="keyword">${translations[currentLanguage]['contact.form.location'] || 'Location'}:</span> Podujevë, Kosovo</div>
+                <div class="terminal-line"><span class="keyword">LinkedIn:</span> linkedin.com/in/shaban-ejupi-406b94214/</div>
+                <div class="terminal-line"><span class="keyword">GitHub:</span> github.com/ShabanEjupi/</div>
             `;
             break;
             
         case 'projects':
             response.innerHTML = `
-                <div class="terminal-line"><span class="function">1.</span> <span class="keyword">EtinUP Platform:</span> Platform for education and innovation</div>
-                <div class="terminal-line"><span class="function">2.</span> <span class="keyword">Prizren Park App:</span> Smart parking application</div>
-                <div class="terminal-line"><span class="function">3.</span> <span class="keyword">E-commerce website:</span> Online shop with MVC architecture</div>
-                <div class="terminal-line"><span class="function">4.</span> <span class="keyword">KoreaDrive KS:</span> Car dealership website</div>
-                <div class="terminal-line"><span class="function">5.</span> <span class="keyword">Violeta Hasani Portfolio:</span> Personal portfolio website</div>
-                <div class="terminal-line"><span class="function">6.</span> <span class="keyword">AI Image Generation:</span> Generate images with AI models</div>
-                <div class="terminal-line"><span class="function">7.</span> <span class="keyword">AI Chatbot:</span> Intelligent conversational assistant</div>
+                <div class="terminal-line"><span class="function">${translations[currentLanguage]['projects.title']}</span></div>
+                <div class="terminal-line">1. <span class="keyword">${translations[currentLanguage]['projects.koreadrive.title']}</span>
             `;
             break;
             
@@ -320,7 +336,7 @@ function processCommand(command, output) {
             return;
             
         default:
-            response.innerHTML = `<div class="terminal-line"><span class="comment">Command not found: ${command}. Type 'help' for available commands.</span></div>`;
+            response.innerHTML = `<div class="terminal-line"><span class="comment">${translations[currentLanguage]['terminal.cmd.notfound'] || 'Command not found:'} ${command}. ${translations[currentLanguage]['terminal.cmd.tryhelp'] || "Type 'help' for available commands."}</span></div>`;
     }
     
     output.appendChild(response);
@@ -516,6 +532,17 @@ function updateContent() {
         const key = element.getAttribute('data-i18n');
         if (translations[currentLanguage][key]) {
             element.textContent = translations[currentLanguage][key];
+            
+            // Update document title if this is the title element
+            if (element.tagName === 'TITLE') {
+                document.title = translations[currentLanguage][key];
+            }
         }
     });
+    
+    // Also update the title directly in case the querySelector doesn't catch it
+    const titleKey = document.querySelector('title').getAttribute('data-i18n');
+    if (titleKey && translations[currentLanguage][titleKey]) {
+        document.title = translations[currentLanguage][titleKey];
+    }
 }
