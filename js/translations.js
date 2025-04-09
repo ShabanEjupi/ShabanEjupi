@@ -24,12 +24,6 @@ const translations = {
         
         // Interactive Terminal
         "terminal.welcome": "Welcome to Shaban's interactive terminal! Try these commands:",
-        "terminal.cmd.help": "Show available commands",
-        "terminal.cmd.about": "Learn about me",
-        "terminal.cmd.skills": "View my technical skills",
-        "terminal.cmd.contact": "Get my contact information",
-        "terminal.cmd.projects": "List my projects",
-        "terminal.cmd.clear": "Clear the terminal",
         "terminal.cmd.notfound": "Command not found:",
         "terminal.cmd.tryhelp": "Type 'help' for available commands.",
         
@@ -158,12 +152,6 @@ const translations = {
         
         // Interactive Terminal
         "terminal.welcome": "Mirësevini në terminalin interaktiv të Shabanit! Provoni këto komanda:",
-        "terminal.cmd.help": "Shfaq komandat në dispozicion",
-        "terminal.cmd.about": "Mëso për mua",
-        "terminal.cmd.skills": "Shiko aftësitë e mia teknike",
-        "terminal.cmd.contact": "Merr informatat e mia të kontaktit",
-        "terminal.cmd.projects": "Listo projektet e mia",
-        "terminal.cmd.clear": "Pastro terminalin",
         "terminal.cmd.notfound": "Komanda nuk u gjet:",
         "terminal.cmd.tryhelp": "Shkruani 'help' për komandat në dispozicion.",
         
