@@ -262,7 +262,7 @@ const translations = {
         "projects.violeta.tech": "HTML, CSS, JavaScript",
         "projects.violeta.description": "Një faqe portofoli personale me dizajn të pastër, që prezanton punën dhe aftësitë e Violeta Hasanit.",
         
-        "projects.aigen.title": "Gjenerimi i Imazheve me AI",
+        "projects.aigen.title": "Gjenerimi i imazheve me AI",
         "projects.aigen.tech": "Python, Hugging Face, Modelet e Difuzionit",
         "projects.aigen.description": "Një platformë interaktive për gjenerimin e imazheve duke përdorur modele AI për të krijuar fotografi nga përshkrime tekstuale.",
         "projects.cta.try": "Provoje",

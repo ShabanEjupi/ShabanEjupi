@@ -15,7 +15,7 @@ function setupProjectLinks() {
                               this.getAttribute('data-i18n')?.includes('code');
             const isVisitLink = !isCodeLink;
             
-            // Projects that should redirect to contact form for code links
+            // Projects that should redirect to contact form (for BOTH visit & code links)
             const restrictedProjects = [
                 'Prizren Park App',
                 'E-commerce website',
@@ -76,12 +76,13 @@ function redirectToContactWithMessage(projectTitle, isCodeRequest) {
     }
     
     // Show notification to the user
+    const notificationType = 'info';
     const notificationKey = isCodeRequest ? 'notification.code.access' : 'notification.demo.access';
     const defaultMessage = isCodeRequest 
         ? `Please complete the form to request code access for ${projectTitle}.`
         : `Please complete the form to request project demo for ${projectTitle}.`;
     
-    showNotification('info', formatTranslation(notificationKey, defaultMessage));
+    showNotification(notificationType, formatTranslation(notificationKey, defaultMessage));
 }
 
 // Helper function that should already exist in your main.js
@@ -134,10 +135,15 @@ if (typeof showNotification !== 'function') {
 function formatTranslation(key, defaultText) {
     const lang = currentLanguage || 'en';
     if (!translations[lang][key]) return defaultText;
+    
+    // Extract project title from default text for replacement
+    let projectTitle = defaultText;
+    if (defaultText.includes('for ')) {
+        projectTitle = defaultText.split('for ')[1].split('.')[0];
+    }
+    
     return translations[lang][key].replace(/\{0\}/g, projectTitle);
 }
-
-// Add at the end of the file
 
 // Update messages when language changes
 document.addEventListener('languageChanged', function() {
@@ -146,14 +152,32 @@ document.addEventListener('languageChanged', function() {
     const subjectField = document.getElementById('subject');
     if (subjectField && subjectField.value) {
         // Detect what kind of request this is and update accordingly
-        if (subjectField.value.includes('Code Access')) {
-            // Extract project name
-            const projectName = subjectField.value.replace('Code Access Request for ', '');
+        if (subjectField.value.includes('Code Access') || subjectField.value.includes('Qasje në Kod')) {
+            // Extract project name - handle both English and Albanian formats
+            let projectName;
+            if (subjectField.value.includes('for ')) {
+                projectName = subjectField.value.split('for ')[1];
+            } else if (subjectField.value.includes('për ')) {
+                projectName = subjectField.value.split('për ')[1];
+            } else {
+                // Default fallback
+                projectName = "Project";
+            }
             redirectToContactWithMessage(projectName, true);
-        } else if (subjectField.value.includes('Project Demo')) {
-            const projectName = subjectField.value.replace('Project Demo Request for ', '');
+        } else if (subjectField.value.includes('Project Demo') || subjectField.value.includes('Demo të Projektit')) {
+            // Extract project name - handle both English and Albanian formats
+            let projectName;
+            if (subjectField.value.includes('for ')) {
+                projectName = subjectField.value.split('for ')[1];
+            } else if (subjectField.value.includes('për ')) {
+                projectName = subjectField.value.split('për ')[1];
+            } else {
+                // Default fallback
+                projectName = "Project";
+            }
             redirectToContactWithMessage(projectName, false);
-        } else if (subjectField.value === 'CV Request') {
+        } else if (subjectField.value.includes('CV')) {
+            // Handle CV request
             requestCV();
         }
     }
