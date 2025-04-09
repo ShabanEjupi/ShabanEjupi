@@ -262,26 +262,28 @@ function processCommand(command, output) {
     const response = document.createElement('div');
     response.className = 'command-response';
     
-    // Create command mapping for current language
-    const commandMap = {
-        'help': translations[currentLanguage]['terminal.cmd.help'],
-        'about': translations[currentLanguage]['terminal.cmd.about'],
-        'skills': translations[currentLanguage]['terminal.cmd.skills'],
-        'contact': translations[currentLanguage]['terminal.cmd.contact'],
-        'projects': translations[currentLanguage]['terminal.cmd.projects'],
-        'clear': translations[currentLanguage]['terminal.cmd.clear']
+    // Always accept these commands in both languages
+    const universalCommands = {
+        'help': 'help',
+        'about': 'about',
+        'skills': 'skills',
+        'contact': 'contact',
+        'projects': 'projects',
+        'clear': 'clear'
     };
     
-    // Reverse map to find English command from localized command
-    let englishCommand = command;
-    for (const [engCmd, localCmd] of Object.entries(commandMap)) {
-        if (command.toLowerCase() === localCmd.toLowerCase()) {
-            englishCommand = engCmd;
-            break;
-        }
+    // Convert command to lowercase for case-insensitive matching
+    const lowerCommand = command.toLowerCase();
+    
+    // Determine which command to execute
+    let commandToExecute = lowerCommand;
+    
+    // First check if it's one of our universal commands
+    if (universalCommands[lowerCommand]) {
+        commandToExecute = lowerCommand;
     }
     
-    switch(englishCommand) {
+    switch(commandToExecute) {
         case 'help':
             response.innerHTML = `
                 <div class="terminal-line">${translations[currentLanguage]['terminal.welcome']}</div>
@@ -327,7 +329,11 @@ function processCommand(command, output) {
         case 'projects':
             response.innerHTML = `
                 <div class="terminal-line"><span class="function">${translations[currentLanguage]['projects.title']}</span></div>
-                <div class="terminal-line">1. <span class="keyword">${translations[currentLanguage]['projects.koreadrive.title']}</span>
+                <div class="terminal-line">1. <span class="keyword">${translations[currentLanguage]['projects.koreadrive.title']}</span> - ${translations[currentLanguage]['projects.koreadrive.description']}</div>
+                <div class="terminal-line">2. <span class="keyword">${translations[currentLanguage]['projects.violeta.title']}</span> - ${translations[currentLanguage]['projects.violeta.description']}</div>
+                <div class="terminal-line">3. <span class="keyword">${translations[currentLanguage]['projects.aigen.title']}</span> - ${translations[currentLanguage]['projects.aigen.description']}</div>
+                <div class="terminal-line">4. <span class="keyword">${translations[currentLanguage]['projects.chatbot.title']}</span> - ${translations[currentLanguage]['projects.chatbot.description']}</div>
+                <div class="terminal-line">5. <span class="keyword">${translations[currentLanguage]['projects.etinup.title']}</span> - ${translations[currentLanguage]['projects.etinup.description']}</div>
             `;
             break;
             
