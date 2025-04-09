@@ -287,12 +287,12 @@ function processCommand(command, output) {
         case 'help':
             response.innerHTML = `
                 <div class="terminal-line">${translations[currentLanguage]['terminal.welcome']}</div>
-                <div class="terminal-line">- <span class="keyword">help</span>: ${translations[currentLanguage]['terminal.cmd.help']}</div>
-                <div class="terminal-line">- <span class="keyword">about</span>: ${translations[currentLanguage]['terminal.cmd.about']}</div>
-                <div class="terminal-line">- <span class="keyword">skills</span>: ${translations[currentLanguage]['terminal.cmd.skills']}</div>
-                <div class="terminal-line">- <span class="keyword">contact</span>: ${translations[currentLanguage]['terminal.cmd.contact']}</div>
-                <div class="terminal-line">- <span class="keyword">projects</span>: ${translations[currentLanguage]['terminal.cmd.projects']}</div>
-                <div class="terminal-line">- <span class="keyword">clear</span>: ${translations[currentLanguage]['terminal.cmd.clear']}</div>
+                <div class="terminal-line">- <span class="keyword">help</span>: ${translations[currentLanguage]['terminal.cmd.help.desc']}</div>
+                <div class="terminal-line">- <span class="keyword">about</span>: ${translations[currentLanguage]['terminal.cmd.about.desc']}</div>
+                <div class="terminal-line">- <span class="keyword">skills</span>: ${translations[currentLanguage]['terminal.cmd.skills.desc']}</div>
+                <div class="terminal-line">- <span class="keyword">contact</span>: ${translations[currentLanguage]['terminal.cmd.contact.desc']}</div>
+                <div class="terminal-line">- <span class="keyword">projects</span>: ${translations[currentLanguage]['terminal.cmd.projects.desc']}</div>
+                <div class="terminal-line">- <span class="keyword">clear</span>: ${translations[currentLanguage]['terminal.cmd.clear.desc']}</div>
             `;
             break;
             

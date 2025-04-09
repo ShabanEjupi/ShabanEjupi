@@ -24,6 +24,21 @@ const translations = {
         
         // Interactive Terminal
         "terminal.welcome": "Welcome to Shaban's interactive terminal! Try these commands:",
+        "terminal.cmd.help": "help",
+        "terminal.cmd.about": "about",
+        "terminal.cmd.skills": "skills",
+        "terminal.cmd.contact": "contact",
+        "terminal.cmd.projects": "projects",
+        "terminal.cmd.clear": "clear",
+        
+        // Add command descriptions
+        "terminal.cmd.help.desc": "Show available commands",
+        "terminal.cmd.about.desc": "Learn about me",
+        "terminal.cmd.skills.desc": "View my technical skills",
+        "terminal.cmd.contact.desc": "Get my contact information",
+        "terminal.cmd.projects.desc": "List my projects",
+        "terminal.cmd.clear.desc": "Clear the terminal",
+        
         "terminal.cmd.notfound": "Command not found:",
         "terminal.cmd.tryhelp": "Type 'help' for available commands.",
         
@@ -152,6 +167,21 @@ const translations = {
         
         // Interactive Terminal
         "terminal.welcome": "Mirësevini në terminalin interaktiv të Shabanit! Provoni këto komanda:",
+        "terminal.cmd.help": "help",
+        "terminal.cmd.about": "about",
+        "terminal.cmd.skills": "skills",
+        "terminal.cmd.contact": "contact",
+        "terminal.cmd.projects": "projects",
+        "terminal.cmd.clear": "clear",
+        
+        // Add command descriptions
+        "terminal.cmd.help.desc": "Shfaq komandat në dispozicion",
+        "terminal.cmd.about.desc": "Mësoni rreth meje",
+        "terminal.cmd.skills.desc": "Shikoni aftësitë e mia teknike",
+        "terminal.cmd.contact.desc": "Merrni informacionin tim të kontaktit",
+        "terminal.cmd.projects.desc": "Listoni projektet e mia",
+        "terminal.cmd.clear.desc": "Pastro terminalin",
+        
         "terminal.cmd.notfound": "Komanda nuk u gjet:",
         "terminal.cmd.tryhelp": "Shkruani 'help' për komandat në dispozicion.",
         
