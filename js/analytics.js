@@ -43,38 +43,37 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Check cookie consent status on page load
-document.addEventListener('DOMContentLoaded', function() {
-    const cookieConsent = localStorage.getItem('cookieConsent');
-    
-    // If cookies were explicitly declined, block interaction
-    if (cookieConsent === 'declined') {
-        // Show the blocking overlay
-        document.getElementById('cookieBlocker').classList.add('visible');
-        
-        // Prevent scrolling on the body
-        document.body.style.overflow = 'hidden';
-    }
-});
-
 // When cookies are accepted, allow scrolling again
 document.addEventListener('cookiesAccepted', function() {
     document.body.style.overflow = 'auto';
-    
-    // Here you could initialize your actual analytics code
-    console.log('Analytics initialized');
-    
-    // Example of how you might initialize Google Analytics
-    // if (typeof gtag === 'function') {
-    //    gtag('consent', 'update', {
-    //        'analytics_storage': 'granted'
-    //    });
-    // }
 });
 
-// When cookies are accepted, allow scrolling again
+// Google Analytics 4 (GA4) setup
 document.addEventListener('cookiesAccepted', function() {
-    document.body.style.overflow = 'auto';
+    // Load the Google Analytics 4 tag
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-Y6VMMDVTKY';
+    document.head.appendChild(script);
+    
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y6VMMDVTKY');
+    
+    // Track internal navigation on SPA
+    document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' && e.target.getAttribute('href') && 
+            e.target.getAttribute('href').startsWith('#')) {
+            const sectionId = e.target.getAttribute('href').substring(1);
+            gtag('event', 'navigation', {
+                'event_category': 'Internal Link',
+                'event_label': sectionId
+            });
+        }
+    });
+    
+    console.log('Analytics initialized with GA4');
 });
 
 // Simple analytics system that respects privacy
@@ -89,6 +88,14 @@ const analytics = {
                 const action = this.textContent.trim();
                 const category = this.closest('section').id || 'unknown';
                 analytics.trackEvent('button_click', { category, action });
+                
+                // Also send to GA4
+                if (typeof gtag === 'function') {
+                    gtag('event', 'button_click', {
+                        'event_category': category,
+                        'event_label': action
+                    });
+                }
             });
         });
         

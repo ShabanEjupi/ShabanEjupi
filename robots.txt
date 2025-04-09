@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://shabanejupi.engineer/sitemap.xml

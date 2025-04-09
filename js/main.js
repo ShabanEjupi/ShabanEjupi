@@ -536,6 +536,14 @@ function setLanguage(lang) {
     currentLanguage = lang;
     localStorage.setItem('language', lang);
     
+    // Update HTML lang attribute
+    document.documentElement.setAttribute('lang', lang);
+    
+    // Update URL with language parameter (for SEO)
+    const url = new URL(window.location);
+    url.searchParams.set('lang', lang);
+    window.history.replaceState({}, '', url);
+    
     // Update UI
     updateLanguageUI();
     
