@@ -100,9 +100,9 @@ const translations = {
         
         // Education Section
         "education.title": "Education & Certifications",
-        "education.cs.title": "BSc in Computer Science",
+        "education.cs.title": "Computer Science double degree",
         "education.cs.institute": "University \"Hasan Prishtina\", Prishtina",
-        "education.cs.date": "2019 - Present",
+        "education.cs.date": "Present",
         "education.cs.description": "Focusing on software engineering, algorithms, and mobile application development.",
         
         "education.flutter.title": "Flutter Development",
@@ -229,9 +229,9 @@ const translations = {
         
         // Education Section
         "education.title": "Edukimi & Çertifikimet",
-        "education.cs.title": "Bachelor në Shkenca Kompjuterike",
+        "education.cs.title": "Shkenca Kompjuterike diplomë e dyfishtë",
         "education.cs.institute": "Universiteti \"Hasan Prishtina\", Prishtinë",
-        "education.cs.date": "2019 - Tani",
+        "education.cs.date": "Prezent",
         "education.cs.description": "Fokusuar në inxhinieri softuerike, algoritme dhe zhvillim të aplikacioneve mobile.",
         
         "education.flutter.title": "Zhvillimi me Flutter",
