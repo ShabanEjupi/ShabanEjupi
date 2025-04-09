@@ -166,7 +166,18 @@ const translations = {
         "cookie.blocked.title": "Website Access Restricted",
         "cookie.blocked.message": "This website requires cookies to function properly. Without accepting cookies, you won't be able to use the features of this site.",
         "cookie.blocked.explanation": "I use cookies to enhance user experience, analyze website traffic, and personalize content.",
-        "cookie.blocked.accept": "Accept Cookies & Continue"
+        "cookie.blocked.accept": "Accept Cookies & Continue",
+
+        // New translations
+        "project.code.request.subject": "Code Access Request for {0}",
+        "project.code.request.message": "Hello Shaban,\n\nI'm interested in your {0} project and would like to request access to the source code. Could you please provide more information about the project and any requirements for accessing the code?\n\nThank you,\n",
+        "project.demo.request.subject": "Project Demo Request for {0}",
+        "project.demo.request.message": "Hello Shaban,\n\nI'm interested in your {0} project and would like to request access to see a demo or live version. Could you please provide me with access or more details about this project?\n\nThank you,\n",
+        "cv.request.subject": "CV Request",
+        "cv.request.message": "Hello Shaban,\n\nI'm interested in your professional experience and would like to request a copy of your CV.\n\nThank you.",
+        "notification.code.access": "Please complete the form to request code access for {0}.",
+        "notification.demo.access": "Please complete the form to request project demo for {0}.",
+        "notification.cv.request": "Please complete the contact form to request my CV."
     },
     sq: {
         // Add title translation
@@ -334,6 +345,17 @@ const translations = {
         "cookie.blocked.title": "Qasja në faqen e internetit është e kufizuar",
         "cookie.blocked.message": "Kjo faqe interneti kërkon cookie për të funksionuar siç duhet. Pa pranuar cookie-t, nuk do të mund të përdorni funksionet e kësaj faqeje.",
         "cookie.blocked.explanation": "Unë përdor cookie për të përmirësuar përvojën e përdoruesit, analizuar trafikun e faqes dhe personalizuar përmbajtjen.",
-        "cookie.blocked.accept": "Prano Cookie-t & vazhdo"
+        "cookie.blocked.accept": "Prano Cookie-t & vazhdo",
+
+        // New translations
+        "project.code.request.subject": "Kërkesë për Qasje në Kod për {0}",
+        "project.code.request.message": "Përshëndetje Shaban,\n\nJam i interesuar për projektin tuaj {0} dhe do të doja të kërkoja qasje në kodin burimor. A mund të më jepni më shumë informacione rreth projektit dhe çdo kërkesë për qasje në kod?\n\nFaleminderit,\n",
+        "project.demo.request.subject": "Kërkesë për Demo të Projektit {0}",
+        "project.demo.request.message": "Përshëndetje Shaban,\n\nJam i interesuar për projektin tuaj {0} dhe do të doja të kërkoja qasje për të parë një demo ose version aktiv. A mund të më ofroni qasje ose më shumë detaje për këtë projekt?\n\nFaleminderit,\n",
+        "cv.request.subject": "Kërkesë për CV",
+        "cv.request.message": "Përshëndetje Shaban,\n\nJam i interesuar për përvojën tuaj profesionale dhe do të doja të kërkoja një kopje të CV-së suaj.\n\nFaleminderit.",
+        "notification.code.access": "Ju lutemi plotësoni formularin për të kërkuar qasje në kodin për {0}.",
+        "notification.demo.access": "Ju lutemi plotësoni formularin për të kërkuar një demo të projektit {0}.",
+        "notification.cv.request": "Ju lutemi plotësoni formularin e kontaktit për të kërkuar CV-në time."
     }
 };

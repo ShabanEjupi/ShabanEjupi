@@ -484,16 +484,20 @@ function showNotification(type, message) {
 }
 
 function requestCV() {
+    // Get current language
+    const lang = currentLanguage || 'en';
+    
     // Pre-fill the subject field with CV request
     const subjectField = document.getElementById('subject');
     if (subjectField) {
-        subjectField.value = "CV Request";
+        subjectField.value = translations[lang]['cv.request.subject'] || "CV Request";
     }
     
     // Pre-fill the message field
     const messageField = document.getElementById('message');
     if (messageField) {
-        messageField.value = "Hello Shaban,\n\nI'm interested in your professional experience and would like to request a copy of your CV.\n\nThank you.";
+        messageField.value = translations[lang]['cv.request.message'] || 
+            "Hello Shaban,\n\nI'm interested in your professional experience and would like to request a copy of your CV.\n\nThank you.";
     }
     
     // Focus the contact form
@@ -502,8 +506,11 @@ function requestCV() {
         contactSection.scrollIntoView({ behavior: 'smooth' });
     }
     
-    showNotification('info', 'Please complete the contact form to request my CV.');
+    const notificationMessage = translations[lang]['notification.cv.request'] || 
+        "Please complete the contact form to request my CV.";
+    showNotification('info', notificationMessage);
 }
+
 // main.js (add at the beginning, after DOMContentLoaded event)
 let currentLanguage = localStorage.getItem('language') || 'en'; // Default to English if no preference is stored
 

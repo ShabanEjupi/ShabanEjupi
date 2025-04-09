@@ -51,30 +51,37 @@ function redirectToContactWithMessage(projectTitle, isCodeRequest) {
     const messageField = document.getElementById('message');
     
     if (subjectField && messageField) {
+        // Get current language
+        const lang = currentLanguage || 'en';
+        
+        // Format translation key with project title
+        const formatTranslation = (key, value) => {
+            if (!translations[lang][key]) return value;
+            return translations[lang][key].replace("{0}", projectTitle);
+        };
+        
         // Set subject based on request type
-        subjectField.value = isCodeRequest 
-            ? `Code Access Request for ${projectTitle}`
-            : `Project Demo Request for ${projectTitle}`;
-        
-        // Set message based on request type
-        let message = `Hello Shaban,\n\n`;
-        
         if (isCodeRequest) {
-            message += `I'm interested in your ${projectTitle} project and would like to request access to the source code. Could you please provide more information about the project and any requirements for accessing the code?\n\n`;
+            subjectField.value = formatTranslation('project.code.request.subject', `Code Access Request for ${projectTitle}`);
+            messageField.value = formatTranslation('project.code.request.message', 
+                `Hello Shaban,\n\nI'm interested in your ${projectTitle} project and would like to request access to the source code. Could you please provide more information about the project and any requirements for accessing the code?\n\nThank you,\n`);
         } else {
-            message += `I'm interested in your ${projectTitle} project and would like to request access to see a demo or live version. Could you please provide me with access or more details about this project?\n\n`;
+            subjectField.value = formatTranslation('project.demo.request.subject', `Project Demo Request for ${projectTitle}`);
+            messageField.value = formatTranslation('project.demo.request.message', 
+                `Hello Shaban,\n\nI'm interested in your ${projectTitle} project and would like to request access to see a demo or live version. Could you please provide me with access or more details about this project?\n\nThank you,\n`);
         }
-        
-        message += `Thank you,\n`;
-        messageField.value = message;
         
         // Focus the name field
         document.getElementById('name').focus();
     }
     
     // Show notification to the user
-    const actionType = isCodeRequest ? "code access" : "project demo";
-    showNotification('info', `Please complete the form to request ${actionType} for ${projectTitle}.`);
+    const notificationKey = isCodeRequest ? 'notification.code.access' : 'notification.demo.access';
+    const defaultMessage = isCodeRequest 
+        ? `Please complete the form to request code access for ${projectTitle}.`
+        : `Please complete the form to request project demo for ${projectTitle}.`;
+    
+    showNotification('info', formatTranslation(notificationKey, defaultMessage));
 }
 
 // Helper function that should already exist in your main.js
@@ -122,3 +129,32 @@ if (typeof showNotification !== 'function') {
         }, 10);
     }
 }
+
+// Helper format function for translations
+function formatTranslation(key, defaultText) {
+    const lang = currentLanguage || 'en';
+    if (!translations[lang][key]) return defaultText;
+    return translations[lang][key].replace(/\{0\}/g, projectTitle);
+}
+
+// Add at the end of the file
+
+// Update messages when language changes
+document.addEventListener('languageChanged', function() {
+    // If user is currently on the contact form with pre-filled data,
+    // update the text based on what type of request they're making
+    const subjectField = document.getElementById('subject');
+    if (subjectField && subjectField.value) {
+        // Detect what kind of request this is and update accordingly
+        if (subjectField.value.includes('Code Access')) {
+            // Extract project name
+            const projectName = subjectField.value.replace('Code Access Request for ', '');
+            redirectToContactWithMessage(projectName, true);
+        } else if (subjectField.value.includes('Project Demo')) {
+            const projectName = subjectField.value.replace('Project Demo Request for ', '');
+            redirectToContactWithMessage(projectName, false);
+        } else if (subjectField.value === 'CV Request') {
+            requestCV();
+        }
+    }
+});
