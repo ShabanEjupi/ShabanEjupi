@@ -141,7 +141,32 @@ const translations = {
         // Footer
         "footer.description": "Software Developer specializing in creating modern web and mobile applications.",
         "footer.nav": "Navigation",
-        "footer.copyright": "All rights reserved."
+        "footer.copyright": "All rights reserved.",
+
+        // Privacy Policy Translations
+        "privacy.title": "Privacy Policy",
+        "privacy.lastUpdated": "Last updated: April 9, 2025",
+        "privacy.intro.title": "1. Introduction",
+        "privacy.intro.content": "This Privacy Policy explains how Shaban Ejupi (\"I\", \"me\", or \"my\") collects, uses, and shares information about you when you visit my personal portfolio website.",
+        "privacy.collection.title": "2. Information I Collect",
+        "privacy.collection.content": "I collect information that you provide directly, such as when you fill out the contact form, as well as information about how you use the website (using cookies and similar technologies).",
+        "privacy.usage.title": "3. How I Use Information",
+        "privacy.usage.content": "I use the information I collect to:",
+        "privacy.usage.item1": "Respond to your inquiries",
+        "privacy.usage.item2": "Improve the website based on user behavior",
+        "privacy.usage.item3": "Monitor and analyze website usage",
+        "privacy.contact.title": "4. Contact",
+        "privacy.contact.content": "If you have any questions about this Privacy Policy, please contact me at shaban.ejupi@student.uni-pr.edu.",
+        "privacy.close": "Close",
+        "cookie.title": "This website uses cookies",
+        "cookie.content": "This website uses cookies to improve user experience. By using our website you consent to all cookies in accordance with our",
+        "cookie.accept": "Accept",
+        "cookie.decline": "Decline",
+        "cookie.policy": "Privacy Policy",
+        "cookie.blocked.title": "Website Access Restricted",
+        "cookie.blocked.message": "This website requires cookies to function properly. Without accepting cookies, you won't be able to use the features of this site.",
+        "cookie.blocked.explanation": "I use cookies to enhance user experience, analyze website traffic, and personalize content. No personal data is shared with third parties.",
+        "cookie.blocked.accept": "Accept Cookies & Continue"
     },
     sq: {
         // Add title translation
@@ -284,6 +309,31 @@ const translations = {
         // Footer
         "footer.description": "Zhvillues softueri i specializuar në krijimin e aplikacioneve moderne për ueb dhe celular.",
         "footer.nav": "Navigimi",
-        "footer.copyright": "Të gjitha të drejtat e rezervuara."
+        "footer.copyright": "Të gjitha të drejtat e rezervuara.",
+
+        // Privacy Policy Translations in Albanian
+        "privacy.title": "Politika e Privatësisë",
+        "privacy.lastUpdated": "Përditësimi i fundit: 9 prill, 2025",
+        "privacy.intro.title": "1. Hyrje",
+        "privacy.intro.content": "Kjo Politikë e Privatësisë shpjegon se si Shaban Ejupi (\"Unë\", \"mua\" ose \"timin\") mbledh, përdor dhe ndan informacionin tuaj kur vizitoni faqen time të portofolit personal.",
+        "privacy.collection.title": "2. Informacionet që Mbledh",
+        "privacy.collection.content": "Unë mbledh informacionet që ju jepni drejtpërdrejt, si kur plotësoni formularin e kontaktit, si dhe informacione rreth mënyrës se si përdorni faqen (duke përdorur cookies dhe teknologji të ngjashme).",
+        "privacy.usage.title": "3. Si e Përdor Informacionin",
+        "privacy.usage.content": "Unë përdor informacionin që mbledh për të:",
+        "privacy.usage.item1": "Iu përgjigjur kërkesave tuaja",
+        "privacy.usage.item2": "Përmirësuar faqen bazuar në sjelljen e përdoruesve",
+        "privacy.usage.item3": "Monitoruar dhe analizuar përdorimin e faqes",
+        "privacy.contact.title": "4. Kontakti",
+        "privacy.contact.content": "Nëse keni ndonjë pyetje rreth kësaj Politike të Privatësisë, ju lutem kontaktoni me mua në shaban.ejupi@student.uni-pr.edu.",
+        "privacy.close": "Mbyll",
+        "cookie.title": "Kjo faqe përdor cookies",
+        "cookie.content": "Kjo faqe përdor cookies për të përmirësuar përvojën e përdoruesit. Duke përdorur faqen tonë, ju pranoni të gjitha cookies në përputhje me",
+        "cookie.accept": "Pranoj",
+        "cookie.decline": "Refuzoj",
+        "cookie.policy": "Politikën e Privatësisë",
+        "cookie.blocked.title": "Qasja në Faqen e Internetit është e Kufizuar",
+        "cookie.blocked.message": "Kjo faqe interneti kërkon cookie për të funksionuar siç duhet. Pa pranuar cookie-t, nuk do të mund të përdorni funksionet e kësaj faqeje.",
+        "cookie.blocked.explanation": "Unë përdor cookie për të përmirësuar përvojën e përdoruesit, analizuar trafikun e faqes dhe personalizuar përmbajtjen. Asnjë e dhënë personale nuk ndahet me palë të treta.",
+        "cookie.blocked.accept": "Prano Cookie-t & Vazhdo"
     }
 };

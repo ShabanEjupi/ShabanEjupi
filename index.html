@@ -636,8 +636,63 @@
     </div>
 </footer>
 
-    <!-- JavaScript -->
-    <script src="js/translations.js"></script>
-    <script src="js/main.js" defer></script>
+    <!-- Add right before the closing </body> tag -->
+<div id="cookieConsent" class="cookie-banner">
+    <div class="cookie-content">
+        <h3 data-i18n="cookie.title">This website uses cookies</h3>
+        <p><span data-i18n="cookie.content">This website uses cookies to improve user experience. By using our website you consent to all cookies in accordance with our</span> <a href="#" id="openPrivacyPolicy" data-i18n="cookie.policy">Privacy Policy</a>.</p>
+        <div class="cookie-buttons">
+            <button id="acceptCookies" class="btn btn-primary" data-i18n="cookie.accept">Accept</button>
+            <button id="declineCookies" class="btn" data-i18n="cookie.decline">Decline</button>
+        </div>
+    </div>
+</div>
+
+<div id="privacyModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2 data-i18n="privacy.title">Privacy Policy</h2>
+        <div class="modal-body">
+            <p data-i18n="privacy.lastUpdated">Last updated: April 9, 2025</p>
+            
+            <h3 data-i18n="privacy.intro.title">1. Introduction</h3>
+            <p data-i18n="privacy.intro.content">This Privacy Policy explains how Shaban Ejupi ("I", "me", or "my") collects, uses, and shares information about you when you visit my personal portfolio website.</p>
+            
+            <h3 data-i18n="privacy.collection.title">2. Information I Collect</h3>
+            <p data-i18n="privacy.collection.content">I collect information that you provide directly, such as when you fill out the contact form, as well as information about how you use the website (using cookies and similar technologies).</p>
+            
+            <h3 data-i18n="privacy.usage.title">3. How I Use Information</h3>
+            <p data-i18n="privacy.usage.content">I use the information I collect to:</p>
+            <ul>
+                <li data-i18n="privacy.usage.item1">Respond to your inquiries</li>
+                <li data-i18n="privacy.usage.item2">Improve the website based on user behavior</li>
+                <li data-i18n="privacy.usage.item3">Monitor and analyze website usage</li>
+            </ul>
+            
+            <h3 data-i18n="privacy.contact.title">4. Contact</h3>
+            <p data-i18n="privacy.contact.content">If you have any questions about this Privacy Policy, please contact me at shaban.ejupi@student.uni-pr.edu.</p>
+        </div>
+        <button id="closePrivacyPolicy" class="btn btn-primary" data-i18n="privacy.close">Close</button>
+    </div>
+</div>
+
+<div id="cookieBlocker" class="cookie-blocker">
+    <div class="blocker-content">
+        <div class="blocker-icon">
+            <i class="fas fa-cookie-bite"></i>
+        </div>
+        <h2 data-i18n="cookie.blocked.title">Website Access Restricted</h2>
+        <p data-i18n="cookie.blocked.message">This website requires cookies to function properly. Without accepting cookies, you won't be able to use the features of this site.</p>
+        <p data-i18n="cookie.blocked.explanation">I use cookies to enhance user experience, analyze website traffic, and personalize content. No personal data is shared with third parties.</p>
+        <button id="reconsiderCookies" class="btn btn-primary" data-i18n="cookie.blocked.accept">Accept Cookies & Continue</button>
+    </div>
+</div>
+
+<link rel="stylesheet" href="css/privacy.css">
+<script src="js/analytics.js" defer></script>
+<script src="js/code-access.js" defer></script>
+<script src="js/privacy.js" defer></script>
+<script src="js/translations.js"></script>
+<script src="js/main.js" defer></script>
 </body>
 </html>

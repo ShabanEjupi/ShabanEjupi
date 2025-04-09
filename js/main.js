@@ -531,6 +531,10 @@ function setLanguage(lang) {
         }
     });
     updateContent();
+    
+    // Dispatch a language changed event
+    const event = new Event('languageChanged');
+    document.dispatchEvent(event);
 }
 
 function updateContent() {
