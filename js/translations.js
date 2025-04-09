@@ -165,7 +165,7 @@ const translations = {
         "cookie.policy": "Privacy Policy",
         "cookie.blocked.title": "Website Access Restricted",
         "cookie.blocked.message": "This website requires cookies to function properly. Without accepting cookies, you won't be able to use the features of this site.",
-        "cookie.blocked.explanation": "I use cookies to enhance user experience, analyze website traffic, and personalize content. No personal data is shared with third parties.",
+        "cookie.blocked.explanation": "I use cookies to enhance user experience, analyze website traffic, and personalize content.",
         "cookie.blocked.accept": "Accept Cookies & Continue"
     },
     sq: {
@@ -312,28 +312,28 @@ const translations = {
         "footer.copyright": "Të gjitha të drejtat e rezervuara.",
 
         // Privacy Policy Translations in Albanian
-        "privacy.title": "Politika e Privatësisë",
+        "privacy.title": "Politika e privatësisë",
         "privacy.lastUpdated": "Përditësimi i fundit: 9 prill, 2025",
         "privacy.intro.title": "1. Hyrje",
-        "privacy.intro.content": "Kjo Politikë e Privatësisë shpjegon se si Shaban Ejupi (\"Unë\", \"mua\" ose \"timin\") mbledh, përdor dhe ndan informacionin tuaj kur vizitoni faqen time të portofolit personal.",
+        "privacy.intro.content": "Kjo politikë e privatësisë shpjegon se si Shaban Ejupi (\"Unë\", \"mua\" ose \"timin\") mbledh, përdor dhe ndan informacionin tuaj kur vizitoni faqen time të portofolit personal.",
         "privacy.collection.title": "2. Informacionet që Mbledh",
         "privacy.collection.content": "Unë mbledh informacionet që ju jepni drejtpërdrejt, si kur plotësoni formularin e kontaktit, si dhe informacione rreth mënyrës se si përdorni faqen (duke përdorur cookies dhe teknologji të ngjashme).",
-        "privacy.usage.title": "3. Si e Përdor Informacionin",
+        "privacy.usage.title": "3. Si e përdor informacionin",
         "privacy.usage.content": "Unë përdor informacionin që mbledh për të:",
         "privacy.usage.item1": "Iu përgjigjur kërkesave tuaja",
         "privacy.usage.item2": "Përmirësuar faqen bazuar në sjelljen e përdoruesve",
         "privacy.usage.item3": "Monitoruar dhe analizuar përdorimin e faqes",
         "privacy.contact.title": "4. Kontakti",
-        "privacy.contact.content": "Nëse keni ndonjë pyetje rreth kësaj Politike të Privatësisë, ju lutem kontaktoni me mua në shaban.ejupi@student.uni-pr.edu.",
+        "privacy.contact.content": "Nëse keni ndonjë pyetje rreth kësaj politike të privatësisë, ju lutem kontaktoni me mua në shaban.ejupi@student.uni-pr.edu.",
         "privacy.close": "Mbyll",
         "cookie.title": "Kjo faqe përdor cookies",
         "cookie.content": "Kjo faqe përdor cookies për të përmirësuar përvojën e përdoruesit. Duke përdorur faqen tonë, ju pranoni të gjitha cookies në përputhje me",
         "cookie.accept": "Pranoj",
         "cookie.decline": "Refuzoj",
-        "cookie.policy": "Politikën e Privatësisë",
-        "cookie.blocked.title": "Qasja në Faqen e Internetit është e Kufizuar",
+        "cookie.policy": "Politikën e privatësisë",
+        "cookie.blocked.title": "Qasja në faqen e internetit është e kufizuar",
         "cookie.blocked.message": "Kjo faqe interneti kërkon cookie për të funksionuar siç duhet. Pa pranuar cookie-t, nuk do të mund të përdorni funksionet e kësaj faqeje.",
-        "cookie.blocked.explanation": "Unë përdor cookie për të përmirësuar përvojën e përdoruesit, analizuar trafikun e faqes dhe personalizuar përmbajtjen. Asnjë e dhënë personale nuk ndahet me palë të treta.",
-        "cookie.blocked.accept": "Prano Cookie-t & Vazhdo"
+        "cookie.blocked.explanation": "Unë përdor cookie për të përmirësuar përvojën e përdoruesit, analizuar trafikun e faqes dhe personalizuar përmbajtjen.",
+        "cookie.blocked.accept": "Prano Cookie-t & vazhdo"
     }
 };
