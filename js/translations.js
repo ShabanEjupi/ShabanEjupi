@@ -167,7 +167,7 @@ const translations = {
         "about.stats.tech": "Teknologji",
         
         // Experience Section
-        "experience.title": "Përvoja e Punës",
+        "experience.title": "Përvoja e punës",
         "experience.customs.title": "Departamenti i Doganave",
         "experience.customs.position": "Specialist i IT",
         "experience.customs.date": "Janar 2025 - Tani",
@@ -175,7 +175,7 @@ const translations = {
         "experience.customs.comment": "// Mbështetja e sistemeve kritike doganore",
         
         "experience.verso.title": "Verso Altima",
-        "experience.verso.position": "Zhvillues i Lartë",
+        "experience.verso.position": "Zhvillues i lartë",
         "experience.verso.date": "2023",
         "experience.verso.description": "Zhvillimi dhe mirëmbajtja e aplikacioneve duke përdorur Flutter dhe Dart. Implementimi i dizajneve responsive dhe integrimi me shërbimet backend. Bashkëpunim me ekipe multifunksionale për të ofruar zgjidhje softuerike me cilësi të lartë.",
         "experience.verso.comment": "// Udhëheqja e zhvillimit të zgjidhjeve të personalizuara",
@@ -186,7 +186,7 @@ const translations = {
         "experience.enisi.description": "Zhvillova aplikacione moderne web duke përdorur PHP në fillimet e mia. Krijova ndërfaqe responsive dhe implementova dizajne të bazave të të dhënave. Punova në zgjidhje të tregtisë elektronike dhe sisteme të menaxhimit të përmbajtjes.",
         
         // Projects Section
-        "projects.title": "Projektet e Spikatura",
+        "projects.title": "Projektet e spikatura",
         
         "projects.koreadrive.title": "KoreaDrive KS",
         "projects.koreadrive.tech": "HTML, CSS, JavaScript",
@@ -198,7 +198,7 @@ const translations = {
         "projects.violeta.tech": "HTML, CSS, JavaScript",
         "projects.violeta.description": "Një uebfaqe portofoli personale me dizajn të pastër, që tregon punën dhe aftësitë e Violeta Hasanit.",
         
-        "projects.aigen.title": "Gjenerimi i Imazheve me AI",
+        "projects.aigen.title": "Gjenerimi i imazheve me AI",
         "projects.aigen.tech": "Python, Hugging Face, Modelet e Difuzionit",
         "projects.aigen.description": "Një platformë interaktive e gjenerimit të imazheve duke përdorur modele AI për të krijuar imazhe nga përshkrimet tekstuale.",
         "projects.cta.try": "Provoje",
@@ -245,7 +245,7 @@ const translations = {
         "education.web.description": "Trajnim intensiv mbi teknologjitë dhe metodologjitë moderne të zhvillimit web.",
         
         // Contact Section
-        "contact.title": "Më Kontakto",
+        "contact.title": "Më kontakto",
         "contact.intro": "Nëse jeni të interesuar për punën time ose dëshironi të diskutoni për bashkëpunime të mundshme, ju lutem mos hezitoni të më kontaktoni:",
         "contact.form.name": "emri:",
         "contact.form.email": "email:",
