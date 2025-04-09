@@ -512,7 +512,7 @@ function requestCV() {
 }
 
 // main.js (add at the beginning, after DOMContentLoaded event)
-let currentLanguage = localStorage.getItem('language') || 'en'; // Default to English if no preference is stored
+let currentLanguage = localStorage.getItem('language') || 'sq'; // Default to English if no preference is stored
 
 function initLanguageSwitcher() {
     const langOptions = document.querySelectorAll('.lang-option');
