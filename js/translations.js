@@ -2,7 +2,7 @@
 const translations = {
     en: {
         // Add title translation
-        "page.title": "Shaban Ejupi | Developer Terminal",
+        "page.title": "Shaban Ejupi | My Terminal",
         
         // Navigation
         "nav.home": "Home",
@@ -147,10 +147,10 @@ const translations = {
         "privacy.title": "Privacy Policy",
         "privacy.lastUpdated": "Last updated: April 9, 2025",
         "privacy.intro.title": "1. Introduction",
-        "privacy.intro.content": "This Privacy Policy explains how Shaban Ejupi (\"I\", \"me\", or \"my\") collects, uses, and shares information about you when you visit my personal portfolio website.",
-        "privacy.collection.title": "2. Information I Collect",
+        "privacy.intro.content": "This Privacy Policy explains how I collect, use, and share information about you when you visit my personal portfolio website.",
+        "privacy.collection.title": "2. Information I collect",
         "privacy.collection.content": "I collect information that you provide directly, such as when you fill out the contact form, as well as information about how you use the website (using cookies and similar technologies).",
-        "privacy.usage.title": "3. How I Use Information",
+        "privacy.usage.title": "3. How I use information",
         "privacy.usage.content": "I use the information I collect to:",
         "privacy.usage.item1": "Respond to your inquiries",
         "privacy.usage.item2": "Improve the website based on user behavior",
@@ -163,15 +163,15 @@ const translations = {
         "cookie.accept": "Accept",
         "cookie.decline": "Decline",
         "cookie.policy": "Privacy Policy",
-        "cookie.blocked.title": "Website Access Restricted",
+        "cookie.blocked.title": "Website access restricted",
         "cookie.blocked.message": "This website requires cookies to function properly. Without accepting cookies, you won't be able to use the features of this site.",
         "cookie.blocked.explanation": "I use cookies to enhance user experience, analyze website traffic, and personalize content.",
-        "cookie.blocked.accept": "Accept Cookies & Continue",
+        "cookie.blocked.accept": "Accept cookies & continue",
 
         // New translations
-        "project.code.request.subject": "Code Access Request for {0}",
+        "project.code.request.subject": "Code access request for {0}",
         "project.code.request.message": "Hello Shaban,\n\nI'm interested in your {0} project and would like to request access to the source code. Could you please provide more information about the project and any requirements for accessing the code?\n\nThank you,\n",
-        "project.demo.request.subject": "Project Demo Request for {0}",
+        "project.demo.request.subject": "Project demo request for {0}",
         "project.demo.request.message": "Hello Shaban,\n\nI'm interested in your {0} project and would like to request access to see a demo or live version. Could you please provide me with access or more details about this project?\n\nThank you,\n",
         "cv.request.subject": "CV Request",
         "cv.request.message": "Hello Shaban,\n\nI'm interested in your professional experience and would like to request a copy of your CV.\n\nThank you.",
@@ -181,7 +181,7 @@ const translations = {
     },
     sq: {
         // Add title translation
-        "page.title": "Shaban Ejupi | Terminali i Zhvilluesit",
+        "page.title": "Shaban Ejupi | Terminali Im",
         
         // Navigation
         "nav.home": "Ballina",
@@ -326,8 +326,8 @@ const translations = {
         "privacy.title": "Politika e privatësisë",
         "privacy.lastUpdated": "Përditësimi i fundit: 9 prill, 2025",
         "privacy.intro.title": "1. Hyrje",
-        "privacy.intro.content": "Kjo politikë e privatësisë shpjegon se si Shaban Ejupi (\"Unë\", \"mua\" ose \"timin\") mbledh, përdor dhe ndan informacionin tuaj kur vizitoni faqen time të portofolit personal.",
-        "privacy.collection.title": "2. Informacionet që Mbledh",
+        "privacy.intro.content": "Kjo politikë e privatësisë shpjegon se si Unë mbledh, përdor dhe ndaj informacionin tuaj kur vizitoni faqen time të portofolit personal.",
+        "privacy.collection.title": "2. Informacionet që mbledh",
         "privacy.collection.content": "Unë mbledh informacionet që ju jepni drejtpërdrejt, si kur plotësoni formularin e kontaktit, si dhe informacione rreth mënyrës se si përdorni faqen (duke përdorur cookies dhe teknologji të ngjashme).",
         "privacy.usage.title": "3. Si e përdor informacionin",
         "privacy.usage.content": "Unë përdor informacionin që mbledh për të:",
@@ -348,9 +348,9 @@ const translations = {
         "cookie.blocked.accept": "Prano Cookie-t & vazhdo",
 
         // New translations
-        "project.code.request.subject": "Kërkesë për Qasje në Kod për {0}",
+        "project.code.request.subject": "Kërkesë për qasje në kod për {0}",
         "project.code.request.message": "Përshëndetje Shaban,\n\nJam i interesuar për projektin tuaj {0} dhe do të doja të kërkoja qasje në kodin burimor. A mund të më jepni më shumë informacione rreth projektit dhe çdo kërkesë për qasje në kod?\n\nFaleminderit,\n",
-        "project.demo.request.subject": "Kërkesë për Demo të Projektit {0}",
+        "project.demo.request.subject": "Kërkesë për demo të projektit {0}",
         "project.demo.request.message": "Përshëndetje Shaban,\n\nJam i interesuar për projektin tuaj {0} dhe do të doja të kërkoja qasje për të parë një demo ose version aktiv. A mund të më ofroni qasje ose më shumë detaje për këtë projekt?\n\nFaleminderit,\n",
         "cv.request.subject": "Kërkesë për CV",
         "cv.request.message": "Përshëndetje Shaban,\n\nJam i interesuar për përvojën tuaj profesionale dhe do të doja të kërkoja një kopje të CV-së suaj.\n\nFaleminderit.",
