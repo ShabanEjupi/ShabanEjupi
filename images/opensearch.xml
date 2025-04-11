@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>Shaban Ejupi</ShortName>
+  <Description>Shaban Ejupi Portfolio Search</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="16" height="16" type="image/x-icon">https://shabanejupi.engineer/images/favicon.ico</Image>
+  <Url type="text/html" template="https://shabanejupi.engineer/?q={searchTerms}"/>
+</OpenSearchDescription>
