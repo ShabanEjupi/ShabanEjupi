@@ -36,7 +36,8 @@ function unlockDemoLinks() {
             title.includes('Violeta Hasani') || 
             title.includes('AI Image Generation') || 
             title.includes('AI Chatbot') || 
-            title.includes('EtinUP')) {
+            title.includes('EtinUP') ||
+            title.includes('Enisi Center')) {
             
             // These links remain functional
         } else {
