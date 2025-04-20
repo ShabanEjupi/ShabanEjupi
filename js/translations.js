@@ -104,6 +104,10 @@ const translations = {
         "projects.ecommerce.title": "E-commerce website - group project",
         "projects.ecommerce.tech": "PHP, MySQL, PayPal API",
         "projects.ecommerce.description": "Online shop with MVC architecture, secure payment integration, and responsive design.",
+
+        "projects.enisicenter.title": "Enisi Center",
+        "projects.enisicenter.tech": "HTML, CSS, JavaScript",
+        "projects.enisicenter.description": "Children's clothing store with product showcase and online shopping features.",
         
         // Skills Section
         "skills.title": "Technical skills",
@@ -283,6 +287,10 @@ const translations = {
         "projects.ecommerce.title": "Faqe e-commerce - projekt grupi",
         "projects.ecommerce.tech": "PHP, MySQL, PayPal API",
         "projects.ecommerce.description": "Dyqan online me arkitekturë MVC, integrim të sigurt të pagesave dhe dizajn responsiv.",
+
+        "projects.enisicenter.title": "Enisi Center",
+        "projects.enisicenter.tech": "HTML, CSS, JavaScript",
+        "projects.enisicenter.description": "Dyqan veshjesh për fëmijë me prezantim të produkteve dhe funksione për blerje online.",
         
         // Skills Section
         "skills.title": "Aftësitë teknike",
