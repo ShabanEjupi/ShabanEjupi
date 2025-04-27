@@ -12,6 +12,7 @@ const translations = {
         "nav.skills": "Skills",
         "nav.education": "Education",
         "nav.contact": "Contact",
+        "nav.pptgen": "PowerPoint AI",
         
         // Hero Section
         "hero.title": "Shaban Ejupi",
@@ -199,6 +200,7 @@ const translations = {
         "nav.skills": "Aftësitë",
         "nav.education": "Edukimi",
         "nav.contact": "Kontakti",
+        "nav.pptgen": "PowerPoint AI",
         
         // Hero Section
         "hero.title": "Shaban Ejupi",
@@ -372,6 +374,25 @@ const translations = {
         "cv.request.message": "Përshëndetje Shaban,\n\nJam i interesuar për përvojën tuaj profesionale dhe do të doja të kërkoja një kopje të CV-së suaj.\n\nFaleminderit.",
         "notification.code.access": "Ju lutemi plotësoni formularin për të kërkuar qasje në kodin për {0}.",
         "notification.demo.access": "Ju lutemi plotësoni formularin për të kërkuar një demo të projektit {0}.",
-        "notification.cv.request": "Ju lutemi plotësoni formularin e kontaktit për të kërkuar CV-në time."
+        "notification.cv.request": "Ju lutemi plotësoni formularin e kontaktit për të kërkuar CV-në time.",
+
+        // PowerPoint Generator Translations in Albanian
+        "pptgen.page.title": "Gjenerues i PowerPoint me AI | Shaban Ejupi",
+        "pptgen.title": "Gjenerues i PowerPoint me AI",
+        "pptgen.intro": "Krijoni prezantime profesionale PowerPoint me AI. Thjesht jepni një temë dhe unë do të gjeneroj strukturën, përmbajtjen dhe vizualet e prezantimit për ju.",
+        "pptgen.form.topic": "Tema e prezantimit:",
+        "pptgen.form.slides": "Numri i sllajdeve:",
+        "pptgen.form.style": "Stili i prezantimit:",
+        "pptgen.form.style.professional": "Profesional",
+        "pptgen.form.style.creative": "Kreativ",
+        "pptgen.form.style.minimalist": "Minimalist",
+        "pptgen.form.style.educational": "Edukativ",
+        "pptgen.form.notes": "Shënime shtesë (Opsionale):",
+        "pptgen.form.generate": "Gjenero Prezantimin",
+        "pptgen.loading": "Duke gjeneruar prezantimin tuaj...",
+        "pptgen.result.title": "Prezantimi juaj është gati!",
+        "pptgen.result.download": "Shkarko PPTX",
+        "pptgen.result.restart": "Krijo një tjetër",
+        "pptgen.examples.title": "Prezantime shembull"
     }
 };
