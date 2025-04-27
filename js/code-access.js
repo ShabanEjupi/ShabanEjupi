@@ -37,6 +37,7 @@ function unlockDemoLinks() {
             title.includes('AI Image Generation') || 
             title.includes('AI Chatbot') || 
             title.includes('EtinUP') ||
+            title.includes('AI PowerPoint Generator') ||
             title.includes('Enisi Center')) {
             
             // These links remain functional
