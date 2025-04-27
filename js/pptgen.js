@@ -1,5 +1,14 @@
 /* filepath: c:\xampp\htdocs\CustomsITPortfolio\js\pptgen.js */
 document.addEventListener('DOMContentLoaded', function() {
+    // Zbato gjuhën e ruajtur përpara çdo inicializimi
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage) {
+        // Përdor gjuhën e ruajtur nga localStorage
+        currentLanguage = savedLanguage;
+        updateLanguageUI();
+        updateContent();
+    }
+
     // Initialize the form
     const form = document.getElementById('pptGenForm');
     const loadingIndicator = document.getElementById('loading-indicator');
@@ -53,18 +62,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Start over button
-    startOverBtn.addEventListener('click', function() {
-        // Reset form
-        form.reset();
-        
-        // Reset UI
-        resultContainer.classList.add('hidden');
-        form.classList.remove('hidden');
-        
-        // Clear preview
-        previewSlides.innerHTML = '';
-        generatedPresentation = null;
-    });
+    if (startOverBtn) {
+        startOverBtn.addEventListener('click', function() {
+            // Reset form
+            form.reset();
+            
+            // Reset UI
+            resultContainer.classList.add('hidden');
+            form.classList.remove('hidden');
+            
+            // Clear preview
+            previewSlides.innerHTML = '';
+            generatedPresentation = null;
+        });
+    }
 });
 
 /**

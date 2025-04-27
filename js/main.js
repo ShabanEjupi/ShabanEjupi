@@ -536,21 +536,29 @@ function setLanguage(lang) {
     currentLanguage = lang;
     localStorage.setItem('language', lang);
     
-    // Update HTML lang attribute
+    // Përditëso HTML lang atributin
     document.documentElement.setAttribute('lang', lang);
     
-    // Update URL with language parameter (for SEO)
+    // Përditëso URL me parametrin e gjuhës (për SEO)
     const url = new URL(window.location);
     url.searchParams.set('lang', lang);
     window.history.replaceState({}, '', url);
     
-    // Update UI
+    // Përditëso UI
     updateLanguageUI();
     
-    // Update content
+    // Përditëso përmbajtjen
     updateContent();
     
-    // Dispatch a language changed event
+    // Përditëso linqet për të ruajtur gjuhën
+    document.querySelectorAll('a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.includes('.html') && !href.includes('?lang=')) {
+            link.setAttribute('href', `${href}?lang=${lang}`);
+        }
+    });
+    
+    // Dërgo një event për ndryshimin e gjuhës
     const event = new Event('languageChanged');
     document.dispatchEvent(event);
 }
@@ -585,3 +593,23 @@ function updateContent() {
         document.title = translations[currentLanguage][titleKey];
     }
 }
+
+// Modifiko URL linqet për të përfshirë parametrin e gjuhës
+document.addEventListener('DOMContentLoaded', function() {
+    // Përditëso të gjitha linqet ndërmjet faqeve për të ruajtur gjuhën
+    function updatePageLinks() {
+        const currentLang = localStorage.getItem('language') || 'en';
+        
+        // Përditëso çdo link që drejton në një faqe tjetër (jo ankorë brenda faqes)
+        document.querySelectorAll('a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.includes('.html') && !href.includes('?lang=')) {
+                link.setAttribute('href', `${href}?lang=${currentLang}`);
+            }
+        });
+    }
+    
+    // Zbato kur faqja ngarkohet dhe kur ndryshon gjuha
+    updatePageLinks();
+    document.addEventListener('languageChanged', updatePageLinks);
+});

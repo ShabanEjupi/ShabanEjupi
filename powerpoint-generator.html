@@ -190,5 +190,24 @@
     <script src="js/translations.js"></script>
     <script src="js/main.js"></script>
     <script src="js/pptgen.js"></script>
+    <script src="js/analytics.js" defer></script>
+    <script src="js/privacy.js" defer></script>
+    <script src="js/seo.js" defer></script>
+    <script>
+        // Sigurohu që gjuha është e njëjtë me atë të faqes kryesore
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lexo gjuhën e ruajtur
+            const savedLanguage = localStorage.getItem('language') || 'en';
+            
+            // Apliko gjuhën
+            if (typeof setLanguage === 'function') {
+                setLanguage(savedLanguage);
+            } else if (typeof currentLanguage !== 'undefined') {
+                currentLanguage = savedLanguage;
+                updateLanguageUI();
+                updateContent();
+            }
+        });
+    </script>
 </body>
 </html>
