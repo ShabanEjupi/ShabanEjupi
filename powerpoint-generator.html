@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="pptgen.page.title">AI PowerPoint Generator | Shaban Ejupi</title>
+    
+    <!-- SEO meta tags -->
+    <meta name="description" content="Generate professional PowerPoint presentations from simple text prompts using AI to create slides, content, and visuals.">
+    <meta name="keywords" content="AI PowerPoint generator, presentation creator, automatic slides, Shaban Ejupi, AI tools">
+    
+    <!-- Include your existing stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pptgen.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon links -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+    <!-- Matrix-like background -->
+    <canvas class="matrix-background" id="matrix"></canvas>
+
+    <!-- Header (same as index.html) -->
+    <header>
+        <div class="container">
+            <div class="logo">shaban@pr:~$<span>_</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                    <li><a href="index.html#about" data-i18n="nav.about">About</a></li>
+                    <li><a href="index.html#projects" data-i18n="nav.projects">Projects</a></li>
+                    <li><a href="index.html#skills" data-i18n="nav.skills">Skills</a></li>
+                    <li><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
+                    <li class="lang-switcher">
+                        <a href="#" class="lang-option active" data-lang="en">EN</a>
+                        <span>/</span>
+                        <a href="#" class="lang-option" data-lang="sq">SQ</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="content" role="main">
+        <section class="pptgen-section">
+            <div class="container">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-controls">
+                            <div class="terminal-control control-close"></div>
+                            <div class="terminal-control control-minimize"></div>
+                            <div class="terminal-control control-maximize"></div>
+                        </div>
+                        <div class="terminal-title">shaban@pr:~/powerpoint-generator</div>
+                    </div>
+                    <div class="terminal-body">
+                        <h1 class="section-title" data-i18n="pptgen.title">AI PowerPoint Generator</h1>
+                        
+                        <div class="pptgen-intro">
+                            <p data-i18n="pptgen.intro">Create professional PowerPoint presentations with AI. Just provide a topic and I'll generate the presentation structure, content, and visuals for you.</p>
+                        </div>
+                        
+                        <div class="generator-container">
+                            <form id="pptGenForm">
+                                <div class="form-group">
+                                    <label for="presentation-topic" data-i18n="pptgen.form.topic">Presentation Topic:</label>
+                                    <input type="text" id="presentation-topic" placeholder="e.g. Introduction to Artificial Intelligence" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="num-slides" data-i18n="pptgen.form.slides">Number of Slides:</label>
+                                    <input type="number" id="num-slides" min="3" max="10" value="5">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="presentation-style" data-i18n="pptgen.form.style">Presentation Style:</label>
+                                    <select id="presentation-style">
+                                        <option value="professional" data-i18n="pptgen.form.style.professional">Professional</option>
+                                        <option value="creative" data-i18n="pptgen.form.style.creative">Creative</option>
+                                        <option value="minimalist" data-i18n="pptgen.form.style.minimalist">Minimalist</option>
+                                        <option value="educational" data-i18n="pptgen.form.style.educational">Educational</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="additional-notes" data-i18n="pptgen.form.notes">Additional Notes (Optional):</label>
+                                    <textarea id="additional-notes" rows="3" placeholder="Any specific requirements or details you want included"></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" data-i18n="pptgen.form.generate">
+                                    <i class="fas fa-magic"></i> Generate Presentation
+                                </button>
+                            </form>
+                            
+                            <div id="loading-indicator" class="loading-indicator hidden">
+                                <div class="spinner"></div>
+                                <p data-i18n="pptgen.loading">Generating your presentation...</p>
+                            </div>
+                            
+                            <div id="result-container" class="result-container hidden">
+                                <h3 data-i18n="pptgen.result.title">Your Presentation is Ready!</h3>
+                                <div class="presentation-preview">
+                                    <div id="preview-slides" class="preview-slides">
+                                        <!-- Slides preview will be inserted here -->
+                                    </div>
+                                </div>
+                                <div class="download-options">
+                                    <button id="download-pptx" class="btn" data-i18n="pptgen.result.download">
+                                        <i class="fas fa-download"></i> Download PPTX
+                                    </button>
+                                    <button id="start-over" class="btn btn-secondary" data-i18n="pptgen.result.restart">
+                                        <i class="fas fa-redo"></i> Create Another
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pptgen-examples">
+                            <h3 data-i18n="pptgen.examples.title">Example Presentations</h3>
+                            <div class="examples-grid">
+                                <div class="example-item">
+                                    <img src="images/pptgen-example1.webp" alt="Business Strategy Presentation Example">
+                                    <h4>Business Strategy</h4>
+                                    <button class="btn btn-small" onclick="loadExample('business')">Use Template</button>
+                                </div>
+                                <div class="example-item">
+                                    <img src="images/pptgen-example2.webp" alt="Educational Presentation Example">
+                                    <h4>Educational</h4>
+                                    <button class="btn btn-small" onclick="loadExample('education')">Use Template</button>
+                                </div>
+                                <div class="example-item">
+                                    <img src="images/pptgen-example3.webp" alt="Project Proposal Presentation Example">
+                                    <h4>Project Proposal</h4>
+                                    <button class="btn btn-small" onclick="loadExample('proposal')">Use Template</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (same as index.html) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="footer-logo">Shaban Ejupi</div>
+                    <p class="footer-description" data-i18n="footer.description">Software Developer specializing in creating modern web and mobile applications.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 data-i18n="footer.nav">Navigation</h4>
+                    <ul>
+                        <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                        <li><a href="index.html#about" data-i18n="nav.about">About</a></li>
+                        <li><a href="index.html#projects" data-i18n="nav.projects">Projects</a></li>
+                        <li><a href="index.html#skills" data-i18n="nav.skills">Skills</a></li>
+                        <li><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 <a href="https://shabanejupi.engineer/">Shaban Ejupi</a>. <span data-i18n="footer.copyright">All rights reserved.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/pptgen.js"></script>
+</body>
+</html>

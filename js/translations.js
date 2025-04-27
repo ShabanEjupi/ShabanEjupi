@@ -108,6 +108,10 @@ const translations = {
         "projects.enisicenter.title": "Enisi Center",
         "projects.enisicenter.tech": "HTML, CSS, JavaScript",
         "projects.enisicenter.description": "Children's clothing store with product showcase and online shopping features.",
+
+        "projects.pptgen.title": "AI PowerPoint Generator",
+        "projects.pptgen.tech": "JavaScript, OpenAI API, pptxgenjs",
+        "projects.pptgen.description": "Generate professional PowerPoint presentations from simple text prompts using AI to create slides, content, and visuals.",
         
         // Skills Section
         "skills.title": "Technical skills",
@@ -291,6 +295,10 @@ const translations = {
         "projects.enisicenter.title": "Enisi Center",
         "projects.enisicenter.tech": "HTML, CSS, JavaScript",
         "projects.enisicenter.description": "Dyqan veshjesh për fëmijë me prezantim të produkteve dhe funksione për blerje online.",
+
+        "projects.pptgen.title": "Gjenerues i PowerPoint me AI",
+        "projects.pptgen.tech": "JavaScript, OpenAI API, pptxgenjs",
+        "projects.pptgen.description": "Gjeneron prezantime profesionale PowerPoint nga kërkesa të thjeshta tekstuale duke përdorur AI për të krijuar slajde, përmbajtje dhe vizuale.",
         
         // Skills Section
         "skills.title": "Aftësitë teknike",
