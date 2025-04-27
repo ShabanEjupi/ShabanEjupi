@@ -1,10 +1,12 @@
+// Define the currentLanguage at the top of the file
+let currentLanguage = 'sq'; // Default language
+
 document.addEventListener('DOMContentLoaded', function() {
-    // ===== CORE FUNCTIONALITY =====
+    // Initialize language switcher FIRST - before anything else
+    initLanguageSwitcher();
+    
     // Force scroll to top on page load
     window.scrollTo(0, 0);
-
-    // Initialize language switcher
-    initLanguageSwitcher();
     
     // Initialize navigation
     initNavigation();
@@ -21,6 +23,113 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add animation for project cards (using Intersection Observer for performance)
     initProjectAnimations();
 });
+
+// ===== LANGUAGE SWITCHER FUNCTIONS =====
+function initLanguageSwitcher() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const langParam = urlParams.get('lang');
+
+    if (langParam && (langParam === 'en' || langParam === 'sq')) {
+        currentLanguage = langParam;
+        localStorage.setItem('language', langParam);
+    } else {
+        currentLanguage = localStorage.getItem('language') || 'sq';
+    }
+
+    updateLanguageUI();
+    updateContent();
+    setupLanguageOptions();
+    updatePageLinks();
+}
+
+function setupLanguageOptions() {
+    const langOptions = document.querySelectorAll('.lang-option');
+
+    langOptions.forEach(option => {
+        option.addEventListener('click', function (e) {
+            e.preventDefault();
+            const lang = this.getAttribute('data-lang');
+            setLanguage(lang);
+            localStorage.setItem('languageManuallySet', 'true');
+        });
+    });
+}
+
+function updatePageLinks() {
+    document.querySelectorAll('a').forEach(link => {
+        const href = link.getAttribute('href');
+
+        // Skip links that are null, anchors, or already have lang parameter
+        if (!href || href.startsWith('#') || href.includes('?lang=')) {
+            return;
+        }
+
+        // Only modify HTML page links
+        if (href.includes('.html')) {
+            link.setAttribute('href', `${href}?lang=${currentLanguage}`);
+        }
+    });
+}
+
+function setLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem('language', lang);
+    
+    // Update HTML lang attribute
+    document.documentElement.setAttribute('lang', lang);
+    
+    // Update URL with language parameter (for SEO)
+    const url = new URL(window.location);
+    url.searchParams.set('lang', lang);
+    window.history.replaceState({}, '', url);
+    
+    // Update UI
+    updateLanguageUI();
+    
+    // Update content
+    updateContent();
+    
+    // Update links to preserve language
+    updatePageLinks();
+    
+    // Dispatch an event for language change
+    const event = new Event('languageChanged');
+    document.dispatchEvent(event);
+}
+
+function updateLanguageUI() {
+    const langOptions = document.querySelectorAll('.lang-option');
+    langOptions.forEach(option => {
+        if (option.getAttribute('data-lang') === currentLanguage) {
+            option.classList.add('active');
+        } else {
+            option.classList.remove('active');
+        }
+    });
+}
+
+function updateContent() {
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[currentLanguage][key]) {
+            element.textContent = translations[currentLanguage][key];
+            
+            // Update document title if this is the title element
+            if (element.tagName === 'TITLE') {
+                document.title = translations[currentLanguage][key];
+            }
+        }
+    });
+    
+    // Also update the title directly in case the querySelector doesn't catch it
+    const titleElement = document.querySelector('title');
+    if (titleElement) {
+        const titleKey = titleElement.getAttribute('data-i18n');
+        if (titleKey && translations[currentLanguage][titleKey]) {
+            document.title = translations[currentLanguage][titleKey];
+        }
+    }
+}
 
 // ===== NAVIGATION FUNCTIONS =====
 function initNavigation() {
@@ -510,106 +619,3 @@ function requestCV() {
         "Please complete the contact form to request my CV.";
     showNotification('info', notificationMessage);
 }
-
-// main.js (add at the beginning, after DOMContentLoaded event)
-let currentLanguage = localStorage.getItem('language') || 'sq'; // Default to English if no preference is stored
-
-function initLanguageSwitcher() {
-    const langOptions = document.querySelectorAll('.lang-option');
-    
-    // Apply stored or detected language
-    updateLanguageUI();
-    
-    langOptions.forEach(option => {
-        option.addEventListener('click', function(e) {
-            e.preventDefault();
-            const lang = this.getAttribute('data-lang');
-            setLanguage(lang);
-            
-            // When user explicitly changes language, remember their choice
-            localStorage.setItem('languageManuallySet', 'true');
-        });
-    });
-}
-
-function setLanguage(lang) {
-    currentLanguage = lang;
-    localStorage.setItem('language', lang);
-    
-    // Përditëso HTML lang atributin
-    document.documentElement.setAttribute('lang', lang);
-    
-    // Përditëso URL me parametrin e gjuhës (për SEO)
-    const url = new URL(window.location);
-    url.searchParams.set('lang', lang);
-    window.history.replaceState({}, '', url);
-    
-    // Përditëso UI
-    updateLanguageUI();
-    
-    // Përditëso përmbajtjen
-    updateContent();
-    
-    // Përditëso linqet për të ruajtur gjuhën
-    document.querySelectorAll('a').forEach(link => {
-        const href = link.getAttribute('href');
-        if (href && href.includes('.html') && !href.includes('?lang=')) {
-            link.setAttribute('href', `${href}?lang=${lang}`);
-        }
-    });
-    
-    // Dërgo një event për ndryshimin e gjuhës
-    const event = new Event('languageChanged');
-    document.dispatchEvent(event);
-}
-
-function updateLanguageUI() {
-    const langOptions = document.querySelectorAll('.lang-option');
-    langOptions.forEach(option => {
-        if (option.getAttribute('data-lang') === currentLanguage) {
-            option.classList.add('active');
-        } else {
-            option.classList.remove('active');
-        }
-    });
-}
-
-function updateContent() {
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        if (translations[currentLanguage][key]) {
-            element.textContent = translations[currentLanguage][key];
-            
-            // Update document title if this is the title element
-            if (element.tagName === 'TITLE') {
-                document.title = translations[currentLanguage][key];
-            }
-        }
-    });
-    
-    // Also update the title directly in case the querySelector doesn't catch it
-    const titleKey = document.querySelector('title').getAttribute('data-i18n');
-    if (titleKey && translations[currentLanguage][titleKey]) {
-        document.title = translations[currentLanguage][titleKey];
-    }
-}
-
-// Modifiko URL linqet për të përfshirë parametrin e gjuhës
-document.addEventListener('DOMContentLoaded', function() {
-    // Përditëso të gjitha linqet ndërmjet faqeve për të ruajtur gjuhën
-    function updatePageLinks() {
-        const currentLang = localStorage.getItem('language') || 'en';
-        
-        // Përditëso çdo link që drejton në një faqe tjetër (jo ankorë brenda faqes)
-        document.querySelectorAll('a').forEach(link => {
-            const href = link.getAttribute('href');
-            if (href && href.includes('.html') && !href.includes('?lang=')) {
-                link.setAttribute('href', `${href}?lang=${currentLang}`);
-            }
-        });
-    }
-    
-    // Zbato kur faqja ngarkohet dhe kur ndryshon gjuha
-    updatePageLinks();
-    document.addEventListener('languageChanged', updatePageLinks);
-});
