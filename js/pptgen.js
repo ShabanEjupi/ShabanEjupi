@@ -82,26 +82,278 @@ document.addEventListener('DOMContentLoaded', function() {
  * Generate a presentation based on user input
  */
 async function generatePresentation(topic, numSlides, style, notes) {
-    // In a real implementation, this would call your backend API
-    // For demonstration, we'll create a mock response
+    // Show user we're connecting to AI services
+    console.log("Connecting to AI models...");
     
-    // This would normally be an API call:
-    // const response = await fetch('/api/generate-presentation', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ topic, numSlides, style, notes })
-    // });
-    // return await response.json();
+    try {
+        // First, generate text content using GPT or similar model
+        const contentData = await generateContentFromPrompt(topic, numSlides, notes);
+        
+        // Then, generate images for slides if needed
+        const slidesWithImages = await addImagesToSlides(contentData, style);
+        
+        // Format the final presentation structure
+        return {
+            title: topic,
+            style: style,
+            slides: slidesWithImages
+        };
+    } catch (error) {
+        console.error("Error generating presentation:", error);
+        
+        // Fallback to mock data if AI generation fails
+        console.log("Falling back to mock data generation");
+        return {
+            title: topic,
+            style: style,
+            slides: generateMockSlides(topic, parseInt(numSlides), style)
+        };
+    }
+}
+
+/**
+ * Function to generate text content from the Hugging Face API
+ */
+async function generateContentFromPrompt(topic, numSlides, additionalNotes) {
+    // This uses the Hugging Face Inference API
+    const API_URL = "https://api-inference.huggingface.co/models/gpt2/";
+    const API_KEY = ""; // You'll need to add your Hugging Face API key here
     
-    // For demo purposes, we'll simulate API processing time
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    // For demo purposes, simulate API processing time if no API key is provided
+    if (!API_KEY) {
+        console.log("No API key provided, using mock data");
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Return mock slides that will be processed by the next function
+        return generateMockContentData(topic, numSlides);
+    }
     
-    // Mock presentation data
-    return {
+    const prompt = `Create a presentation about ${topic} with ${numSlides} slides. 
+                    Additional notes: ${additionalNotes || 'None'}
+                    
+                    Presentation outline:
+                    1. Title: ${topic}`;
+    
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${API_KEY}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ inputs: prompt })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`API request failed: ${response.statusText}`);
+        }
+        
+        const result = await response.json();
+        
+        // Process the generated text into slide structure
+        return processGeneratedText(result[0].generated_text, numSlides);
+    } catch (error) {
+        console.error("Error calling Hugging Face API:", error);
+        // Fallback to mock content
+        return generateMockContentData(topic, numSlides);
+    }
+}
+
+/**
+ * Process text into slide structure
+ */
+function processGeneratedText(generatedText, numSlides) {
+    // Logic to parse generated text into slide content
+    const slides = [];
+    
+    // Parse the generated text and create slides
+    // This is a simplistic approach - you'd want more robust parsing in production
+    const sections = generatedText.split(/\d+\.\s/).filter(s => s.trim());
+    
+    // Create title slide
+    slides.push({
+        title: sections[0] || "Presentation Title",
+        subtitle: "Generated with AI",
+        type: "title"
+    });
+    
+    // Create content slides
+    for (let i = 1; i < Math.min(sections.length, numSlides - 1); i++) {
+        const section = sections[i];
+        const title = section.split('\n')[0] || `Section ${i}`;
+        const content = section.split('\n').slice(1).filter(line => line.trim());
+        
+        slides.push({
+            title: title,
+            content: content,
+            type: "content"
+        });
+    }
+    
+    // If we need more slides, generate extras
+    while (slides.length < numSlides - 1) {
+        slides.push({
+            title: `Additional Point ${slides.length}`,
+            content: ["Additional content can be added here."],
+            type: "content"
+        });
+    }
+    
+    // Add final slide
+    slides.push({
+        title: "Thank You",
+        content: "Any questions?",
+        type: "end"
+    });
+    
+    return slides;
+}
+
+/**
+ * Generate mock content data as fallback
+ */
+function generateMockContentData(topic, numSlides) {
+    const slides = [];
+    
+    // Title slide
+    slides.push({
         title: topic,
-        style: style,
-        slides: generateMockSlides(topic, parseInt(numSlides), style)
+        subtitle: "Generated Presentation",
+        type: "title"
+    });
+    
+    // Content slides - we'll create more structured content than the original mock data
+    const mockSections = [
+        "Introduction and Overview",
+        "Key Features and Benefits",
+        "Market Analysis",
+        "Implementation Strategy",
+        "Budget Considerations",
+        "Timeline and Milestones",
+        "Risk Assessment",
+        "Conclusions and Next Steps"
+    ];
+    
+    // Use the mockSections to create better content slides
+    for (let i = 1; i < numSlides - 1; i++) {
+        const sectionTitle = mockSections[(i - 1) % mockSections.length];
+        slides.push({
+            title: sectionTitle,
+            content: generateStructuredPoints(sectionTitle, 3 + Math.floor(Math.random() * 3)),
+            type: "content"
+        });
+    }
+    
+    // Add final slide
+    slides.push({
+        title: "Thank You",
+        content: "Any questions?",
+        type: "end"
+    });
+    
+    return slides;
+}
+
+/**
+ * Generate more structured bullet points based on section title
+ */
+function generateStructuredPoints(sectionTitle, count) {
+    // Different content based on section type
+    const contentBySection = {
+        "Introduction and Overview": [
+            "Overview of the project scope and objectives",
+            "Background information and context",
+            "Expected outcomes and deliverables",
+            "Key stakeholders involved in the project",
+            "Alignment with organizational goals"
+        ],
+        "Key Features and Benefits": [
+            "Primary features that differentiate our solution",
+            "Direct benefits to users and stakeholders",
+            "Long-term advantages and opportunities",
+            "Competitive advantages in the marketplace",
+            "Value proposition for target audience"
+        ],
+        "Market Analysis": [
+            "Current market trends and opportunities",
+            "Competitor analysis and positioning",
+            "Target demographic and customer needs",
+            "Market size and growth projections",
+            "Key market challenges and solutions"
+        ],
+        "Implementation Strategy": [
+            "Phase 1: Planning and resource allocation",
+            "Phase 2: Development and testing procedures",
+            "Phase 3: Deployment and integration steps",
+            "Training and onboarding approaches",
+            "Quality assurance and monitoring systems"
+        ],
+        "Budget Considerations": [
+            "Initial investment requirements",
+            "Ongoing operational costs",
+            "Expected return on investment (ROI)",
+            "Cost-saving opportunities identified",
+            "Budget allocation across project phases"
+        ],
+        "Timeline and Milestones": [
+            "Project kickoff and initial planning",
+            "Development phase expected completion",
+            "Testing and quality assurance period",
+            "Deployment and launch window",
+            "Post-launch evaluation and optimization"
+        ],
+        "Risk Assessment": [
+            "Potential obstacles and mitigation strategies",
+            "Resource constraints and solutions",
+            "Technical challenges and contingency plans",
+            "Market and competitive risks",
+            "Regulatory and compliance considerations"
+        ],
+        "Conclusions and Next Steps": [
+            "Summary of key project benefits",
+            "Decision points and approvals needed",
+            "Recommended actions and responsibilities",
+            "Success metrics and evaluation criteria",
+            "Future enhancements and opportunities"
+        ]
     };
+    
+    // Get relevant points or use default
+    const relevantPoints = contentBySection[sectionTitle] || [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "Sed do eiusmod tempor incididunt ut labore et dolore",
+        "Ut enim ad minim veniam, quis nostrud exercitation",
+        "Duis aute irure dolor in reprehenderit in voluptate",
+        "Excepteur sint occaecat cupidatat non proident"
+    ];
+    
+    // Get random points
+    const points = [];
+    const selectedIndices = new Set();
+    
+    while (points.length < Math.min(count, relevantPoints.length)) {
+        const randomIndex = Math.floor(Math.random() * relevantPoints.length);
+        if (!selectedIndices.has(randomIndex)) {
+            selectedIndices.add(randomIndex);
+            points.push(relevantPoints[randomIndex]);
+        }
+    }
+    
+    return points;
+}
+
+/**
+ * Add images to slides using Stable Diffusion or similar models
+ */
+async function addImagesToSlides(slides, style) {
+    // For each content slide, we could generate a relevant image
+    // This is optional and would require additional API calls
+    
+    return slides.map((slide, index) => {
+        // Add style-specific background
+        slide.background = getStyleBackground(style, index);
+        return slide;
+    });
 }
 
 /**
