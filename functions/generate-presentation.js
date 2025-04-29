@@ -3,15 +3,26 @@ const axios = require('axios');
 exports.handler = async (event, context) => {
   try {
     // Parse request body
-    const { topic, numSlides, additionalNotes } = JSON.parse(event.body);
+    const { topic, numSlides, additionalNotes, style } = JSON.parse(event.body);
     
     // Set up Hugging Face API configuration
-    // Alternative approach - try a different model better suited for text generation
     const API_URL = "https://api-inference.huggingface.co/models/gpt2";
     const API_KEY = process.env.API_KEY;
     
+    // Create a style-specific prompt
+    const stylePrompts = {
+      professional: "Create a formal business presentation with clear sections and corporate terminology.",
+      creative: "Create a visually engaging presentation with innovative concepts and inspirational content.",
+      minimalist: "Create a clean, concise presentation with minimal text and focused key points.",
+      educational: "Create an instructional presentation with clear learning objectives and educational content."
+    };
+    
+    const styleGuidance = stylePrompts[style] || stylePrompts.professional;
+    
     // Create prompt for the model
-    const prompt = `Create a professional presentation outline on "${topic}" with ${numSlides} slides.
+    const prompt = `${styleGuidance}
+      
+      Create a presentation outline on "${topic}" with ${numSlides} slides.
       Additional notes: ${additionalNotes || 'None'}
       
       For each slide, provide a title and 3-5 bullet points.
@@ -54,10 +65,17 @@ exports.handler = async (event, context) => {
       generatedText = response.data.generated_text;
     } else {
       console.log('Unexpected API response format:', response.data);
-      generatedText = createDefaultPresentation(topic, numSlides);
+      const slides = createDefaultPresentation(topic, parseInt(numSlides), style);
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ slides }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
     }
     
-    const slides = processGeneratedText(generatedText, parseInt(numSlides), topic);
+    const slides = processGeneratedText(generatedText, parseInt(numSlides), topic, style);
     
     // Return the result
     return {
@@ -71,9 +89,11 @@ exports.handler = async (event, context) => {
     console.log('Error:', error);
     
     // Create fallback content if API fails
+    const parsedBody = event.body ? JSON.parse(event.body) : {};
     const slides = createDefaultPresentation(
-      event.body ? JSON.parse(event.body).topic : 'Presentation', 
-      event.body ? JSON.parse(event.body).numSlides : 5
+      parsedBody.topic || 'Presentation', 
+      parsedBody.numSlides || 5,
+      parsedBody.style || 'professional'
     );
     
     // Return fallback content instead of error
@@ -87,45 +107,171 @@ exports.handler = async (event, context) => {
   }
 };
 
-function createDefaultPresentation(topic, numSlides) {
+function createDefaultPresentation(topic, numSlides, style = 'professional') {
   const slides = [];
   
-  // Add title slide
+  // Add title slide with style-specific subtitle
   slides.push({
     title: topic || "Presentation",
-    subtitle: "Generated Presentation",
+    subtitle: getSubtitleByStyle(style, topic),
     type: "title"
   });
   
-  // Common slide structures based on topic
+  // Style-specific slide templates
   const slideTemplates = {
-    general: [
-      { title: "Introduction", points: [
-        "Overview of the topic",
-        "Importance and relevance",
-        "Key objectives of this presentation"
+    professional: [
+      { title: "Executive Summary", points: [
+        "Overview of business objectives",
+        "Key market opportunities",
+        "Financial projections and ROI",
+        "Strategic positioning and competitive advantages"
       ]},
-      { title: "Key Concepts", points: [
-        "Definition of important terms",
-        "Core principles and methodologies",
-        "Historical context and development"
+      { title: "Market Analysis", points: [
+        "Industry trends and market size",
+        "Competitor landscape and positioning",
+        "Target customer segments and demographics",
+        "Market share opportunities and growth potential"
       ]},
-      { title: "Applications", points: [
-        "Practical use cases",
-        "Industry examples",
-        "Benefits and advantages"
+      { title: "Strategic Approach", points: [
+        "Core business strategy and objectives",
+        "Value proposition and differentiators",
+        "Go-to-market approach",
+        "Key partnerships and alliances"
       ]},
-      { title: "Challenges & Solutions", points: [
-        "Common obstacles and difficulties",
-        "Strategies to overcome challenges",
-        "Best practices and recommendations"
+      { title: "Implementation Plan", points: [
+        "Project phases and milestones",
+        "Resource requirements and allocation",
+        "Timeline and delivery schedule",
+        "Key performance indicators (KPIs)"
       ]},
-      { title: "Future Directions", points: [
-        "Emerging trends and innovations",
-        "Predictions for future developments",
-        "Opportunities for growth and expansion"
+      { title: "Financial Overview", points: [
+        "Investment requirements and capital allocation",
+        "Revenue projections and forecast models",
+        "Cost structure and operational expenses",
+        "Risk assessment and mitigation strategies"
+      ]},
+      { title: "Action Items", points: [
+        "Key decisions and approvals required",
+        "Team responsibilities and accountability",
+        "Next steps and immediate priorities",
+        "Success metrics and evaluation criteria"
       ]}
     ],
+    
+    creative: [
+      { title: "The Big Idea", points: [
+        "Introducing our creative vision",
+        "Breaking conventional thinking",
+        "Inspiration and concept development",
+        "Unique perspectives and approaches"
+      ]},
+      { title: "Storytelling & Narrative", points: [
+        "Creating an emotional connection",
+        "Building a compelling story arc",
+        "Visual and verbal communication strategies",
+        "Character and audience engagement"
+      ]},
+      { title: "Innovation Workshop", points: [
+        "Brainstorming techniques and creative exercises",
+        "Challenging assumptions and limits",
+        "Collaborative ideation process",
+        "Transforming constraints into opportunities"
+      ]},
+      { title: "Visual Expression", points: [
+        "Color theory and emotional impact",
+        "Typography and visual hierarchy",
+        "Imagery and symbolic representation",
+        "Animation and movement concepts"
+      ]},
+      { title: "Audience Experience", points: [
+        "Creating memorable moments and interactions",
+        "Sensory engagement strategies",
+        "Participatory and immersive elements",
+        "Lasting impression and takeaways"
+      ]},
+      { title: "Creative Evolution", points: [
+        "Iterative design process",
+        "Feedback integration and refinement",
+        "Creative expansion and future directions",
+        "Building on successful concepts"
+      ]}
+    ],
+    
+    minimalist: [
+      { title: "Purpose", points: [
+        "Core objective",
+        "Essential background",
+        "Key value proposition"
+      ]},
+      { title: "Framework", points: [
+        "Fundamental structure",
+        "Key principles",
+        "Basic methodology"
+      ]},
+      { title: "Focus Areas", points: [
+        "Primary concentration",
+        "Secondary elements",
+        "Critical factors"
+      ]},
+      { title: "Implementation", points: [
+        "Streamlined approach",
+        "Essential resources",
+        "Timeline basics"
+      ]},
+      { title: "Results", points: [
+        "Expected outcomes",
+        "Success metrics",
+        "Value delivered"
+      ]},
+      { title: "Next Steps", points: [
+        "Immediate actions",
+        "Key responsibilities",
+        "Follow-up process"
+      ]}
+    ],
+    
+    educational: [
+      { title: "Learning Objectives", points: [
+        "Key knowledge and skills to be acquired",
+        "Competency development goals",
+        "Application opportunities",
+        "Assessment approach and criteria"
+      ]},
+      { title: "Foundational Concepts", points: [
+        "Essential terminology and definitions",
+        "Theoretical framework and principles",
+        "Historical context and development",
+        "Current state of knowledge and research"
+      ]},
+      { title: "Key Methods", points: [
+        "Fundamental approaches and techniques",
+        "Step-by-step processes",
+        "Common tools and resources",
+        "Best practices and guidelines"
+      ]},
+      { title: "Practical Applications", points: [
+        "Real-world case studies and examples",
+        "Implementation scenarios",
+        "Problem-solving strategies",
+        "Adaptation to different contexts"
+      ]},
+      { title: "Assessment & Practice", points: [
+        "Knowledge check questions",
+        "Hands-on exercises and activities",
+        "Self-evaluation opportunities",
+        "Application challenges"
+      ]},
+      { title: "Additional Resources", points: [
+        "Further reading and materials",
+        "Reference guides and tools",
+        "Community and support options",
+        "Continued learning path"
+      ]}
+    ]
+  };
+  
+  // Topic-specific templates for common subjects
+  const topicTemplates = {
     dataScience: [
       { title: "Introduction to Data Science", points: [
         "Definition and scope of data science",
@@ -159,12 +305,14 @@ function createDefaultPresentation(topic, numSlides) {
     ]
   };
   
-  // Select appropriate template based on topic
-  let template = slideTemplates.general;
-  if (topic.toLowerCase().includes('data') || 
-      topic.toLowerCase().includes('analytics') || 
-      topic.toLowerCase().includes('machine learning')) {
-    template = slideTemplates.dataScience;
+  // Select appropriate template based on style and topic
+  let template = slideTemplates[style] || slideTemplates.professional;
+  
+  // Check if we should use a topic-specific template
+  const lowerTopic = topic.toLowerCase();
+  if (lowerTopic.includes('data sci') || lowerTopic.includes('analytics') || 
+      lowerTopic.includes('machine learning') || lowerTopic.includes('ai')) {
+    template = topicTemplates.dataScience;
   }
   
   // Add content slides
@@ -178,7 +326,8 @@ function createDefaultPresentation(topic, numSlides) {
   
   // If we need more slides, add from general template
   while (slides.length < numSlides - 1) {
-    const extraSlide = slideTemplates.general[slides.length % slideTemplates.general.length];
+    const styleTemplate = slideTemplates[style] || slideTemplates.professional;
+    const extraSlide = styleTemplate[slides.length % styleTemplate.length];
     slides.push({
       title: extraSlide.title,
       content: extraSlide.points,
@@ -186,28 +335,61 @@ function createDefaultPresentation(topic, numSlides) {
     });
   }
   
-  // Add final slide
+  // Add final slide with style-appropriate closing
   slides.push({
-    title: "Thank You",
-    content: "Any questions?",
+    title: getClosingTitleByStyle(style),
+    content: getClosingContentByStyle(style),
     type: "end"
   });
   
   return slides;
 }
 
-function processGeneratedText(text, numSlides, topic) {
+// Style-specific presentation subtitles
+function getSubtitleByStyle(style, topic) {
+  const subtitles = {
+    professional: "Strategic Overview",
+    creative: "Innovative Perspectives",
+    minimalist: "Key Insights",
+    educational: "Learning & Development"
+  };
+  return subtitles[style] || "Generated Presentation";
+}
+
+// Style-specific closing slide titles
+function getClosingTitleByStyle(style) {
+  const closingTitles = {
+    professional: "Thank You",
+    creative: "Let's Create Together",
+    minimalist: "Questions?",
+    educational: "Key Takeaways"
+  };
+  return closingTitles[style] || "Thank You";
+}
+
+// Style-specific closing slide content
+function getClosingContentByStyle(style) {
+  const closingContent = {
+    professional: "Contact us for further information",
+    creative: "Imagination is just the beginning",
+    minimalist: "Thank you for your attention",
+    educational: "Remember the core concepts we explored today"
+  };
+  return closingContent[style] || "Any questions?";
+}
+
+function processGeneratedText(text, numSlides, topic, style = 'professional') {
   // First check if we have usable content
   if (!text || text.trim().length < 50) {
-    return createDefaultPresentation(topic, numSlides);
+    return createDefaultPresentation(topic, numSlides, style);
   }
   
   const slides = [];
   
-  // Add title slide
+  // Add style-specific title slide
   slides.push({
     title: topic || text.split('\n')[0].replace('Slide 1:', '').trim() || "Presentation",
-    subtitle: "Generated Presentation",
+    subtitle: getSubtitleByStyle(style),
     type: "title"
   });
   
@@ -241,9 +423,9 @@ function processGeneratedText(text, numSlides, topic) {
     slideCount++;
   }
   
-  // If we don't have enough slides, add some from templates
+  // If we don't have enough slides, add some from style-specific templates
   if (slides.length < numSlides - 1) {
-    const defaultSlides = createDefaultPresentation(topic, numSlides);
+    const defaultSlides = createDefaultPresentation(topic, numSlides, style);
     
     // Skip the title slide from default slides
     while (slides.length < numSlides - 1) {
@@ -256,10 +438,10 @@ function processGeneratedText(text, numSlides, topic) {
     }
   }
   
-  // Add final thank you slide
+  // Add style-specific final slide
   slides.push({
-    title: "Thank You",
-    content: "Any questions?",
+    title: getClosingTitleByStyle(style),
+    content: getClosingContentByStyle(style),
     type: "end"
   });
   

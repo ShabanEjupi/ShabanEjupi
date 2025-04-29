@@ -87,7 +87,7 @@ async function generatePresentation(topic, numSlides, style, notes) {
     
     try {
         // First, generate text content using GPT or similar model
-        const contentData = await generateContentFromPrompt(topic, numSlides, notes);
+        const contentData = await generateContentFromPrompt(topic, numSlides, notes, style);
         
         // Then, generate images for slides if needed
         const slidesWithImages = await addImagesToSlides(contentData, style);
@@ -114,7 +114,7 @@ async function generatePresentation(topic, numSlides, style, notes) {
 /**
  * Function to generate text content from the AI service
  */
-async function generateContentFromPrompt(topic, numSlides, additionalNotes) {
+async function generateContentFromPrompt(topic, numSlides, additionalNotes, style) {
     try {
         console.log("Calling AI text generation service...");
         
@@ -126,7 +126,8 @@ async function generateContentFromPrompt(topic, numSlides, additionalNotes) {
             body: JSON.stringify({ 
                 topic: topic,
                 numSlides: numSlides,
-                additionalNotes: additionalNotes
+                additionalNotes: additionalNotes,
+                style: style // Add style parameter
             })
         });
         
@@ -138,9 +139,206 @@ async function generateContentFromPrompt(topic, numSlides, additionalNotes) {
         return result.slides;
     } catch (error) {
         console.error("Error generating presentation content:", error);
-        // Fallback to mock content
-        return generateMockContentData(topic, numSlides);
+        // Fallback to mock content with style
+        return generateMockContentData(topic, numSlides, style);
     }
+}
+
+/**
+ * Generate mock content data as fallback
+ */
+function generateMockContentData(topic, numSlides, style) {
+    const slides = [];
+    
+    // Style-specific subtitles
+    const styleSubtitles = {
+        professional: "Strategic Overview",
+        creative: "Innovative Perspectives",
+        minimalist: "Key Insights",
+        educational: "Learning & Development"
+    };
+    
+    // Title slide
+    slides.push({
+        title: topic,
+        subtitle: styleSubtitles[style] || "Generated Presentation",
+        type: "title"
+    });
+    
+    // Style-specific sections
+    const styleSections = {
+        professional: [
+            "Executive Summary",
+            "Market Analysis",
+            "Strategic Approach",
+            "Implementation Plan",
+            "Financial Overview",
+            "Action Items"
+        ],
+        creative: [
+            "The Big Idea",
+            "Storytelling & Narrative",
+            "Innovation Workshop",
+            "Visual Expression",
+            "Audience Experience",
+            "Creative Evolution"
+        ],
+        minimalist: [
+            "Purpose",
+            "Framework",
+            "Focus Areas",
+            "Implementation",
+            "Results",
+            "Next Steps"
+        ],
+        educational: [
+            "Learning Objectives",
+            "Foundational Concepts",
+            "Key Methods",
+            "Practical Applications",
+            "Assessment & Practice",
+            "Additional Resources"
+        ]
+    };
+    
+    // Select the appropriate sections based on style
+    const mockSections = styleSections[style] || [
+        "Introduction and Overview",
+        "Key Features and Benefits",
+        "Market Analysis",
+        "Implementation Strategy",
+        "Budget Considerations",
+        "Timeline and Milestones",
+        "Risk Assessment",
+        "Conclusions and Next Steps"
+    ];
+    
+    // Use mockSections to create style-appropriate content slides
+    for (let i = 1; i < numSlides - 1; i++) {
+        const sectionTitle = mockSections[(i - 1) % mockSections.length];
+        slides.push({
+            title: sectionTitle,
+            content: generateStructuredPoints(sectionTitle, style, 3 + Math.floor(Math.random() * 3)),
+            type: "content"
+        });
+    }
+    
+    // Style-specific closing slide
+    const closingTitles = {
+        professional: "Thank You",
+        creative: "Let's Create Together",
+        minimalist: "Questions?",
+        educational: "Key Takeaways"
+    };
+    
+    const closingContent = {
+        professional: "Contact us for further information",
+        creative: "Imagination is just the beginning",
+        minimalist: "Thank you for your attention",
+        educational: "Remember the core concepts we explored today"
+    };
+    
+    // Add final slide
+    slides.push({
+        title: closingTitles[style] || "Thank You",
+        content: closingContent[style] || "Any questions?",
+        type: "end"
+    });
+    
+    return slides;
+}
+
+/**
+ * Generate more structured bullet points based on section title and style
+ */
+function generateStructuredPoints(sectionTitle, style, count) {
+    // Different content based on style and section type
+    const styleContentMap = {
+        professional: {
+            "Executive Summary": [
+                "Overview of business objectives",
+                "Key market opportunities",
+                "Financial projections and ROI",
+                "Strategic positioning and competitive advantages",
+                "Critical success factors"
+            ],
+            "Market Analysis": [
+                "Industry trends and market size",
+                "Competitor landscape and positioning",
+                "Target customer segments and demographics",
+                "Market share opportunities and growth potential",
+                "SWOT analysis highlights"
+            ],
+            // Add more sections as needed
+        },
+        minimalist: {
+            "Purpose": [
+                "Core objective",
+                "Essential background",
+                "Key value proposition",
+                "Main stakeholders"
+            ],
+            "Framework": [
+                "Fundamental structure",
+                "Key principles",
+                "Basic methodology",
+                "Critical components"
+            ],
+            // Add more sections as needed
+        }
+        // Add more styles as needed
+    };
+    
+    // Try to get style-specific content for the section
+    const styleContent = styleContentMap[style] && styleContentMap[style][sectionTitle];
+    
+    // Fall back to the original content map if style-specific content not found
+    if (styleContent) {
+        return getRandomPoints(styleContent, count);
+    }
+    
+    // Original content organized by section title
+    const contentBySection = {
+        // Your existing content map
+        "Introduction and Overview": [
+            "Overview of the project scope and objectives",
+            "Background information and context",
+            "Expected outcomes and deliverables",
+            "Key stakeholders involved in the project",
+            "Alignment with organizational goals"
+        ],
+        // Add other sections as in your original code
+    };
+    
+    // Get relevant points or use default
+    const relevantPoints = contentBySection[sectionTitle] || [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "Sed do eiusmod tempor incididunt ut labore et dolore",
+        "Ut enim ad minim veniam, quis nostrud exercitation",
+        "Duis aute irure dolor in reprehenderit in voluptate",
+        "Excepteur sint occaecat cupidatat non proident"
+    ];
+    
+    return getRandomPoints(relevantPoints, count);
+}
+
+/**
+ * Helper function to get random points from an array
+ */
+function getRandomPoints(points, count) {
+    // Get random points
+    const selectedPoints = [];
+    const selectedIndices = new Set();
+    
+    while (selectedPoints.length < Math.min(count, points.length)) {
+        const randomIndex = Math.floor(Math.random() * points.length);
+        if (!selectedIndices.has(randomIndex)) {
+            selectedIndices.add(randomIndex);
+            selectedPoints.push(points[randomIndex]);
+        }
+    }
+    
+    return selectedPoints;
 }
 
 /**
@@ -191,139 +389,6 @@ function processGeneratedText(generatedText, numSlides) {
     });
     
     return slides;
-}
-
-/**
- * Generate mock content data as fallback
- */
-function generateMockContentData(topic, numSlides) {
-    const slides = [];
-    
-    // Title slide
-    slides.push({
-        title: topic,
-        subtitle: "Generated Presentation",
-        type: "title"
-    });
-    
-    // Content slides - we'll create more structured content than the original mock data
-    const mockSections = [
-        "Introduction and Overview",
-        "Key Features and Benefits",
-        "Market Analysis",
-        "Implementation Strategy",
-        "Budget Considerations",
-        "Timeline and Milestones",
-        "Risk Assessment",
-        "Conclusions and Next Steps"
-    ];
-    
-    // Use the mockSections to create better content slides
-    for (let i = 1; i < numSlides - 1; i++) {
-        const sectionTitle = mockSections[(i - 1) % mockSections.length];
-        slides.push({
-            title: sectionTitle,
-            content: generateStructuredPoints(sectionTitle, 3 + Math.floor(Math.random() * 3)),
-            type: "content"
-        });
-    }
-    
-    // Add final slide
-    slides.push({
-        title: "Thank You",
-        content: "Any questions?",
-        type: "end"
-    });
-    
-    return slides;
-}
-
-/**
- * Generate more structured bullet points based on section title
- */
-function generateStructuredPoints(sectionTitle, count) {
-    // Different content based on section type
-    const contentBySection = {
-        "Introduction and Overview": [
-            "Overview of the project scope and objectives",
-            "Background information and context",
-            "Expected outcomes and deliverables",
-            "Key stakeholders involved in the project",
-            "Alignment with organizational goals"
-        ],
-        "Key Features and Benefits": [
-            "Primary features that differentiate our solution",
-            "Direct benefits to users and stakeholders",
-            "Long-term advantages and opportunities",
-            "Competitive advantages in the marketplace",
-            "Value proposition for target audience"
-        ],
-        "Market Analysis": [
-            "Current market trends and opportunities",
-            "Competitor analysis and positioning",
-            "Target demographic and customer needs",
-            "Market size and growth projections",
-            "Key market challenges and solutions"
-        ],
-        "Implementation Strategy": [
-            "Phase 1: Planning and resource allocation",
-            "Phase 2: Development and testing procedures",
-            "Phase 3: Deployment and integration steps",
-            "Training and onboarding approaches",
-            "Quality assurance and monitoring systems"
-        ],
-        "Budget Considerations": [
-            "Initial investment requirements",
-            "Ongoing operational costs",
-            "Expected return on investment (ROI)",
-            "Cost-saving opportunities identified",
-            "Budget allocation across project phases"
-        ],
-        "Timeline and Milestones": [
-            "Project kickoff and initial planning",
-            "Development phase expected completion",
-            "Testing and quality assurance period",
-            "Deployment and launch window",
-            "Post-launch evaluation and optimization"
-        ],
-        "Risk Assessment": [
-            "Potential obstacles and mitigation strategies",
-            "Resource constraints and solutions",
-            "Technical challenges and contingency plans",
-            "Market and competitive risks",
-            "Regulatory and compliance considerations"
-        ],
-        "Conclusions and Next Steps": [
-            "Summary of key project benefits",
-            "Decision points and approvals needed",
-            "Recommended actions and responsibilities",
-            "Success metrics and evaluation criteria",
-            "Future enhancements and opportunities"
-        ]
-    };
-    
-    // Get relevant points or use default
-    const relevantPoints = contentBySection[sectionTitle] || [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        "Sed do eiusmod tempor incididunt ut labore et dolore",
-        "Ut enim ad minim veniam, quis nostrud exercitation",
-        "Duis aute irure dolor in reprehenderit in voluptate",
-        "Excepteur sint occaecat cupidatat non proident"
-    ];
-    
-    // Get random points
-    const points = [];
-    const selectedIndices = new Set();
-    
-    while (points.length < Math.min(count, relevantPoints.length)) {
-        const randomIndex = Math.floor(Math.random() * relevantPoints.length);
-        if (!selectedIndices.has(randomIndex)) {
-            selectedIndices.add(randomIndex);
-            points.push(relevantPoints[randomIndex]);
-        }
-    }
-    
-    return points;
 }
 
 /**
