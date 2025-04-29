@@ -267,6 +267,139 @@ function createDefaultPresentation(topic, numSlides, style = 'professional') {
         "Community and support options",
         "Continued learning path"
       ]}
+    ],
+    
+    // New styles
+    corporate: [
+      { title: "Company Overview", points: [
+        "Corporate history and milestones",
+        "Mission, vision and core values",
+        "Organizational structure",
+        "Global presence and market position"
+      ]},
+      { title: "Industry Landscape", points: [
+        "Current market trends and dynamics",
+        "Key industry challenges and opportunities",
+        "Competitive positioning analysis",
+        "Regulatory considerations"
+      ]},
+      { title: "Strategic Initiatives", points: [
+        "Key business priorities",
+        "Growth and expansion strategies",
+        "Innovation and digital transformation",
+        "Sustainable business practices"
+      ]},
+      { title: "Performance Indicators", points: [
+        "Financial highlights and metrics",
+        "Operational efficiency measures",
+        "Customer satisfaction and retention",
+        "Employee engagement and productivity"
+      ]},
+      { title: "Future Outlook", points: [
+        "Short-term and long-term objectives",
+        "Market expansion opportunities",
+        "Product and service roadmap",
+        "Investment and resource allocation"
+      ]}
+    ],
+    
+    technical: [
+      { title: "System Architecture", points: [
+        "Overall system structure and components",
+        "Infrastructure and deployment model",
+        "Integration points and APIs",
+        "Security architecture and protocols"
+      ]},
+      { title: "Technology Stack", points: [
+        "Programming languages and frameworks",
+        "Database and storage solutions",
+        "Front-end technologies and UI components",
+        "Third-party services and dependencies"
+      ]},
+      { title: "Implementation Approach", points: [
+        "Development methodology",
+        "Testing strategy and quality assurance",
+        "Continuous integration and deployment",
+        "Code management and versioning"
+      ]},
+      { title: "Performance Metrics", points: [
+        "Response time and throughput",
+        "Scalability and load handling",
+        "Resource utilization",
+        "Error rates and reliability measures"
+      ]},
+      { title: "Technical Roadmap", points: [
+        "Planned feature development",
+        "Technical debt resolution",
+        "Upgrade and migration plans",
+        "Research and innovation areas"
+      ]}
+    ],
+    
+    pitch: [
+      { title: "The Problem", points: [
+        "Market pain point or gap",
+        "Impact on customers or businesses",
+        "Current solutions and limitations",
+        "Scale and scope of the problem"
+      ]},
+      { title: "Our Solution", points: [
+        "Product/service overview",
+        "Key features and benefits",
+        "Unique value proposition",
+        "Competitive advantages"
+      ]},
+      { title: "Market Opportunity", points: [
+        "Target market size and growth",
+        "Customer segments and profiles",
+        "Market trends and timing advantages",
+        "Initial traction and validation"
+      ]},
+      { title: "Business Model", points: [
+        "Revenue streams and pricing strategy",
+        "Sales and marketing approach",
+        "Customer acquisition strategy",
+        "Growth and scaling plans"
+      ]},
+      { title: "Ask & Offering", points: [
+        "Investment required",
+        "Use of funds and milestones",
+        "Expected returns and timeline",
+        "Partnership or support requested"
+      ]}
+    ],
+    
+    infographic: [
+      { title: "Key Statistics", points: [
+        "Primary data points and metrics",
+        "Growth percentages and comparisons",
+        "Historical trends and patterns",
+        "Regional or demographic breakdowns"
+      ]},
+      { title: "Visual Timeline", points: [
+        "Key milestones and events",
+        "Evolution and development stages",
+        "Future projections and goals",
+        "Comparative historical data"
+      ]},
+      { title: "Process Flow", points: [
+        "Step-by-step methodology",
+        "Input and output elements",
+        "Decision points and alternatives",
+        "Feedback loops and iterations"
+      ]},
+      { title: "Comparison Matrix", points: [
+        "Feature and benefit analysis",
+        "Option evaluation criteria",
+        "Strength/weakness assessment",
+        "Cost-benefit relationships"
+      ]},
+      { title: "Data Visualization", points: [
+        "Trends and patterns representation",
+        "Statistical analysis findings",
+        "Correlations and relationships",
+        "Forecasts and projections"
+      ]}
     ]
   };
   

@@ -392,15 +392,119 @@ function processGeneratedText(generatedText, numSlides) {
 }
 
 /**
- * Add images to slides using Stable Diffusion or similar models
+ * Add images to slides using predefined imagery and icons
  */
 async function addImagesToSlides(slides, style) {
-    // For each content slide, we could generate a relevant image
-    // This is optional and would require additional API calls
+    // Define icon families for different presentation styles
+    const iconSets = {
+        professional: ['chart-line', 'handshake', 'briefcase', 'building', 'award', 'users', 'file-contract', 'chart-pie'],
+        creative: ['lightbulb', 'palette', 'comments', 'camera', 'magic', 'pencil-ruler', 'shapes', 'paint-brush'],
+        minimalist: ['check', 'list', 'cube', 'square', 'circle', 'arrow-right', 'tasks', 'columns'],
+        educational: ['book', 'graduation-cap', 'chalkboard-teacher', 'brain', 'puzzle-piece', 'microscope', 'atom', 'flask'],
+        corporate: ['landmark', 'chart-bar', 'analytics', 'money-bill', 'project-diagram', 'sitemap', 'certificate'],
+        technical: ['code', 'server', 'database', 'network-wired', 'laptop-code', 'cogs', 'wifi', 'shield-alt'],
+        pitch: ['rocket', 'bullseye', 'chart-line', 'money-bill-wave', 'handshake', 'users', 'search-dollar'],
+        infographic: ['chart-pie', 'chart-bar', 'chart-area', 'analytics', 'percentage', 'poll', 'table', 'sort-amount-up']
+    };
     
+    // Repository of stock images by slide style and title keywords
+    const imageKeywords = {
+        professional: {
+            "executive summary": "business-meeting",
+            "market analysis": "market-graph",
+            "strategic": "strategy-chess",
+            "implementation": "project-management", 
+            "financial": "financial-report",
+            "action": "business-action"
+        },
+        creative: {
+            "big idea": "creative-bulb", 
+            "storytelling": "storytelling",
+            "innovation": "innovation",
+            "visual": "design-tools",
+            "audience": "audience",
+            "evolution": "growth-plant"
+        },
+        minimalist: {
+            "purpose": "minimal-goal",
+            "framework": "minimal-structure",
+            "focus": "minimal-target",
+            "implementation": "minimal-steps",
+            "results": "minimal-chart",
+            "next steps": "minimal-arrow"
+        },
+        educational: {
+            "learning": "education-book",
+            "concepts": "concept-map",
+            "methods": "methodology",
+            "applications": "application",
+            "assessment": "assessment-test",
+            "resources": "resources-library"
+        },
+        corporate: {
+            "company": "corporate-building",
+            "industry": "industry",
+            "strategic": "strategy",
+            "performance": "performance-metrics",
+            "future": "future-vision"
+        },
+        technical: {
+            "system": "system-architecture",
+            "technology": "tech-stack",
+            "implementation": "code-screen",
+            "performance": "speed-metrics",
+            "technical": "technical-blueprint"
+        },
+        pitch: {
+            "problem": "problem-solution",
+            "solution": "solution-key",
+            "market": "market-growth",
+            "business": "business-model",
+            "ask": "investment-funding"
+        },
+        infographic: {
+            "statistics": "data-charts",
+            "timeline": "timeline",
+            "process": "process-flow",
+            "comparison": "comparison-scales",
+            "visualization": "data-visualization"
+        }
+    };
+    
+    // Process each slide with appropriate visual elements
     return slides.map((slide, index) => {
-        // Add style-specific background
+        // Set style-specific background
         slide.background = getStyleBackground(style, index);
+        
+        // Skip icon/image for title and end slides 
+        if (slide.type === 'content') {
+            // Select icon based on style and position in presentation
+            const iconFamily = iconSets[style] || iconSets.professional;
+            const iconIndex = index % iconFamily.length;
+            slide.icon = iconFamily[iconIndex];
+            
+            // Try to find a relevant image based on slide title
+            const images = imageKeywords[style] || imageKeywords.professional;
+            
+            // Search for keywords in slide title
+            let slideImage = null;
+            const lowerTitle = slide.title.toLowerCase();
+            
+            Object.keys(images).forEach(keyword => {
+                if (lowerTitle.includes(keyword)) {
+                    slideImage = images[keyword];
+                }
+            });
+            
+            // If no specific match found, use a default based on index
+            if (!slideImage) {
+                const imageOptions = Object.values(images);
+                slideImage = imageOptions[index % imageOptions.length];
+            }
+            
+            slide.image = `images/${style}/${slideImage}.jpg`;
+        }
+        
         return slide;
     });
 }
@@ -544,75 +648,196 @@ function downloadPresentation(presentation) {
     presentation.slides.forEach(slide => {
         const newSlide = pptx.addSlide();
         
-        // Set background
-        newSlide.background = { color: slide.background.includes('gradient') ? '#2c3e50' : slide.background };
+        // Get gradient colors for this slide's background
+        const gradientColors = parseGradient(slide.background);
+        
+        // Set background with gradient if available, otherwise use solid color
+        if (gradientColors.length >= 2) {
+            newSlide.background = { 
+                color: gradientColors[0], // Fallback solid color
+                gradient: {
+                    type: 'linear',
+                    color1: gradientColors[0],
+                    color2: gradientColors[1],
+                    angle: 135
+                }
+            };
+        } else {
+            newSlide.background = { color: '#2c3e50' };
+        }
         
         // Add content based on slide type
         if (slide.type === 'title') {
-            // Title slide
-            newSlide.addText(slide.title, { 
-                x: 1, y: 1, w: '100%', h: 2, 
-                fontSize: 44, 
-                color: 'FFFFFF', 
-                bold: true,
-                align: 'center'
+            // Title slide with enhanced design elements
+            
+            // Add background shape for visual interest
+            newSlide.addShape(pptx.shapes.ROUNDED_RECTANGLE, {
+                x: 0, y: 0, w: '100%', h: '100%',
+                fill: { type: 'solid', color: '000000', alpha: 10 },
+                line: { type: 'none' }
             });
             
+            // Add title
+            newSlide.addText(slide.title, { 
+                x: 1, y: 1.5, w: '100%', h: 2, 
+                fontSize: 50, 
+                color: 'FFFFFF', 
+                bold: true,
+                align: 'center',
+                shadow: { type: 'outer', angle: 45, blur: 5, color: '000000', opacity: 0.3 }
+            });
+            
+            // Add subtitle with style
             newSlide.addText(slide.subtitle, { 
-                x: 1, y: 3.5, w: '100%', h: 1, 
+                x: 1, y: 3.8, w: '100%', h: 1, 
                 fontSize: 28, 
                 color: 'FFFFFF', 
-                align: 'center'
+                align: 'center',
+                italic: true
+            });
+            
+            // Add decorative element (line)
+            newSlide.addShape(pptx.shapes.LINE, {
+                x: 4, y: 3.5, w: 2, h: 0,
+                line: { color: 'FFFFFF', width: 1 }
             });
             
             // Add generated by text
             newSlide.addText('Generated by AI PowerPoint Generator', { 
-                x: 1, y: 5, w: '100%', h: 0.5, 
-                fontSize: 16, 
+                x: 1, y: 5.5, w: '100%', h: 0.5, 
+                fontSize: 14, 
                 color: 'CCCCCC', 
                 align: 'center'
             });
         } 
         else if (slide.type === 'content') {
-            // Content slide
+            // Content slide with image and icon
+            
+            // Add slide title with accent bar
             newSlide.addText(slide.title, { 
-                x: 0.5, y: 0.5, w: '100%', h: 1, 
+                x: 0.5, y: 0.3, w: '70%', h: 0.8, 
                 fontSize: 32, 
                 color: 'FFFFFF', 
                 bold: true
             });
             
-            // Add bullet points
+            // Add accent bar next to title
+            newSlide.addShape(pptx.shapes.RECTANGLE, {
+                x: 0.5, y: 1.1, w: 2, h: 0.1,
+                fill: { color: 'FFFFFF', alpha: 80 }
+            });
+            
+            // Add icon if available using a placeholder box
+            if (slide.icon) {
+                newSlide.addText(`[${slide.icon}]`, { 
+                    x: 8, y: 0.3, w: 1, h: 0.8, 
+                    fontSize: 16, 
+                    color: 'FFFFFF',
+                    align: 'center',
+                    fontFace: 'Font Awesome 5 Free'
+                });
+            }
+            
+            // Try to add image if provided (in actual implementation, would check if file exists)
+            // Here we add a placeholder rectangle
+            newSlide.addShape(pptx.shapes.ROUNDED_RECTANGLE, {
+                x: 7, y: 1.8, w: 2.5, h: 2,
+                fill: { color: 'FFFFFF', alpha: 15 },
+                line: { color: 'FFFFFF', width: 1, alpha: 30 },
+                shadow: { type: 'outer', angle: 45, blur: 5, color: '000000', opacity: 0.3 }
+            });
+            
+            // Add image placeholder text
+            newSlide.addText(`Image: ${slide.title}`, { 
+                x: 7, y: 2.4, w: 2.5, h: 0.8, 
+                fontSize: 9, 
+                color: 'FFFFFF',
+                align: 'center',
+                bold: false,
+                italic: true
+            });
+            
+            // Add bullet points with enhanced styling
             slide.content.forEach((point, i) => {
                 newSlide.addText(point, { 
-                    x: 0.7, y: 1.8 + (i * 0.7), w: '90%', h: 0.5, 
+                    x: 0.7, y: 1.8 + (i * 0.7), w: '60%', h: 0.6, 
                     fontSize: 18, 
                     color: 'FFFFFF',
-                    bullet: { type: 'bullet' }
+                    bullet: { type: 'bullet' },
+                    shadow: { type: 'outer', angle: 45, blur: 3, color: '000000', opacity: 0.2 }
                 });
             });
         } 
         else if (slide.type === 'end') {
-            // Thank you slide
+            // Enhanced Thank you slide
+            
+            // Add decorative top shape
+            newSlide.addShape(pptx.shapes.RECTANGLE, {
+                x: 0, y: 0, w: '100%', h: 0.5,
+                fill: { color: 'FFFFFF', alpha: 15 }
+            });
+            
+            // Add decorative bottom shape
+            newSlide.addShape(pptx.shapes.RECTANGLE, {
+                x: 0, y: 5.5, w: '100%', h: 0.5,
+                fill: { color: 'FFFFFF', alpha: 15 }
+            });
+            
+            // Add centered circle behind text
+            newSlide.addShape(pptx.shapes.OVAL, {
+                x: 3.5, y: 1.5, w: 3, h: 3,
+                fill: { color: 'FFFFFF', alpha: 10 },
+                line: { color: 'FFFFFF', width: 2, alpha: 30 }
+            });
+            
+            // Add title with emphasis
             newSlide.addText(slide.title, { 
                 x: 1, y: 2, w: '100%', h: 2, 
                 fontSize: 60, 
                 color: 'FFFFFF', 
                 bold: true,
-                align: 'center'
+                align: 'center',
+                shadow: { type: 'outer', angle: 45, blur: 8, color: '000000', opacity: 0.3 }
             });
             
+            // Add content with style
             newSlide.addText(slide.content, { 
                 x: 1, y: 4, w: '100%', h: 1, 
                 fontSize: 24, 
                 color: 'FFFFFF', 
-                align: 'center'
+                align: 'center',
+                italic: true
             });
+            
+            // Add contact information (optional)
+            if (presentation.contactInfo) {
+                newSlide.addText(presentation.contactInfo, { 
+                    x: 1, y: 5, w: '100%', h: 0.5, 
+                    fontSize: 14, 
+                    color: 'CCCCCC', 
+                    align: 'center'
+                });
+            }
         }
     });
     
     // Save the presentation
     pptx.writeFile({ fileName: `${presentation.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_presentation.pptx` });
+}
+
+/**
+ * Helper function to parse gradient colors from CSS
+ */
+function parseGradient(gradientStr) {
+    const colors = [];
+    if (typeof gradientStr === 'string' && gradientStr.includes('linear-gradient')) {
+        // Simple regex to extract colors
+        const matches = gradientStr.match(/#[0-9a-f]{6}|rgba?\([^)]+\)/gi);
+        if (matches && matches.length >= 2) {
+            return matches;
+        }
+    }
+    return ['#2c3e50', '#34495e']; // Default colors if parsing fails
 }
 
 /**
