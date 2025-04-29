@@ -112,36 +112,22 @@ async function generatePresentation(topic, numSlides, style, notes) {
 }
 
 /**
- * Function to generate text content from the Hugging Face API
+ * Function to generate text content from the AI service
  */
 async function generateContentFromPrompt(topic, numSlides, additionalNotes) {
-    // This uses the Hugging Face Inference API
-    const API_URL = "https://api-inference.huggingface.co/models/gpt2/";
-    const API_KEY = ""; // You'll need to add your Hugging Face API key here
-    
-    // For demo purposes, simulate API processing time if no API key is provided
-    if (!API_KEY) {
-        console.log("No API key provided, using mock data");
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Return mock slides that will be processed by the next function
-        return generateMockContentData(topic, numSlides);
-    }
-    
-    const prompt = `Create a presentation about ${topic} with ${numSlides} slides. 
-                    Additional notes: ${additionalNotes || 'None'}
-                    
-                    Presentation outline:
-                    1. Title: ${topic}`;
-    
     try {
-        const response = await fetch(API_URL, {
+        console.log("Calling AI text generation service...");
+        
+        const response = await fetch('/.netlify/functions/generate-presentation', {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${API_KEY}`,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ inputs: prompt })
+            body: JSON.stringify({ 
+                topic: topic,
+                numSlides: numSlides,
+                additionalNotes: additionalNotes
+            })
         });
         
         if (!response.ok) {
@@ -149,11 +135,9 @@ async function generateContentFromPrompt(topic, numSlides, additionalNotes) {
         }
         
         const result = await response.json();
-        
-        // Process the generated text into slide structure
-        return processGeneratedText(result[0].generated_text, numSlides);
+        return result.slides;
     } catch (error) {
-        console.error("Error calling Hugging Face API:", error);
+        console.error("Error generating presentation content:", error);
         // Fallback to mock content
         return generateMockContentData(topic, numSlides);
     }
