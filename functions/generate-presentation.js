@@ -6,8 +6,8 @@ exports.handler = async (event, context) => {
     const { topic, numSlides, additionalNotes } = JSON.parse(event.body);
     
     // Set up Hugging Face API configuration
-    // Using a smaller model that works with free tier
-    const API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn";
+    // Alternative approach - try a different model better suited for text generation
+    const API_URL = "https://api-inference.huggingface.co/models/gpt2";
     const API_KEY = process.env.API_KEY;
     
     // Create prompt for the model
@@ -38,9 +38,9 @@ exports.handler = async (event, context) => {
       data: {
         inputs: prompt,
         parameters: {
-          max_new_tokens: 512, // Reduced token count for smaller models
+          max_length: 512,
           temperature: 0.7,
-          return_full_text: false
+          do_sample: true
         }
       },
       responseType: 'json'
