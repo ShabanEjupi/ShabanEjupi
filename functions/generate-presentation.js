@@ -6,26 +6,31 @@ exports.handler = async (event, context) => {
     const { topic, numSlides, additionalNotes, style } = JSON.parse(event.body);
     
     // Set up Hugging Face API configuration
-    const API_URL = "https://api-inference.huggingface.co/models/gpt2";
-    const API_KEY = process.env.API_KEY;
+    const API_URL = "https://api-inference.huggingface.co/models/gpt2-large";
+    const API_KEY = process.env.HUGGINGFACE_API_KEY;
     
     // Create a style-specific prompt
     const stylePrompts = {
       professional: "Create a formal business presentation with clear sections and corporate terminology.",
       creative: "Create a visually engaging presentation with innovative concepts and inspirational content.",
       minimalist: "Create a clean, concise presentation with minimal text and focused key points.",
-      educational: "Create an instructional presentation with clear learning objectives and educational content."
+      educational: "Create an instructional presentation with clear learning objectives and educational content.",
+      corporate: "Create a corporate presentation with business metrics, strategic overview and market positioning.",
+      technical: "Create a technical presentation explaining systems, technologies and implementation details.",
+      pitch: "Create an investor pitch deck presentation with problem statement, solution and market opportunity.",
+      infographic: "Create a data-focused presentation with visualizable metrics and statistical insights."
     };
     
     const styleGuidance = stylePrompts[style] || stylePrompts.professional;
     
-    // Create prompt for the model
+    // Create more detailed prompt for the model
     const prompt = `${styleGuidance}
       
-      Create a presentation outline on "${topic}" with ${numSlides} slides.
-      Additional notes: ${additionalNotes || 'None'}
+      Create a comprehensive presentation outline on "${topic}" with exactly ${numSlides} slides.
+      Additional requirements: ${additionalNotes || 'None'}
       
-      For each slide, provide a title and 3-5 bullet points.
+      For each slide, provide a compelling title and 3-5 detailed bullet points.
+      Also include a brief description of what image would be appropriate for each slide.
       Include an introduction slide and a thank you slide at the end.
       
       Format your response as follows:
@@ -34,11 +39,18 @@ exports.handler = async (event, context) => {
       - Point 1
       - Point 2
       - Point 3
+      Image: [Brief description of appropriate image for this slide]
       
       Slide 2: [Title]
+      - Point 1
+      - Point 2
+      - Point 3
+      - Point 4
+      Image: [Brief description of appropriate image for this slide]
+      
       ...and so on.`;
     
-    // Call Hugging Face API
+    // Call Hugging Face API with more temperature for creativity
     const response = await axios({
       method: 'POST',
       url: API_URL,
@@ -49,8 +61,9 @@ exports.handler = async (event, context) => {
       data: {
         inputs: prompt,
         parameters: {
-          max_length: 512,
-          temperature: 0.7,
+          max_length: 1024,  // Increased for more detailed content
+          temperature: 0.8,
+          top_p: 0.9,
           do_sample: true
         }
       },
@@ -526,8 +539,8 @@ function processGeneratedText(text, numSlides, topic, style = 'professional') {
     type: "title"
   });
   
-  // Parse slide content
-  const slideRegex = /Slide\s+(\d+):\s+([^\n]+)([\s\S]*?)(?=Slide\s+\d+:|$)/g;
+  // Parse slide content with improved regex that captures image descriptions
+  const slideRegex = /Slide\s+(\d+):\s+([^\n]+)([\s\S]*?)(?=Image:)(Image:[\s\S]*?)(?=Slide\s+\d+:|$)/g;
   let matches;
   let slideCount = 1;
   
@@ -540,6 +553,7 @@ function processGeneratedText(text, numSlides, topic, style = 'professional') {
     
     const slideTitle = matches[2].trim();
     const slideContent = matches[3].trim();
+    const imageDescription = matches[4].replace('Image:', '').trim();
     
     // Extract bullet points
     const bulletPoints = slideContent
@@ -550,6 +564,7 @@ function processGeneratedText(text, numSlides, topic, style = 'professional') {
     slides.push({
       title: slideTitle,
       content: bulletPoints.length > 0 ? bulletPoints : ["Important information about " + slideTitle],
+      imageDescription: imageDescription, // Store the image description
       type: "content"
     });
     

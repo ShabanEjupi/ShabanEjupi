@@ -157,6 +157,30 @@
                 </div>
             </div>
         </section>
+
+        <div class="chat-assistant" id="chatAssistant">
+            <div class="chat-header">
+                <div class="chat-title">Asistenti i Prezantimeve</div>
+                <button class="chat-toggle" id="chatToggle">
+                    <i class="fas fa-comments"></i>
+                </button>
+            </div>
+            <div class="chat-body hidden" id="chatBody">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message assistant">
+                        <div class="message-content">
+                            Përshëndetje! Jam asistenti i prezantimeve dhe mund t'ju ndihmoj të krijoni prezantime të shkëlqyera. Çfarë lloj prezantimi dëshironi të krijoni?
+                        </div>
+                    </div>
+                </div>
+                <form id="chatForm" class="chat-input-form">
+                    <input type="text" id="chatInput" placeholder="Shkruani pyetjen tuaj..." autocomplete="off">
+                    <button type="submit">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
     </main>
 
     <!-- Footer (same as index.html) -->
@@ -213,5 +237,6 @@
             }
         });
     </script>
+    <script src="js/chat-assistant.js"></script>
 </body>
 </html>
