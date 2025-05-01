@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     async function processWithAPI(message) {
         try {
-            const response = await fetch('/.netlify/functions/chat-assistant', {
+            const response = await fetch('/api/chat-assistant', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

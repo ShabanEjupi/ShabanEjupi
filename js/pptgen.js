@@ -118,7 +118,7 @@ async function generateContentFromPrompt(topic, numSlides, additionalNotes, styl
     try {
         console.log("Calling AI text generation service...");
         
-        const response = await fetch('/.netlify/functions/generate-presentation', {
+        const response = await fetch('/api/generate-presentation', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

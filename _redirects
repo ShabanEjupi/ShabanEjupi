@@ -1,1 +1,2 @@
-/.netlify/functions/* /.netlify/functions/:splat 200
+# Forward API requests to serverless functions
+/api/*  /.netlify/functions/:splat  200
