@@ -407,7 +407,7 @@ async function addImagesToSlides(slides, style) {
         infographic: ['chart-pie', 'chart-bar', 'chart-area', 'analytics', 'percentage', 'poll', 'table', 'sort-amount-up']
     };
     
-    // Repository of stock images by slide style and title keywords
+    // Repository of stock image keywords by slide style and title keywords
     const imageKeywords = {
         professional: {
             "executive summary": "business-meeting",
@@ -483,7 +483,7 @@ async function addImagesToSlides(slides, style) {
             const iconIndex = index % iconFamily.length;
             slide.icon = iconFamily[iconIndex];
             
-            // Try to find a relevant image based on slide title
+            // Try to find a relevant image keyword based on slide title
             const images = imageKeywords[style] || imageKeywords.professional;
             
             // Search for keywords in slide title
@@ -502,11 +502,45 @@ async function addImagesToSlides(slides, style) {
                 slideImage = imageOptions[index % imageOptions.length];
             }
             
-            slide.image = `images/${style}/${slideImage}.jpg`;
+            // Set image using a search term instead of path
+            slide.imageKeyword = slideImage.replace(/-/g, ' ');
+            slide.imageTag = getImageForSlide(slide.title, style);
         }
         
         return slide;
     });
+}
+
+/**
+ * Get appropriate image search terms based on slide title and style
+ */
+function getImageForSlide(slideTitle, style) {
+    // Define style-specific image themes
+    const styleThemes = {
+        professional: 'business,corporate,office',
+        creative: 'colorful,creative,design,art',
+        minimalist: 'minimal,simple,clean',
+        educational: 'education,learning,school',
+        corporate: 'corporate,business,professional',
+        technical: 'technology,digital,code',
+        pitch: 'startup,presentation,growth',
+        infographic: 'data,chart,graph'
+    };
+    
+    // Get the base theme for the style
+    const theme = styleThemes[style] || 'business';
+    
+    // Extract keywords from the slide title
+    const titleWords = slideTitle.toLowerCase()
+        .replace(/[^\w\s]/g, '') // Remove punctuation
+        .split(' ')
+        .filter(word => word.length > 3) // Only keep meaningful words
+        .slice(0, 2); // Take up to 2 keywords
+    
+    // Combine style theme with title keywords
+    return titleWords.length > 0 ? 
+        `${theme},${titleWords.join(',')}` : 
+        theme;
 }
 
 /**
@@ -567,6 +601,22 @@ function getStyleBackground(style, index) {
         educational: [
             'linear-gradient(135deg, #3494e6, #ec6ead)',
             'linear-gradient(135deg, #11998e, #38ef7d)'
+        ],
+        corporate: [
+            'linear-gradient(135deg, #1a2980, #26d0ce)',
+            'linear-gradient(135deg, #003973, #e5e5be)'
+        ],
+        technical: [
+            'linear-gradient(135deg, #16222a, #3a6073)',
+            'linear-gradient(135deg, #0f2027, #203a43)'
+        ],
+        pitch: [
+            'linear-gradient(135deg, #4568dc, #b06ab3)',
+            'linear-gradient(135deg, #12c2e9, #c471ed)'
+        ],
+        infographic: [
+            'linear-gradient(135deg, #009fff, #ec2f4b)',
+            'linear-gradient(135deg, #654ea3, #eaafc8)'
         ]
     };
     
@@ -613,12 +663,29 @@ function renderPreview(presentation) {
         // Create slide content preview
         const slideContent = document.createElement('div');
         slideContent.className = 'slide-content';
-        slideContent.innerHTML = `
+        
+        let contentHTML = `
             <div style="padding: 15px; color: white; text-align: center; height: 100%;">
                 <h3 style="font-size: 14px; margin-bottom: 8px;">${slide.title}</h3>
-                ${slide.type === 'content' ? '<div style="font-size: 8px; text-align: left;">• • • • •</div>' : ''}
-            </div>
         `;
+        
+        // If it's a content slide, add indication of content and icons
+        if (slide.type === 'content') {
+            contentHTML += `
+                <div style="font-size: 8px; text-align: left; margin-top: 5px;">• • • </div>
+            `;
+            
+            // Add icon if available
+            if (slide.icon) {
+                contentHTML += `<div style="position: absolute; top: 10px; right: 10px; font-size: 12px;"><i class="fas fa-${slide.icon}"></i></div>`;
+            }
+            
+            // Add image indicator
+            contentHTML += `<div style="position: absolute; bottom: 20px; right: 10px; font-size: 12px;"><i class="fas fa-image"></i></div>`;
+        }
+        
+        contentHTML += `</div>`;
+        slideContent.innerHTML = contentHTML;
         
         const slideNumber = document.createElement('div');
         slideNumber.className = 'slide-number';
@@ -727,35 +794,83 @@ function downloadPresentation(presentation) {
                 fill: { color: 'FFFFFF', alpha: 80 }
             });
             
-            // Add icon if available using a placeholder box
+            // Add icon as fontawesome text
             if (slide.icon) {
-                newSlide.addText(`[${slide.icon}]`, { 
-                    x: 8, y: 0.3, w: 1, h: 0.8, 
-                    fontSize: 16, 
+                // Map FontAwesome icon names to their unicode values
+                const iconMap = {
+                    'chart-line': '\uf201', 'handshake': '\uf2b5', 'briefcase': '\uf0b1',
+                    'building': '\uf1ad', 'award': '\uf559', 'users': '\uf0c0',
+                    'file-contract': '\uf56c', 'chart-pie': '\uf200', 'lightbulb': '\uf0eb',
+                    'palette': '\uf53f', 'comments': '\uf086', 'camera': '\uf030',
+                    'magic': '\uf0d0', 'pencil-ruler': '\uf5ae', 'shapes': '\uf61f',
+                    'paint-brush': '\uf1fc', 'check': '\uf00c', 'list': '\uf03a',
+                    'cube': '\uf1b2', 'square': '\uf0c8', 'circle': '\uf111',
+                    'arrow-right': '\uf061', 'tasks': '\uf0ae', 'columns': '\uf0db',
+                    'book': '\uf02d', 'graduation-cap': '\uf19d', 'chalkboard-teacher': '\uf51c',
+                    'brain': '\uf5dc', 'puzzle-piece': '\uf12e', 'microscope': '\uf610',
+                    'atom': '\uf5d2', 'flask': '\uf0c3', 'landmark': '\uf66f',
+                    'chart-bar': '\uf080', 'analytics': '\uf643', 'money-bill': '\uf0d6',
+                    'project-diagram': '\uf542', 'sitemap': '\uf0e8', 'certificate': '\uf0a3',
+                    'code': '\uf121', 'server': '\uf233', 'database': '\uf1c0',
+                    'network-wired': '\uf6ff', 'laptop-code': '\uf5fc', 'cogs': '\uf085',
+                    'wifi': '\uf1eb', 'shield-alt': '\uf3ed', 'rocket': '\uf135',
+                    'bullseye': '\uf140', 'money-bill-wave': '\uf53a', 'search-dollar': '\uf688',
+                    'percentage': '\uf541', 'poll': '\uf681', 'table': '\uf0ce',
+                    'sort-amount-up': '\uf161'
+                };
+                
+                // Add icon with proper styling
+                newSlide.addText(iconMap[slide.icon] || '■', { 
+                    x: 8.5, y: 0.3, w: 1, h: 0.8, 
+                    fontSize: 24, 
                     color: 'FFFFFF',
                     align: 'center',
-                    fontFace: 'Font Awesome 5 Free'
+                    fontFace: 'Arial',
+                    bold: true
+                });
+                
+                // Add icon circle background
+                newSlide.addShape(pptx.shapes.OVAL, {
+                    x: 8.45, y: 0.25, w: 1.1, h: 0.9,
+                    line: { color: 'FFFFFF', width: 2, alpha: 30 },
+                    fill: { color: 'FFFFFF', alpha: 5 }
                 });
             }
             
-            // Try to add image if provided (in actual implementation, would check if file exists)
-            // Here we add a placeholder rectangle
-            newSlide.addShape(pptx.shapes.ROUNDED_RECTANGLE, {
-                x: 7, y: 1.8, w: 2.5, h: 2,
-                fill: { color: 'FFFFFF', alpha: 15 },
-                line: { color: 'FFFFFF', width: 1, alpha: 30 },
-                shadow: { type: 'outer', angle: 45, blur: 5, color: '000000', opacity: 0.3 }
-            });
-            
-            // Add image placeholder text
-            newSlide.addText(`Image: ${slide.title}`, { 
-                x: 7, y: 2.4, w: 2.5, h: 0.8, 
-                fontSize: 9, 
-                color: 'FFFFFF',
-                align: 'center',
-                bold: false,
-                italic: true
-            });
+            // Generate dynamic image based on slide topic
+            try {
+                // Determine style-appropriate image
+                const style = presentation.style || 'professional';
+                const imageStyle = getImageForSlide(slide.title, style);
+                
+                // Try to add a real image if it exists
+                newSlide.addImage({ 
+                    path: `https://source.unsplash.com/640x360/?${encodeURIComponent(imageStyle)}`, 
+                    x: 6.8, y: 1.8, w: 3, h: 2.3,
+                    sizing: { type: 'cover' }
+                });
+            } catch (e) {
+                // If image can't be added, use a placeholder
+                console.log("Could not add image:", e);
+                
+                // Add a colored rectangle as fallback
+                newSlide.addShape(pptx.shapes.ROUNDED_RECTANGLE, {
+                    x: 6.8, y: 1.8, w: 3, h: 2.3,
+                    fill: { color: 'FFFFFF', alpha: 15 },
+                    line: { color: 'FFFFFF', width: 1, alpha: 30 },
+                    shadow: { type: 'outer', angle: 45, blur: 5, color: '000000', opacity: 0.3 }
+                });
+                
+                // Add image placeholder text
+                newSlide.addText(`Image: ${slide.title}`, { 
+                    x: 7, y: 2.4, w: 2.5, h: 0.8, 
+                    fontSize: 9, 
+                    color: 'FFFFFF',
+                    align: 'center',
+                    bold: false,
+                    italic: true
+                });
+            }
             
             // Add bullet points with enhanced styling
             slide.content.forEach((point, i) => {
