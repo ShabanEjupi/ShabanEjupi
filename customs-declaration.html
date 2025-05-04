@@ -93,6 +93,29 @@
                                 <div class="form-section">
                                     <h3 data-i18n="customs.form.personal">1. Personal Information</h3>
                                     
+                                    <div class="document-scanner">
+                                        <h4 data-i18n="customs.form.scan.title">Scan documents</h4>
+                                        <p data-i18n="customs.form.scan.description">Upload ID card or passport to automatically fill personal details</p>
+                                        
+                                        <div class="scan-options">
+                                            <div class="scan-option">
+                                                <label for="idCardScan" class="scan-label">
+                                                    <i class="fas fa-id-card"></i>
+                                                    <span data-i18n="customs.form.scan.idcard">ID card</span>
+                                                </label>
+                                                <input type="file" id="idCardScan" accept="image/*" class="scan-input" capture="environment">
+                                            </div>
+                                            
+                                            <div class="scan-option">
+                                                <label for="passportScan" class="scan-label">
+                                                    <i class="fas fa-passport"></i>
+                                                    <span data-i18n="customs.form.scan.passport">Passport</span>
+                                                </label>
+                                                <input type="file" id="passportScan" accept="image/*" class="scan-input" capture="environment">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="form-row">
                                         <div class="form-group">
                                             <label for="fullName" data-i18n="customs.form.fullname">Full Name:</label>
@@ -121,6 +144,29 @@
                                 <!-- Vehicle Information Section -->
                                 <div class="form-section">
                                     <h3 data-i18n="customs.form.vehicle">2. Vehicle Information</h3>
+                                    
+                                    <div class="document-scanner">
+                                        <h4 data-i18n="customs.form.scan.vehicle.title">Scan vehicle documents</h4>
+                                        <p data-i18n="customs.form.scan.vehicle.description">Upload vehicle registration document to automatically fill vehicle details</p>
+                                        
+                                        <div class="scan-options">
+                                            <div class="scan-option">
+                                                <label for="vehicleRegScan" class="scan-label">
+                                                    <i class="fas fa-car-side"></i>
+                                                    <span data-i18n="customs.form.scan.vehicle.reg">Vehicle registration</span>
+                                                </label>
+                                                <input type="file" id="vehicleRegScan" accept="image/*" class="scan-input" capture="environment">
+                                            </div>
+                                            
+                                            <div class="scan-option">
+                                                <label for="licensePlateScan" class="scan-label">
+                                                    <i class="fas fa-car"></i>
+                                                    <span data-i18n="customs.form.scan.vehicle.plate">License plate</span>
+                                                </label>
+                                                <input type="file" id="licensePlateScan" accept="image/*" class="scan-input" capture="environment">
+                                            </div>
+                                        </div>
+                                    </div>
                                     
                                     <div class="form-row">
                                         <div class="form-group">

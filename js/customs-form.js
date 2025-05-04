@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set up form submission handling
     setupFormSubmission();
+    
+    // Initialize document scanning functionality
+    initializeDocumentScanning();
 });
 
 /**
@@ -230,4 +233,172 @@ function showNotification(type, message) {
             notification.remove();
         }
     }, 5000);
+}
+
+/**
+ * Initialize document scanning functionality
+ */
+function initializeDocumentScanning() {
+    // ID Card scanning
+    const idCardScan = document.getElementById('idCardScan');
+    if (idCardScan) {
+        idCardScan.addEventListener('change', async function(event) {
+            if (event.target.files && event.target.files[0]) {
+                const file = event.target.files[0];
+                
+                // Tregojmë një indikator ngarkimi
+                showScanningIndicator('Analyzing ID card...');
+                
+                try {
+                    // Në një implementim të vërtetë, këtu do të thirrnim një API OCR
+                    // Por për demonstrim, do të simulojmë një përgjigje pas një vonese
+                    await simulateDocumentScan(file, 'idCard');
+                    
+                    // Fshehim indikatorin
+                    hideScanningIndicator();
+                    
+                    // Tregojmë njoftim suksesi
+                    showNotification('success', 'ID card scanned successfully! Personal details filled automatically.');
+                    
+                } catch (error) {
+                    hideScanningIndicator();
+                    showNotification('error', 'Could not process ID card: ' + error.message);
+                }
+            }
+        });
+    }
+    
+    // Passport scanning
+    const passportScan = document.getElementById('passportScan');
+    if (passportScan) {
+        passportScan.addEventListener('change', async function(event) {
+            if (event.target.files && event.target.files[0]) {
+                const file = event.target.files[0];
+                
+                showScanningIndicator('Analyzing passport...');
+                
+                try {
+                    await simulateDocumentScan(file, 'passport');
+                    hideScanningIndicator();
+                    showNotification('success', 'Passport scanned successfully! Personal details filled automatically.');
+                } catch (error) {
+                    hideScanningIndicator();
+                    showNotification('error', 'Could not process passport: ' + error.message);
+                }
+            }
+        });
+    }
+    
+    // Vehicle registration scanning
+    const vehicleRegScan = document.getElementById('vehicleRegScan');
+    if (vehicleRegScan) {
+        vehicleRegScan.addEventListener('change', async function(event) {
+            if (event.target.files && event.target.files[0]) {
+                const file = event.target.files[0];
+                
+                showScanningIndicator('Analyzing vehicle registration...');
+                
+                try {
+                    await simulateDocumentScan(file, 'vehicleReg');
+                    hideScanningIndicator();
+                    showNotification('success', 'Vehicle registration scanned successfully! Vehicle details filled automatically.');
+                } catch (error) {
+                    hideScanningIndicator();
+                    showNotification('error', 'Could not process vehicle registration: ' + error.message);
+                }
+            }
+        });
+    }
+    
+    // License plate scanning
+    const licensePlateScan = document.getElementById('licensePlateScan');
+    if (licensePlateScan) {
+        licensePlateScan.addEventListener('change', async function(event) {
+            if (event.target.files && event.target.files[0]) {
+                const file = event.target.files[0];
+                
+                showScanningIndicator('Reading license plate...');
+                
+                try {
+                    await simulateDocumentScan(file, 'licensePlate');
+                    hideScanningIndicator();
+                    showNotification('success', 'License plate recognized successfully!');
+                } catch (error) {
+                    hideScanningIndicator();
+                    showNotification('error', 'Could not recognize license plate: ' + error.message);
+                }
+            }
+        });
+    }
+}
+
+/**
+ * Show scanning indicator overlay
+ */
+function showScanningIndicator(message) {
+    // Krijojmë një element overlay për indikatorin
+    const overlay = document.createElement('div');
+    overlay.className = 'scanning-overlay';
+    overlay.innerHTML = `
+        <div class="scanning-indicator">
+            <div class="scanning-spinner"></div>
+            <p>${message || 'Processing...'}</p>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+}
+
+/**
+ * Hide scanning indicator
+ */
+function hideScanningIndicator() {
+    const overlay = document.querySelector('.scanning-overlay');
+    if (overlay) {
+        overlay.classList.add('fade-out');
+        setTimeout(() => {
+            overlay.remove();
+        }, 300);
+    }
+}
+
+/**
+ * Simulate document scanning process (in a real implementation, this would call an OCR API)
+ */
+async function simulateDocumentScan(file, documentType) {
+    // Simulon një vonesë për procesimin e dokumentit
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Bazuar në llojin e dokumentit, mbushim fusha të ndryshme të formularit
+    switch(documentType) {
+        case 'idCard':
+            // Demo data - në një implementim të vërtetë këto do vinin nga API
+            document.getElementById('fullName').value = 'Arben Krasniqi';
+            document.getElementById('nationality').value = 'Kosovo';
+            document.getElementById('passportNumber').value = 'ID12345678';
+            document.getElementById('dateOfBirth').value = '1985-07-15';
+            break;
+            
+        case 'passport':
+            document.getElementById('fullName').value = 'Arben Krasniqi';
+            document.getElementById('nationality').value = 'Kosovo';
+            document.getElementById('passportNumber').value = 'P987654321';
+            document.getElementById('dateOfBirth').value = '1985-07-15';
+            break;
+            
+        case 'vehicleReg':
+            document.getElementById('vehicleMake').value = 'Volkswagen';
+            document.getElementById('vehicleModel').value = 'Golf 8';
+            document.getElementById('licensePlate').value = 'KS-123-AB';
+            document.getElementById('countryRegistration').value = 'Kosovo';
+            break;
+            
+        case 'licensePlate':
+            document.getElementById('licensePlate').value = 'KS-123-AB';
+            document.getElementById('countryRegistration').value = 'Kosovo';
+            break;
+    }
+    
+    // Në implementim të vërtetë, këtu do të kishim logjikë për të përpunuar imazhin
+    // dhe për të nxjerrë informacionin duke përdorur një API OCR
 }
