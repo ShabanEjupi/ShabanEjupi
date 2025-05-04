@@ -363,42 +363,109 @@ function hideScanningIndicator() {
 }
 
 /**
- * Simulate document scanning process (in a real implementation, this would call an OCR API)
+ * Simulate document scanning process with image analysis instead of static data
  */
 async function simulateDocumentScan(file, documentType) {
-    // Simulon një vonesë për procesimin e dokumentit
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Create a loading delay that represents actual processing time
+    await new Promise(resolve => setTimeout(resolve, 2000));
     
-    // Bazuar në llojin e dokumentit, mbushim fusha të ndryshme të formularit
-    switch(documentType) {
-        case 'idCard':
-            // Demo data - në një implementim të vërtetë këto do vinin nga API
-            document.getElementById('fullName').value = 'Arben Krasniqi';
-            document.getElementById('nationality').value = 'Kosovo';
-            document.getElementById('passportNumber').value = 'ID12345678';
-            document.getElementById('dateOfBirth').value = '1985-07-15';
-            break;
-            
-        case 'passport':
-            document.getElementById('fullName').value = 'Arben Krasniqi';
-            document.getElementById('nationality').value = 'Kosovo';
-            document.getElementById('passportNumber').value = 'P987654321';
-            document.getElementById('dateOfBirth').value = '1985-07-15';
-            break;
-            
-        case 'vehicleReg':
-            document.getElementById('vehicleMake').value = 'Volkswagen';
-            document.getElementById('vehicleModel').value = 'Golf 8';
-            document.getElementById('licensePlate').value = 'KS-123-AB';
-            document.getElementById('countryRegistration').value = 'Kosovo';
-            break;
-            
-        case 'licensePlate':
-            document.getElementById('licensePlate').value = 'KS-123-AB';
-            document.getElementById('countryRegistration').value = 'Kosovo';
-            break;
+    // In a real implementation, we would send the image to an OCR API
+    // For this simulation, we'll analyze the image properties to vary the returned data
+    
+    try {
+        // Create an object URL to analyze some properties of the image
+        const objectUrl = URL.createObjectURL(file);
+        const img = new Image();
+        
+        // Create a promise to wait for the image to load
+        await new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+            img.src = objectUrl;
+        });
+        
+        // Generate data based on image properties (size, name, timestamp)
+        // This creates variation in results based on the uploaded file
+        const imageId = file.name.length + file.size % 10000; 
+        const timestamp = new Date(file.lastModified);
+        const month = timestamp.getMonth() + 1;
+        const day = timestamp.getDate();
+        
+        // Calculate values based on the image and file properties
+        const nameOptions = ['Arben', 'Fatmir', 'Vjosa', 'Teuta', 'Bekim', 'Valdrin'];
+        const surnameOptions = ['Krasniqi', 'Gashi', 'Berisha', 'Hoxha', 'Maloku', 'Rexhepi'];
+        const nameIndex = Math.floor(img.width % nameOptions.length);
+        const surnameIndex = Math.floor(img.height % surnameOptions.length);
+        
+        const firstName = nameOptions[nameIndex] || nameOptions[0];
+        const lastName = surnameOptions[surnameIndex] || surnameOptions[0];
+        
+        // Vehicle makes and models
+        const vehicleMakes = ['Volkswagen', 'Audi', 'Mercedes', 'BMW', 'Toyota', 'Peugeot'];
+        const vehicleModels = {
+            'Volkswagen': ['Golf', 'Passat', 'Tiguan', 'Polo'],
+            'Audi': ['A3', 'A4', 'Q5', 'A6'],
+            'Mercedes': ['C-Class', 'E-Class', 'GLC', 'A-Class'],
+            'BMW': ['3 Series', '5 Series', 'X3', 'X5'],
+            'Toyota': ['Corolla', 'Yaris', 'RAV4', 'Auris'],
+            'Peugeot': ['308', '3008', '208', '508']
+        };
+        
+        // Generate data based on document type
+        switch(documentType) {
+            case 'idCard':
+                const birthYear = 1970 + (imageId % 40); // Between 1970-2010
+                const birthMonth = 1 + (imageId % 12);
+                const birthDay = 1 + (imageId % 28);
+                
+                document.getElementById('fullName').value = `${firstName} ${lastName}`;
+                document.getElementById('nationality').value = 'Kosovo';
+                document.getElementById('passportNumber').value = `ID${String(imageId).padStart(8, '0')}`;
+                document.getElementById('dateOfBirth').value = 
+                    `${birthYear}-${String(birthMonth).padStart(2, '0')}-${String(birthDay).padStart(2, '0')}`;
+                break;
+                
+            case 'passport':
+                const passportBirthYear = 1965 + (imageId % 45); // Between 1965-2010
+                const passportBirthMonth = 1 + (imageId % 12);
+                const passportBirthDay = 1 + (imageId % 28);
+                
+                document.getElementById('fullName').value = `${firstName} ${lastName}`;
+                document.getElementById('nationality').value = 'Kosovo';
+                document.getElementById('passportNumber').value = `P${String(imageId).padStart(7, '0')}`;
+                document.getElementById('dateOfBirth').value = 
+                    `${passportBirthYear}-${String(passportBirthMonth).padStart(2, '0')}-${String(passportBirthDay).padStart(2, '0')}`;
+                break;
+                
+            case 'vehicleReg':
+                const makeIndex = imageId % vehicleMakes.length;
+                const make = vehicleMakes[makeIndex];
+                const modelList = vehicleModels[make];
+                const model = modelList[imageId % modelList.length];
+                
+                document.getElementById('vehicleMake').value = make;
+                document.getElementById('vehicleModel').value = model;
+                document.getElementById('licensePlate').value = `KS-${String(imageId % 999).padStart(3, '0')}-${String.fromCharCode(65 + (imageId % 26))}${String.fromCharCode(65 + ((imageId + 5) % 26))}`;
+                document.getElementById('countryRegistration').value = 'Kosovo';
+                break;
+                
+            case 'licensePlate':
+                document.getElementById('licensePlate').value = `KS-${String(imageId % 999).padStart(3, '0')}-${String.fromCharCode(65 + (imageId % 26))}${String.fromCharCode(65 + ((imageId + 5) % 26))}`;
+                document.getElementById('countryRegistration').value = 'Kosovo';
+                break;
+        }
+        
+        // Clean up the object URL
+        URL.revokeObjectURL(objectUrl);
+        
+    } catch (error) {
+        console.error("Error processing image:", error);
+        throw new Error("Could not process the document image. Please try again.");
     }
     
-    // Në implementim të vërtetë, këtu do të kishim logjikë për të përpunuar imazhin
-    // dhe për të nxjerrë informacionin duke përdorur një API OCR
+    // In a real implementation, we would:
+    // 1. Send the image to an OCR service (Google Cloud Vision, Azure Computer Vision, etc.)
+    // 2. Process the OCR response to extract relevant text fields
+    // 3. Map the extracted text to the appropriate form fields
+    // 4. Handle edge cases, validation, and error scenarios
 }
