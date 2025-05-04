@@ -1,0 +1,298 @@
+.customs-form-section {
+    padding: 80px 0;
+}
+
+.official-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.customs-logo {
+    width: 80px;
+    height: 80px;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+}
+
+.form-subtitle {
+    font-size: 1rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.form-container {
+    background-color: rgba(20, 20, 20, 0.5);
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 50px;
+    border: 1px solid var(--terminal-border);
+}
+
+.form-notice {
+    background-color: rgba(255, 204, 0, 0.1);
+    border-left: 4px solid #ffcc00;
+    padding: 15px;
+    margin-bottom: 30px;
+    color: #ffcc00;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.customs-form {
+    position: relative;
+}
+
+.form-section {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--terminal-border);
+}
+
+.form-section:last-child {
+    border-bottom: none;
+}
+
+.form-section h3 {
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+
+.form-group {
+    padding: 0 10px;
+    margin-bottom: 20px;
+    flex: 1 0 100%;
+}
+
+.form-row .form-group {
+    flex: 1 0 calc(50% - 20px);
+    min-width: 250px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 4px;
+    background-color: rgba(30, 30, 30, 0.7);
+    border: 1px solid var(--terminal-border);
+    color: var(--text-color);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(0, 168, 255, 0.2);
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.radio-group input {
+    margin-right: 8px;
+    width: auto;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+}
+
+.checkbox-group label {
+    display: flex;
+    cursor: pointer;
+    margin-bottom: 0;
+    line-height: 1.4;
+}
+
+.checkbox-group input {
+    margin-right: 10px;
+    margin-top: 3px;
+    width: auto;
+}
+
+.checkbox-group.required label::after {
+    content: '*';
+    color: #ff4040;
+    margin-left: 4px;
+}
+
+.consent-box {
+    background-color: rgba(30, 30, 30, 0.7);
+    border: 1px solid var(--terminal-border);
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.consent-box p {
+    margin-bottom: 15px;
+}
+
+.consent-box ol {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.consent-box li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.consent-box li:last-child {
+    margin-bottom: 0;
+}
+
+.signature-group input {
+    font-style: italic;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.form-actions button {
+    padding: 12px 25px;
+    font-size: 1rem;
+}
+
+/* Success message styling */
+.form-success {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.success-icon {
+    font-size: 4rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.form-success h3 {
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.form-success p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.form-success #referenceNumber {
+    font-weight: bold;
+    color: var(--accent-color);
+    letter-spacing: 1px;
+}
+
+/* Helper classes */
+.hidden {
+    display: none !important;
+}
+
+/* Print button styling */
+#printDeclaration {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+    }
+    
+    .form-row .form-group {
+        flex: 1 0 100%;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions button {
+        width: 100%;
+    }
+    
+    .official-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .radio-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    header, footer, .terminal-header, .form-actions, #printDeclaration {
+        display: none !important;
+    }
+    
+    .terminal-window, .terminal-body, .form-container {
+        background: white !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+    }
+    
+    .form-success {
+        page-break-before: always;
+    }
+    
+    .form-success #referenceNumber {
+        color: black !important;
+    }
+    
+    .consent-box {
+        border: 1px solid #ddd !important;
+        background: white !important;
+    }
+}

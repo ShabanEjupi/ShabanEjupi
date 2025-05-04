@@ -1,0 +1,319 @@
+sITPortfolio\customs-declaration.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="customs.page.title">Customs Declaration Form | Customs Department</title>
+    
+    <!-- SEO meta tags -->
+    <meta name="description" content="Official customs declaration form for vehicle and passenger processing at border crossings">
+    <meta name="keywords" content="customs declaration, border crossing, vehicle search consent, passenger declaration">
+    
+    <!-- Include your existing stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/customs-form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon links -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+    <!-- Matrix-like background -->
+    <canvas class="matrix-background" id="matrix"></canvas>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">customs@ks:~$<span>_</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                    <li><a href="index.html#about" data-i18n="nav.about">About</a></li>
+                    <li><a href="index.html#projects" data-i18n="nav.projects">Projects</a></li>
+                    <li><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
+                    <li><a href="customs-declaration.html" class="active" data-i18n="nav.customs">Customs Declaration</a></li>
+                    <li class="lang-switcher">
+                        <a href="#" class="lang-option active" data-lang="en">EN</a>
+                        <span>/</span>
+                        <a href="#" class="lang-option" data-lang="sq">SQ</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="content" role="main">
+        <section class="customs-form-section">
+            <div class="container">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-controls">
+                            <div class="terminal-control control-close"></div>
+                            <div class="terminal-control control-minimize"></div>
+                            <div class="terminal-control control-maximize"></div>
+                        </div>
+                        <div class="terminal-title">customs@ks:~/declaration-form</div>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="official-header">
+                            <img src="images/customs-logo.svg" alt="Kosovo Customs Logo" class="customs-logo">
+                            <div>
+                                <h1 class="section-title" data-i18n="customs.form.title">Official Customs Declaration Form</h1>
+                                <p class="form-subtitle" data-i18n="customs.form.subtitle">Border Entry Processing & Consent Document</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-container">
+                            <div class="form-notice" data-i18n="customs.form.notice">
+                                This form must be completed truthfully by all persons entering Kosovo territory. False declarations may lead to legal consequences including fines and detention.
+                            </div>
+                            
+                            <!-- Netlify Form - important attributes added for Netlify form detection -->
+                            <form id="customsForm" name="customs-declaration" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" netlify-honeypot="bot-field" class="customs-form">
+                                <p class="hidden">
+                                    <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                                </p>
+                                <input type="hidden" name="form-name" value="customs-declaration">
+                                
+                                <!-- Personal Information Section -->
+                                <div class="form-section">
+                                    <h3 data-i18n="customs.form.personal">1. Personal Information</h3>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="fullName" data-i18n="customs.form.fullname">Full Name:</label>
+                                            <input type="text" id="fullName" name="fullName" required>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="nationality" data-i18n="customs.form.nationality">Nationality:</label>
+                                            <input type="text" id="nationality" name="nationality" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="passportNumber" data-i18n="customs.form.passport">Passport/ID Number:</label>
+                                            <input type="text" id="passportNumber" name="passportNumber" required>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="dateOfBirth" data-i18n="customs.form.dob">Date of Birth:</label>
+                                            <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Vehicle Information Section -->
+                                <div class="form-section">
+                                    <h3 data-i18n="customs.form.vehicle">2. Vehicle Information</h3>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="vehicleMake" data-i18n="customs.form.make">Vehicle Make:</label>
+                                            <input type="text" id="vehicleMake" name="vehicleMake">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="vehicleModel" data-i18n="customs.form.model">Vehicle Model:</label>
+                                            <input type="text" id="vehicleModel" name="vehicleModel">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="licensePlate" data-i18n="customs.form.plate">License Plate Number:</label>
+                                            <input type="text" id="licensePlate" name="licensePlate">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="countryRegistration" data-i18n="customs.form.registration">Country of Registration:</label>
+                                            <input type="text" id="countryRegistration" name="countryRegistration">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Declaration Section -->
+                                <div class="form-section">
+                                    <h3 data-i18n="customs.form.declaration">3. Declarations</h3>
+                                    
+                                    <div class="form-group">
+                                        <label data-i18n="customs.form.currency">Are you carrying currency or monetary instruments exceeding €10,000 (or equivalent)?</label>
+                                        <div class="radio-group">
+                                            <label>
+                                                <input type="radio" name="currency" value="yes"> 
+                                                <span data-i18n="customs.form.yes">Yes</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="currency" value="no" checked> 
+                                                <span data-i18n="customs.form.no">No</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="currency-details hidden" id="currencyDetails">
+                                        <div class="form-group">
+                                            <label for="currencyAmount" data-i18n="customs.form.amount">Amount & Currency:</label>
+                                            <input type="text" id="currencyAmount" name="currencyAmount">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="currencyOrigin" data-i18n="customs.form.origin">Origin of Funds:</label>
+                                            <input type="text" id="currencyOrigin" name="currencyOrigin">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label data-i18n="customs.form.goods">Are you carrying any goods subject to customs declaration (alcohol, tobacco, commercial goods, etc.)?</label>
+                                        <div class="radio-group">
+                                            <label>
+                                                <input type="radio" name="goods" value="yes"> 
+                                                <span data-i18n="customs.form.yes">Yes</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="goods" value="no" checked> 
+                                                <span data-i18n="customs.form.no">No</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="goods-details hidden" id="goodsDetails">
+                                        <div class="form-group">
+                                            <label for="goodsDescription" data-i18n="customs.form.description">Description of Goods:</label>
+                                            <textarea id="goodsDescription" name="goodsDescription" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="goodsValue" data-i18n="customs.form.value">Estimated Value (€):</label>
+                                            <input type="text" id="goodsValue" name="goodsValue">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Consent & Legal Section -->
+                                <div class="form-section">
+                                    <h3 data-i18n="customs.form.consent">4. Search Consent & Legal Acknowledgment</h3>
+                                    
+                                    <div class="consent-box">
+                                        <p data-i18n="customs.form.consent.text">By signing this declaration, I hereby consent and acknowledge that:</p>
+                                        
+                                        <ol>
+                                            <li data-i18n="customs.form.consent.1">I authorize Kosovo Customs officials to search my vehicle, luggage, and person as deemed necessary.</li>
+                                            <li data-i18n="customs.form.consent.2">I release Kosovo Customs from liability for any damage that may occur during the inspection process.</li>
+                                            <li data-i18n="customs.form.consent.3">I understand that while in Kosovo territory, I must comply with all instructions from Customs officials.</li>
+                                            <li data-i18n="customs.form.consent.4">I acknowledge that providing false information may result in administrative penalties, detention, or criminal charges.</li>
+                                            <li data-i18n="customs.form.consent.5">I confirm that all declarations made herein are truthful and complete to the best of my knowledge.</li>
+                                            <li data-i18n="customs.form.consent.6">I accept that any undeclared items may be confiscated and additional penalties may apply.</li>
+                                        </ol>
+                                    </div>
+                                    
+                                    <div class="form-group checkbox-group required">
+                                        <label>
+                                            <input type="checkbox" name="consentSearch" required>
+                                            <span data-i18n="customs.form.consent.search">I consent to vehicle and personal searches by Customs officials</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-group checkbox-group required">
+                                        <label>
+                                            <input type="checkbox" name="consentLiability" required>
+                                            <span data-i18n="customs.form.consent.liability">I release Kosovo Customs from liability for any damage during inspection</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-group checkbox-group required">
+                                        <label>
+                                            <input type="checkbox" name="consentTruth" required>
+                                            <span data-i18n="customs.form.consent.truth">I confirm all declarations are truthful and complete</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-group signature-group">
+                                        <label for="signature" data-i18n="customs.form.signature">Digital Signature (Type Full Name):</label>
+                                        <input type="text" id="signature" name="signature" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="currentDate" data-i18n="customs.form.date">Date:</label>
+                                        <input type="date" id="currentDate" name="currentDate" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- Submit Button -->
+                                <div class="form-actions">
+                                    <button type="reset" class="btn btn-secondary" data-i18n="customs.form.reset">Clear Form</button>
+                                    <button type="submit" class="btn btn-primary" data-i18n="customs.form.submit">Submit Declaration</button>
+                                </div>
+                            </form>
+                            
+                            <!-- Success message (hidden initially) -->
+                            <div id="successMessage" class="form-success hidden">
+                                <div class="success-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h3 data-i18n="customs.form.success.title">Declaration Submitted Successfully</h3>
+                                <p data-i18n="customs.form.success.message">Your customs declaration has been recorded. Please proceed to the customs checkpoint for further processing.</p>
+                                <p data-i18n="customs.form.success.reference">Reference number: <span id="referenceNumber">KS-XXXX-XXXX</span></p>
+                                <button id="printDeclaration" class="btn" data-i18n="customs.form.print">
+                                    <i class="fas fa-print"></i> Print Declaration
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="footer-logo">Kosovo Customs Department</div>
+                    <p class="footer-description" data-i18n="customs.footer.description">Official customs declaration system for border control and entry processing</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 data-i18n="footer.nav">Navigation</h4>
+                    <ul>
+                        <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                        <li><a href="index.html#about" data-i18n="nav.about">About</a></li>
+                        <li><a href="index.html#projects" data-i18n="nav.projects">Projects</a></li>
+                        <li><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
+                        <li><a href="customs-declaration.html" data-i18n="nav.customs">Customs Declaration</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 <a href="https://customs.rks-gov.net/">Kosovo Customs</a>. <span data-i18n="footer.copyright">All rights reserved.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <link rel="stylesheet" href="css/privacy.css">
+    <script src="js/analytics.js" defer></script>
+    <script src="js/privacy.js" defer></script>
+    <script src="js/translations.js"></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/customs-form.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('currentDate').value = today;
+        });
+    </script>
+</body>
+</html>
