@@ -1,0 +1,83 @@
+## 1. Analizë: 3 Rregulla kryesore të GDPR  
+1.  Transparenca (Art. 12–14)  
+  • Të gjithë vizitorët duhet të informohen në mënyrë të qartë për llojet e të dhënave që mblidhen, qëllimin e përpunimit dhe kohëzgjatjen e ruajtjes.  
+2.  E drejta për t’u fshirë (“right to be forgotten”, Art. 17)  
+  • Përdoruesi mund të kërkojë fshirjen e të dhënave të tij personale pa vonesë, nëse nuk ka nevojë ligjore për t’i ruajtur.  
+3.  Mbajtja e përgjegjësisë (Accountability, Art. 5, 24)  
+  • Të gjitha përpunimet duhet të jenë ligjore, të ndershme dhe transparente; organizata duhet të dokumentojë dhe të jetë në gjendje t’i dijë çdo moment se si përpunohen të dhënat.  
+
+### Rast shkeljeje  
+Në 2019, Autoriteti i Mbrojtjes së të Dhënave në Britani (ICO) gjobiti British Airways me 183 milion paund për mos‑sigurimin e të dhënave të klientëve (Data breach gjatë të cilit u vodhën të dhëna pagese). Kompania nuk kishte aplikuar masat e duhura të sigurisë (Art. 32) dhe nuk njoftoi autoritetin brenda 72 orëve (Art. 33), duke shkelur parimet e transparencës dhe përgjegjësisë.  
+
+---  
+
+## 2. Politikë privatësie (shabanejupi.engineer)  
+
+<section id="privacy-policy">
+  <h2>Politika e privatësisë</h2>
+  <p>Last updated: April 21, 2025</p>
+
+  <h3>1. Kujdesja për të dhënat tuaja</h3>
+  <p>Ne mbledhim vetëm të dhëna të nevojshme për t’ju ofruar shërbimin tonë: emër, email, IP adresë dhe informacione teknike (cookies).</p>
+
+  <h3>2. Për çfarë i përdorim</h3>
+  <ul>
+    <li>Për të përpunuar kërkesat e formularit të kontaktit.</li>
+    <li>Për të përmirësuar funksionimin e faqes (analitikë dhe personalizim).</li>
+    <li>Për të zbatuar masat e nevojshme të sigurisë.</li>
+  </ul>
+
+  <h3>3. Bazat ligjore</h3>
+  <ul>
+    <li>Miratimin tuaj (Art. 6(1)(a) GDPR) kur pranoni cookies.</li>
+    <li>Interesin legjitim (Art. 6(1)(f)) për përmirësimin dhe mbrojtjen e shërbimit.</li>
+  </ul>
+
+  <h3>4. E drejta për qasje & fshirje</h3>
+  <p>Çdokush mund të kërkojë kopje të të dhënave të veta, korrigjimin, ose fshirjen e tyre duke na kontaktuar në <a href="mailto:shaban.ejupi@student.uni-pr.edu">email</a>.</p>
+
+  <h3>5. Kohëzgjatja e ruajtjes</h3>
+  <p>Të dhënat e kontaktit ruhen maksimumi 2 vjet, analitika anonime ruhen 1 vit.</p>
+
+  <h3>6. Siguria</h3>
+  <p>Ne përdorim HTTPS, firewall dhe politika të restriksionit të aksesit për mbrojtjen e të dhënave.</p>
+
+  <h3>7. Cookies</h3>
+  <p>Lista e cookies që përdorim mund të gjendet në seksionin “Cookies” të faqes.</p>
+
+  <h3>8. Bashkëpunimi me palë të treta</h3>
+  <p>Shpërndajmë të dhëna vetëm me:</p>
+  <ul>
+    <li>Ofertues analitikë (p.sh. Google Analytics)</li>
+    <li>Shërbime email–marketingu</li>
+  </ul>
+
+  <h3>9. Të Drejtat e subjektit të të dhënave</h3>
+  <p>Mund të kërkoni:</p>
+  <ul>
+    <li>Qasje në të dhënat tuaja (Art. 15)</li>
+    <li>Korrigjim (Art. 16)</li>
+    <li>Fshirje (“right to be forgotten”, Art. 17)</li>
+    <li>Opozitë ose kufizim përpunimi (Art. 18–21)</li>
+  </ul>
+
+  <h3>10. Ndryshimet në politikë</h3>
+  <p>Çdo ndryshim do të publikohet këtu me “Last updated”.</p>
+
+  <h3>11. Kontakti</h3>
+  <p>Për pyetje: <a href="mailto:shaban.ejupi@student.uni-pr.edu">shaban.ejupi@student.uni-pr.edu</a></p>
+</section>
+
+---  
+
+## 3. Analizë e CCPA  
+1. Right to know: konsumatori mund të kërkojë raport për kategori të dhënash  
+2. Right to delete: kërkesë për fshirjen e të dhënave private  
+3. Right to opt‑out: ndalimi i shitjes së të dhënave personale  
+
+## 4. Përfundim  
+Politikat e GDPR dhe CCPA forcojnë besimin e përdoruesve. Implementimi në YourSite.com (cookie‑banner, modal‑i i politikës) garanton përputhje dhe transparencë.
+
+## 5. Referenca  
+- GDPR: https://eur‑lex.europa.eu/eli/reg/2016/679/oj  
+- CCPA: https://oag.ca.gov/privacy/ccpa
